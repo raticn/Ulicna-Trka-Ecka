@@ -1,45 +1,11 @@
 <script>
+import Footer from '../components/Footer.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faXmark} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
-    data() {
-        return {
-            drugaTrka: false
-        }
-    },
-    methods: {
-    enterAnimation(el, done) {
-        // Initial state before animation
-        el.style.transform = 'translateY(100%)';
-        
-        // Next frame
-        requestAnimationFrame(() => {
-        // Resetting to initial state
-        el.style.transform = '';
-        
-        // Applying the slide-in class
-        el.classList.add('slide-in');
-        
-        // Cleaning up after animation is done
-        el.addEventListener('transitionend', done);
-        });
-    },
-    leaveAnimation(el, done) {
-        // Applying the slide-out class
-        el.classList.add('slide-out');
-        
-        // Cleaning up after animation is done
-        el.addEventListener('transitionend', () => {
-        done();
-        });
-    }
-    },
-    components: {
-        FontAwesomeIcon,
-    },
     mounted() {
     let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
 
@@ -171,6 +137,7 @@ export default {
 </Transition>
 </div>
 <RouterView></RouterView>
+<Footer/>
 </template>
 
 <style>
