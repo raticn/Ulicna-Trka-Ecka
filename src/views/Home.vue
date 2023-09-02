@@ -1,6 +1,10 @@
 <script>
+import Footer from '../components/Footer.vue'
 
 export default {
+    components:{
+        Footer,
+    },
     mounted() {
     let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
 
@@ -90,6 +94,7 @@ export default {
     </div>
 </div>
 <RouterView></RouterView>
+<Footer/>
 </template>
 
 <style>
