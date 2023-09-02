@@ -1,7 +1,7 @@
 <script>
+import Footer from '../components/Footer.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark} from '@fortawesome/free-solid-svg-icons'
-import { faInstagram, faFacebook, faTiktok } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
@@ -14,7 +14,9 @@ export default{
     },
     components: {
         FontAwesomeIcon,
+        Footer
     },
+    
     mounted() {
         window.scrollTo(0, 0);
     },
@@ -155,7 +157,7 @@ export default{
     <img class="sertifikat" src="../assets/sertifikat1.jpg" alt="">
     <img class="sertifikat" src="../assets/sertifikat2.jpg" alt="">
 </div>
-
+<Footer/>
 </template>
 
 <style>

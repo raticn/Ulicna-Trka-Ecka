@@ -66,14 +66,13 @@ export default {
 }
 
 .footer {
-    width: 100vw;
+    width: 100%;
     background: linear-gradient(to right, rgb(74, 144, 226), rgb(23, 45, 89));
 }
 
 .footer_wrapper {
     color: #fff;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
 
 }
@@ -108,14 +107,11 @@ export default {
     flex-basis: 33%;
     font-size: 1.5em;
     text-align: center;
-    margin: 15px;
 }
 .socialsLinks{
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    margin: 0 18%;
+    justify-content: space-around;
 }
 .socialIcons{
     color: #fff;
@@ -130,11 +126,8 @@ export default {
 
 .quicklinks {
     display: flex;
-    height: 15em;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-
+    padding: 0;
 }
 
 .quicklinksLink  {
@@ -144,6 +137,7 @@ export default {
 }
 
 .copyright {
+    font-size: 2em;
     color: #fff;
     display: flex;
     justify-content: center;
