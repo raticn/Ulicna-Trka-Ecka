@@ -27,7 +27,7 @@ export default{
 <template>
 <div class="trkaHero">
     <nav class="nav fixed">
-    <p class="logo">LOGO</p>
+    <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="">
     <ul class="navLista">
         <li class="navLink">Događaji</li>
         <li class="navLink">Rezultati</li>
@@ -254,9 +254,9 @@ export default{
 }
 .xmark{
     position: fixed;
-    top: 1em;
-    right: 1em;
-    font-size: 2em;
+    top: 0.5em;
+    right: 0.5em;
+    font-size: 3em;
     color: #fff;
     cursor: pointer;
 }

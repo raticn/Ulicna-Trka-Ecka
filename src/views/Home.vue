@@ -1,6 +1,45 @@
 <script>
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { faXmark} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
+    data() {
+        return {
+            drugaTrka: false
+        }
+    },
+    methods: {
+    enterAnimation(el, done) {
+        // Initial state before animation
+        el.style.transform = 'translateY(100%)';
+        
+        // Next frame
+        requestAnimationFrame(() => {
+        // Resetting to initial state
+        el.style.transform = '';
+        
+        // Applying the slide-in class
+        el.classList.add('slide-in');
+        
+        // Cleaning up after animation is done
+        el.addEventListener('transitionend', done);
+        });
+    },
+    leaveAnimation(el, done) {
+        // Applying the slide-out class
+        el.classList.add('slide-out');
+        
+        // Cleaning up after animation is done
+        el.addEventListener('transitionend', () => {
+        done();
+        });
+    }
+    },
+    components: {
+        FontAwesomeIcon,
+    },
     mounted() {
     let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
 
@@ -23,8 +62,11 @@ export default {
         document.querySelector(".countDown").innerHTML = "EXPIRED";
         }
     }, 1000);
+    },
+    created() {
+        library.add(faYoutube, faXmark)
     }
-    }
+}
 
 </script>
 
@@ -33,7 +75,7 @@ export default {
     <div class="heroWrapper">
         <img src="../assets/heroProba.jpg" class="img-fluid" alt="Responsive image">
         <nav class="nav">
-        <p class="logo">LOGO</p>
+        <img class="logo" src="../assets/logo.png" alt="">
         <ul class="navLista">
             <li class="navLink">Događaji</li>
             <li class="navLink">Rezultati</li>
@@ -56,7 +98,7 @@ export default {
             <p class="trkaGod">2021</p>
             <div class="overlay"></div>
         </div>
-        <div class="trka trka2">
+        <div class="trka trka2" @click="this.drugaTrka = !this.drugaTrka">
         <p class="trkaNo">2. ULIČNA TRKA EČKA</p>
         <p class="trkaGod">2022</p>
         <div class="overlay"></div>
@@ -85,9 +127,48 @@ export default {
             Your browser does not support the video tag.
         </video>
     </div>
-    <div class="drugaTrkaPopup">
-        
+    <Transition @enter="enterAnimation"
+  @leave="leaveAnimation">
+    <div class="drugaTrkaWrapper" v-if="this.drugaTrka">
+        <div class="drugaTrkaPopup">
+            <div id="carouselExampleCaptions" class="carousel slide carouselPopup" data-bs-ride="carousel" data-bs-interval="5000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="5000">
+                        <img src="../assets/trka.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="../assets/heroProba.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="../assets/heroProba2.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="../assets/slika.jpg" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="drugaTrkaText">
+                <h2 class="drugaTrkaHeading">2. Ulična trka Ečka</h2>
+                <p class="datumTrkePopup">(29.10.2022.)</p>
+                <p>Ove godine je bio rekordan broj prijava od 600 učesnika, na sam start trke je izašlo oko 500 ljudi, što je rekord u odnosu na prošlu godinu.</p>
+                <p>U drugom izdanju Ulične trke Ečka su postignuti najbrži rezultati u Srbiji 2022. godine na trci od 10km (ženski i muški)!</p>
+                <p><a href="">REZULTATI 2. ULIČNE TRKE</a></p>
+                <div class="ytWrapper"><a href="">Pogledajte kako je izgledala 2. Ulična trka Ečka </a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
+            </div>
+            <FontAwesomeIcon @click="this.drugaTrka = !this.drugaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
+        </div>
     </div>
+</Transition>
 </div>
 <RouterView></RouterView>
 </template>
@@ -118,9 +199,9 @@ color: #fff;
 width: 100%;
 }
 .logo{
-font-size: 3em;
-padding: 0.2em 2em;
-margin: 0;
+    width: 5em;
+    margin: 1em 0 1em 1em;
+    cursor: pointer;
 }
 .navLista{
 display: flex;
@@ -313,5 +394,57 @@ padding: 0.5em 0;
     margin: 2em 0;
     width: 80%;
 }
-/* ------------------------------------------END OF EDIT TRKE-------------------------------------- */
+/* ------------------------------------------END OF EDIT TRKE------------------------------------ */
+/* ------------------------------------------DRUGA TRKA POPUP------------------------------------ */
+.drugaTrkaWrapper{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 20;
+}
+.drugaTrkaPopup{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 2% auto 0;
+    background-color: #fff;
+}
+.carouselPopup{
+    width: 50%;
+}
+.drugaTrkaText{
+    width: 45%;
+}
+.drugaTrkaHeading{
+    font-size: 4em;
+    text-align: center;
+    padding: 0.5em 0 0;
+}
+.datumTrkePopup{
+    font-weight: 700;
+    text-align: center;
+    font-size: 2em;
+}
+.ytWrapper{
+    display: flex;
+    align-items: center;
+}
+.yt{
+    font-size: 2em;
+    color: red;
+    margin-left: 0.2em;
+}
+.slide-in {
+    transform: translateY(0);
+    transition: transform 0.7s ease-out;
+}
+
+.slide-out {
+    transform: translateY(100%);
+    transition: transform 0.7s ease-in;
+}
+/* -------------------------------------END OF DRUGA TRKA POPUP--------------------------------- */
 </style>
