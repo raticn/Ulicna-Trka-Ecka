@@ -2,7 +2,7 @@
 import Footer from '../components/Footer.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { faXmark, faRepeat} from '@fortawesome/free-solid-svg-icons'
+import { faXmark, faArrowRightArrowLeft} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
@@ -65,7 +65,7 @@ export default {
     document.querySelector(".rec3").classList.add("fromTop3")
     },
     created() {
-        library.add(faYoutube, faXmark, faRepeat)
+        library.add(faYoutube, faXmark, faArrowRightArrowLeft)
     }
 }
 
@@ -84,7 +84,7 @@ export default {
             <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></li>
             <li class="language">
                 <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png">
-                <FontAwesomeIcon class="changeLang" icon="fa-solid fa-repeat"></FontAwesomeIcon>
+                <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
                 <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png">  
             </li>
         </ul>
@@ -250,26 +250,28 @@ width: 100%;
     cursor: pointer;
 }
 .navLista{
-display: flex;
-margin: 0;
+    display: flex;
+    margin: 0;
+    width: 90vw;
 }
 .navLink{
-list-style: none;
-font-size: 1.2em;
-padding: 0.5em 1.5em;
-cursor: pointer;
+    list-style: none;
+    font-size: 1.2em;
+    padding: 0.5em 1.5em;
+    cursor: pointer;
 }
 .language{
     padding: 0 1.5em;
     display: flex;
     align-items: center;
     cursor: pointer;
+    margin-left: auto;
 }
 .lang{
     width: 3em;
 }
 .changeLang{
-    font-size: 2em;
+    font-size: 1.5em;
 }
 .fixed{
     position: fixed;

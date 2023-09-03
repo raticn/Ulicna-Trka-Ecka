@@ -1,7 +1,7 @@
 <script>
 import Footer from '../components/Footer.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faRepeat} from '@fortawesome/free-solid-svg-icons'
+import { faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faArrowRightArrowLeft} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
@@ -21,7 +21,7 @@ export default{
         window.scrollTo(0, 0);
     },
     created() {
-        library.add(faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faRepeat)
+        library.add(faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faArrowRightArrowLeft)
     }
 }
 </script>
@@ -37,7 +37,7 @@ export default{
         <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></li>
         <li class="language">
             <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png">
-            <FontAwesomeIcon class="changeLang" icon="fa-solid fa-repeat"></FontAwesomeIcon>
+            <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
             <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png">  
         </li>
     </ul>
