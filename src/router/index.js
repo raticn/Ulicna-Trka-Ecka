@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Trka from "../views/Trka.vue"
 import Home from "../views/Home.vue"
+import Kontakt from "../views/Kontakt.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +15,11 @@ const router = createRouter({
       path: '/trka',
       name: 'trka',
       component: Trka
+    },
+    {
+      path: '/kontakt',
+      name: 'kontakt',
+      component: Kontakt
     }
   ]
 })

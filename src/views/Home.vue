@@ -2,7 +2,7 @@
 import Footer from '../components/Footer.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { faXmark} from '@fortawesome/free-solid-svg-icons'
+import { faXmark, faRepeat} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
@@ -59,9 +59,13 @@ export default {
         document.querySelector(".countDown").innerHTML = "EXPIRED";
         }
     }, 1000);
+
+    document.querySelector(".rec1").classList.add("fromTop1")
+    document.querySelector(".rec2").classList.add("fromTop2")
+    document.querySelector(".rec3").classList.add("fromTop3")
     },
     created() {
-        library.add(faYoutube, faXmark)
+        library.add(faYoutube, faXmark, faRepeat)
     }
 }
 
@@ -70,24 +74,28 @@ export default {
 <template>
 <div class="appWrapper">
     <div class="heroWrapper">
-        <img src="../assets/heroProba.jpg" class="img-fluid" alt="Responsive image">
+        <img src="../assets/hero.jpg" class="img-fluid" alt="Responsive image">
         <nav class="nav">
         <img class="logo" src="../assets/logo.png" alt="">
         <ul class="navLista">
             <li class="navLink">Događaji</li>
             <li class="navLink">Rezultati</li>
-            <li class="navLink">Kontakt</li>
+            <li class="navLink" @click="this.$router.push('/kontakt')">Kontakt</li>
             <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></li>
-            <li class="navLink">SRB&lt;ENG</li>
+            <li class="language">
+                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png">
+                <FontAwesomeIcon class="changeLang" icon="fa-solid fa-repeat"></FontAwesomeIcon>
+                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png">  
+            </li>
         </ul>
         </nav>
-        <p class="heroText">3. ULIČNA TRKA EČKA</p>
+        <p class="heroText"><span class="rec1">3. ULIČNA</span> <span class="rec2">TRKA</span> <span class="rec3">EČKA</span></p>
         <div class="datumTrke">SUBOTA, 28. Oktobar 2023.</div>
     </div>
     <div class="odbrojavanjeWrapper">
         <h2 class="countdownHeader">Vreme do trke:</h2>
         <p class="countDown"></p>
-        <button class="countdownBtn"><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">PRIJAVI SE ODMAH!</a></button>
+        <button class="countdownBtn"><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">TRK PO SVOJE MESTO!</a></button>
     </div>
     <div class="trkeWrapper">
         <div class="trka trka1" @click="this.prvaTrka = !this.prvaTrka">
@@ -130,16 +138,16 @@ export default {
             <div id="carouselExampleCaptions" class="carousel slide carouselPopup" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="5000">
-                        <img src="../assets/trka.jpg" class="d-block w-100" alt="...">
+                        <img src="../assets/slika1.jpg" class="d-block w-100" alt="...">
                     </div>
-                    <div class="carousel-item">
+                    <!-- <div class="carousel-item">
                         <img src="../assets/heroProba.jpg" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
                         <img src="../assets/heroProba2.jpg" class="d-block w-100" alt="...">
-                    </div>
+                    </div> -->
                     <div class="carousel-item">
-                        <img src="../assets/slika.jpg" class="d-block w-100" alt="...">
+                        <img src="../assets/slika2.jpg" class="d-block w-100" alt="...">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
@@ -251,6 +259,18 @@ font-size: 1.2em;
 padding: 0.5em 1.5em;
 cursor: pointer;
 }
+.language{
+    padding: 0 1.5em;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.lang{
+    width: 3em;
+}
+.changeLang{
+    font-size: 2em;
+}
 .fixed{
     position: fixed;
     background-color: rgb(255, 255, 255);
@@ -270,25 +290,64 @@ transform: skew(20deg);
 color: #fff;
 text-decoration: none;
 }
-.heroText{
-position: absolute;
-right: 10%;
-top: 20%;
-font-size: 7em;
-font-weight: 700;
-color: #fff;
-width: 5em;
-text-align: center;
+.rec1, .rec2, .rec3{
+    position: absolute;
+    right: 10%;
+    top: -20%;
+    font-size: 7em;
+    font-weight: 700;
+    color: #fff;
+    width: 5em;
+    text-align: center;
+}
+.fromTop1{
+    animation: rec1 2s forwards;
+}
+.fromTop2{
+    animation: rec2 2s forwards 0.5s;
+}
+.fromTop3{
+    animation: rec3 2s forwards 1s;
+}
+@keyframes rec1 {
+    0%{
+        top: -20%;
+        font-size: 10em;
+    }
+    100%{
+        top: 20%;
+        font-size: 7em;
+    }
+}
+@keyframes rec2 {
+    0%{
+        top: -20%;
+        font-size: 10em;
+    }
+    100%{
+        top: 35%;
+        font-size: 7em;
+    }
+}
+@keyframes rec3 {
+    0%{
+        top: -20%;
+        font-size: 10em;
+    }
+    100%{
+        top: 50%;
+        font-size: 7em;
+    }
 }
 .datumTrke{
-position: absolute;
-left: 50%;
-bottom: 0;
-transform: translateX(-50%) translateY(50%);
-padding: 0.2em 0.5em;
-font-size: 3em;
-background-color: #4A90E2;
-color: #fff;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) translateY(50%);
+    padding: 0.2em 0.5em;
+    font-size: 3em;
+    background-color: #4A90E2;
+    color: #fff;
 }
 /* ---------------------------------------END OF HERO SECTION------------------------------------ */
 
@@ -353,10 +412,10 @@ background-size: cover;
 background-image: url("../assets/heroProba2.jpg");
 }
 .trka2{
-background-image: url("../assets/trka.jpg");
+background-image: url("../assets/drugaTrka.jpg");
 }
 .trka3{
-background-image: url("../assets/slika.jpg");
+background-image: url("../assets/trecaTrka.jpg");
 }
 .trkaNo{
 position: relative;
@@ -364,6 +423,7 @@ z-index: 3;
 font-size: 2em;
 text-align: center;
 padding: 3em 1em;
+margin: 0;
 }
 .trka:hover{
 cursor: pointer;

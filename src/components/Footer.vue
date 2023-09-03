@@ -88,7 +88,6 @@ export default {
 
 .footer_info p {
     margin: 1em 0;
-    line-height: 1.5em;
 }
 
 .footer_logo {
@@ -101,7 +100,7 @@ export default {
     flex-basis: 33%;
     flex-direction: column;
     flex-wrap: wrap;
-    justify-content: space-between;
+    align-items: center;
 }
 .socials{
     flex-basis: 33%;
@@ -120,7 +119,7 @@ export default {
 
 .footer_links p {
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1.5em;
     margin: 1em 0;
 }
 
@@ -142,7 +141,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1em 0;
 }
 
 .footerIcons {

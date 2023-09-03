@@ -1,7 +1,7 @@
 <script>
 import Footer from '../components/Footer.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark} from '@fortawesome/free-solid-svg-icons'
+import { faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faRepeat} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
@@ -21,7 +21,7 @@ export default{
         window.scrollTo(0, 0);
     },
     created() {
-        library.add(faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark)
+        library.add(faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faRepeat)
     }
 }
 </script>
@@ -33,9 +33,13 @@ export default{
     <ul class="navLista">
         <li class="navLink">Događaji</li>
         <li class="navLink">Rezultati</li>
-        <li class="navLink">Kontakt</li>
+        <li class="navLink" @click="this.$router.push('/kontakt')">Kontakt</li>
         <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></li>
-        <li class="navLink">SRB&lt;ENG</li>
+        <li class="language">
+            <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png">
+            <FontAwesomeIcon class="changeLang" icon="fa-solid fa-repeat"></FontAwesomeIcon>
+            <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png">  
+        </li>
     </ul>
     </nav>
     <video class="trkaVideo" controls muted autoplay>
@@ -80,6 +84,23 @@ export default{
 </div>
 <div class="trkeInfoWrapper">
     <div class="vrsteTrka">
+        <div class="trkeInfo">
+            <h2 class="trkeInfoHeader">Informacije o događaju</h2>
+            <p><span class="bold">Trke:</span> Dečija trka, 5km, štafetna trka (5km x 2), 10km (5km x 2)</p>
+            <p><span class="bold">O stazi:</span> Staza je dugačka 5km, kružna i 100% ravna što je čini idealnom za obaranje vaših ličnih rekorda koji će biti validni i verodostojni svugde jer je staza <span class="sertifikat" @click="this.sertifikat = !this.sertifikat">SERTIFIKOVANA A licencom (sertifikatom)</span>. Svedok tome je drugo izdanje Ulične trke Ečka gde su postignuti najbrži rezultati u Srbiji 2022. godine na trci od 10km (ženski i muški).</p>
+            <p><span class="bold">Mesto:</span> Zrenjanin, Ečka, Kaštel Ečka, sa početkom od 16h (glavna trka)</p>
+            <p><span class="bold">Organizator takmičenja:</span> Sportsko udruženje „Ulična trka Ečka“ u saradnji sa MZ EČKA i gradom Zrenjaninom</p>
+            <p><span class="bold">Preuzimanje startnih paketa:</span> Petak 27.10.2023 od 17h do 20h u prostorijama Kaštela Ečka.
+            Na dan trke prezimanje traje od 12h do 14:30h kako bi se izbegla gužva, mole se svi učesnici da dođu ranije.</p>
+            <p class="starosneKategorije bold">STAROSNE KATEGORIJE U TRCI NA 10KM:</p>
+            <p>Kategorije muškarci/žene
+            <span class="kategorije">M/Ž 29- <br>
+            M/Ž 30-39 <br>
+            M/Ž 40-49 <br>
+            M/Ž 50-59 <br>
+            M/Ž 60-69 <br>
+            M/Ž 70 +</span></p>
+        </div>
         <div class="carouselWrapper">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
@@ -108,22 +129,7 @@ export default{
                 </button>
             </div>
         </div>
-        <div class="trkeInfo">
-            <h2 class="trkeInfoHeader">Informacije o događaju</h2>
-            <p><span class="bold">Trke:</span> Dečija trka, 5km, štafetna trka (5km x 2), 10km (5km x 2)</p>
-            <p><span class="bold">O stazi:</span> Staza je dugačka 5km, kružna i 100% ravna što je čini idealnom za obaranje vaših ličnih rekorda koji će biti validni i verodostojni svugde jer je staza <span class="sertifikat" @click="this.sertifikat = !this.sertifikat">SERTIFIKOVANA A licencom (sertifikatom)</span>. Svedok tome je drugo izdanje Ulične trke Ečka gde su postignuti najbrži rezultati u Srbiji 2022. godine na trci od 10km (ženski i muški).</p>
-            <p><span class="bold">Mesto:</span> Zrenjanin, Ečka, Kaštel Ečka, sa početkom od 16h (glavna trka)</p>
-            <p><span class="bold">Organizator takmičenja:</span> Sportsko udruženje „Ulična trka Ečka“ u saradnji sa MZ EČKA i gradom Zrenjaninom</p>
-            <p><span class="bold">Preuzimanje startnih paketa:</span> Petak 27.10.2023 od 17h do 20h u prostorijama Kaštela Ečka.
-            Na dan trke prezimanje traje od 12h do 14:30h kako bi se izbegla gužva, mole se svi učesnici da dođu ranije.</p>
-            <p class="starosneKategorije bold">STAROSNE KATEGORIJE U TRCI NA 10KM:</p>
-            <p>Kategorije muškarci/žene
-            <span class="kategorije">M/Ž 29- <br>
-            M/Ž 30-39 <br>
-            M/Ž 40-49 <br>
-            M/Ž 50-59 <br>
-            M/Ž 60-69 <br>
-            M/Ž 70 +</span></p>
+        <div class="trkeInfo2">
             <p><span class="bold">Cene:</span></p>
             <p>28.04.2023 - 31.05.2023 -> 2000 dinara</p>
             <p>01.06.2023 - 30.09.2023 -> 2200 dinara</p>
@@ -168,7 +174,7 @@ export default{
     justify-content: center;
 }
 .trkaVideo{
-    width: 70%;
+    width: 80%;
     margin-top: 150px;
 }
 /* ------------------------------------END OF TRKE HERO-------------------------------------------- */
@@ -205,21 +211,23 @@ export default{
 
 .vrsteTrka{
     display: flex;
-    flex-direction: column-reverse;
+    flex-wrap: wrap;
     width: 100%;
     justify-content: center;
-    align-items: center;
 }
 .carouselWrapper{
-    width: 40%;
+    flex-basis: 45%;
 }
 .trkeInfo{
-    width: 90%;
+    flex-basis: 45%;
+}
+.trkeInfo2{
+    flex-basis: 90%;
 }
 .trkeInfoHeader{
     font-size: 4em;
     text-align: center;
-    margin: 0.5em 0;
+    margin-bottom: 0.5em;
 }
 .sertifikat{
     color: #0001d9;
@@ -245,7 +253,7 @@ export default{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.85);
     display: flex;
     align-items: center;
     justify-content: space-evenly;
