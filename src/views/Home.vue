@@ -509,7 +509,7 @@ padding: 0.5em 0;
     display: flex;
     justify-content: space-between;
     width: 90%;
-    margin: 2% auto 0;
+    margin: 7% auto 0;
     background-color: #fff;
 }
 .carouselPopup{
