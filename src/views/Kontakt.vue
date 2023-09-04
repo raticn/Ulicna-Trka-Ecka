@@ -18,6 +18,10 @@ export default{
             isEmailFocused: false,
             isPredmetFocused: false,
             menu: false,
+            lang: '',
+            language: '',
+            shortText: {},
+            longText: {},
         }
     },
     components: {
@@ -35,10 +39,37 @@ export default{
         },
         focusInput(inputRef) {
         this.$refs[inputRef].focus();
-        }
+        },
+        changeLang() {
+            if (localStorage.getItem("lang") == "sr") {
+                localStorage.setItem("lang", "en")
+            }
+            else {
+                localStorage.setItem("lang", "sr")
+            }
+            this.fetchText()
+        },
+        async fetchText() {
+            let language = localStorage.getItem("lang")
+            try {
+                let res = await axios.get('http://093g123.mars2.mars-hosting.com/API/text', {
+                    params: {
+                        language: language
+                    }
+                })
+                this.language = res.data.trazeniTekst
+                for (let item of this.language) {
+                    this.shortText[item.tex_name] = item.tex_text
+                    this.longText[item.tex_name] = item.tex_long
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
     mounted() {
         window.scrollTo(0, 0);
+        this.fetchText()
     },
     created() {
         library.add(faArrowRightArrowLeft, faBars)
@@ -55,7 +86,7 @@ export default{
             <li class="navLink">Rezultati</li>
             <li class="navLink">Kontakt</li>
             <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></li>
-            <li class="language">
+            <li class="language" @click="changeLang">
                 <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png">
                 <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
                 <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png">  

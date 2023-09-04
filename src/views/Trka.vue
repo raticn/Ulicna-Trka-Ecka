@@ -5,21 +5,54 @@ import { faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDoll
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
+import axios from 'axios'
 
 export default{
     data() {
         return {
             sertifikat: false,
             menu: false,
+            lang: '',
+            language: '',
+            shortText: {},
+            longText: {},
         }
     },
     components: {
         FontAwesomeIcon,
         Footer
     },
-    
-    mounted() {
+    methods: {
+        changeLang() {
+            if (localStorage.getItem("lang") == "sr") {
+                localStorage.setItem("lang", "en")
+            }
+            else {
+                localStorage.setItem("lang", "sr")
+            }
+            this.fetchText()
+        },
+        async fetchText() {
+            let language = localStorage.getItem("lang")
+            try {
+                let res = await axios.get('http://093g123.mars2.mars-hosting.com/API/text', {
+                    params: {
+                        language: language
+                    }
+                })
+                this.language = res.data.trazeniTekst
+                for (let item of this.language) {
+                    this.shortText[item.tex_name] = item.tex_text
+                    this.longText[item.tex_name] = item.tex_long
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    },
+    async mounted() {
         window.scrollTo(0, 0);
+        this.fetchText()
     },
     created() {
         library.add(faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faArrowRightArrowLeft, faBars)
@@ -32,11 +65,11 @@ export default{
     <nav class="nav fixed">
     <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="">
     <ul class="navLista">
-        <li class="navLink">Događaji</li>
-        <li class="navLink">Rezultati</li>
-        <li class="navLink" @click="this.$router.push('/kontakt')">Kontakt</li>
-        <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></li>
-        <li class="language">
+        <li class="navLink">{{ this.shortText.dogadjajinaslov }}</li>
+        <li class="navLink">{{ this.shortText.rezultatinaslov }}</li>
+        <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
+        <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
+        <li class="language" @click="changeLang">
             <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png">
             <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
             <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png">  
@@ -68,59 +101,58 @@ export default{
         Your browser does not support the video tag.
     </video>
 </div>
-<h2 class="paketHeading">Učesnički paket</h2>
+<h2 class="paketHeading">{{ this.shortText.paketHeading }}</h2>
 <div class="ucesnickiPaket">
     <div class="paket">
         <FontAwesomeIcon class="paketiIcons" icon="fa-solid fa-microchip"></FontAwesomeIcon>
-        <p>Startni broj sa čipom, elektronsko merenje vremena, elektronske diplome</p>
+        <p>{{ this.shortText.paketp1 }}</p>
     </div>
     <div class="paket">
         <FontAwesomeIcon class="paketiIcons" icon="fa-solid fa-money-check-dollar"></FontAwesomeIcon>
-        <p>Novčane nagrade za pobednike</p>
+        <p>{{ this.shortText.paketp2 }}</p>
     </div>
     <div class="paket">
         <FontAwesomeIcon class="paketiIcons" icon="fa-solid fa-gift"></FontAwesomeIcon>
-        <p>Pokloni i nagrade generalnog sponzora i organizatora trke</p>
+        <p>{{ this.shortText.paketp3 }}</p>
     </div>
     <div class="paket">
         <FontAwesomeIcon class="paketiIcons" icon="fa-solid fa-bottle-water"></FontAwesomeIcon>
-        <p>Okrepa na stazi i cilju</p>
+        <p>{{ this.shortText.paketp4 }}</p>
     </div>
     <div class="paket">
         <FontAwesomeIcon class="paketiIcons" icon="fa-solid fa-medal"></FontAwesomeIcon>
-        <p>Unikatna finišerska medalja</p>
+        <p>{{ this.shortText.paketp5 }}</p>
     </div>
     <div class="paket">
         <FontAwesomeIcon class="paketiIcons" icon="fa-solid fa-coins"></FontAwesomeIcon>
-        <p>Bon za sendvič, bon za pivo</p>
+        <p>{{ this.shortText.paketp6 }}</p>
     </div>
     <div class="paket">
         <FontAwesomeIcon class="paketiIcons" icon="fa-solid fa-camera"></FontAwesomeIcon>
-        <p>Profesinalne slike</p>
+        <p>{{ this.shortText.paketp7 }}</p>
     </div>
     <div class="paket">
         <FontAwesomeIcon class="paketiIcons" icon="fa-solid fa-suitcase-medical"></FontAwesomeIcon>
-        <p>Medicinsko osoblje na stazi i cilju</p>
+        <p>{{ this.shortText.paketp8 }}</p>
     </div>
 </div>
 <div class="trkeInfoWrapper">
     <div class="vrsteTrka">
         <div class="trkeInfo">
-            <h2 class="trkeInfoHeader">Informacije o događaju</h2>
-            <p><span class="bold">Trke:</span> Dečija trka, 5km, štafetna trka (5km x 2), 10km (5km x 2)</p>
-            <p><span class="bold">O stazi:</span> Staza je dugačka 5km, kružna i 100% ravna što je čini idealnom za obaranje vaših ličnih rekorda koji će biti validni i verodostojni svugde jer je staza <span class="sertifikat" @click="this.sertifikat = !this.sertifikat">SERTIFIKOVANA A licencom (sertifikatom)</span>. Svedok tome je drugo izdanje Ulične trke Ečka gde su postignuti najbrži rezultati u Srbiji 2022. godine na trci od 10km (ženski i muški).</p>
-            <p><span class="bold">Mesto:</span> Zrenjanin, Ečka, Kaštel Ečka, sa početkom od 16h (glavna trka)</p>
-            <p><span class="bold">Organizator takmičenja:</span> Sportsko udruženje „Ulična trka Ečka“ u saradnji sa MZ EČKA i gradom Zrenjaninom</p>
-            <p><span class="bold">Preuzimanje startnih paketa:</span> Petak 27.10.2023 od 17h do 20h u prostorijama Kaštela Ečka.
-            Na dan trke prezimanje traje od 12h do 14:30h kako bi se izbegla gužva, mole se svi učesnici da dođu ranije.</p>
-            <p class="starosneKategorije bold">STAROSNE KATEGORIJE U TRCI NA 10KM:</p>
-            <p>Kategorije muškarci/žene
-            <span class="kategorije">M/Ž 29- <br>
-            M/Ž 30-39 <br>
-            M/Ž 40-49 <br>
-            M/Ž 50-59 <br>
-            M/Ž 60-69 <br>
-            M/Ž 70 +</span></p>
+            <h2 class="trkeInfoHeader">{{ this.shortText.trkeInfoHeader }}</h2>
+            <p><span class="bold">{{ this.shortText.trkeSpan1 }} </span>  {{ this.shortText.trkeInfo1 }}</p>
+            <p><span class="bold">{{ this.shortText.trkeSpan2 }}</span> {{ this.shortText.trkeInfo21 }} <span class="sertifikat" @click="this.sertifikat = !this.sertifikat"> {{ this.shortText.trkeInfo22 }} </span> {{ this.shortText.trkeInfo23 }}</p>
+            <p><span class="bold">{{ this.shortText.trkeSpan3 }}</span> {{ this.shortText.trkeInfo3 }}</p>
+            <p><span class="bold">{{ this.shortText.trkeSpan4 }}</span> {{ this.shortText.trkeInfo4 }}</p>
+            <p><span class="bold">{{ this.shortText.trkeSpan5 }}</span> {{ this.shortText.trkeInfo5 }}</p>
+            <p class="starosneKategorije bold">{{ this.shortText.starosneKategorije }}</p>
+            <p>{{ this.shortText.kategorijeP }}
+            <span class="kategorije">{{ this.shortText.kategorija1 }} <br>
+            {{ this.shortText.kategorija2 }} <br>
+            {{ this.shortText.kategorija3 }} <br>
+            {{ this.shortText.kategorija4 }} <br>
+            {{ this.shortText.kategorija5 }} <br>
+            {{ this.shortText.kategorija6 }}</span></p>
         </div>
         <div class="carouselWrapper">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
@@ -151,15 +183,14 @@ export default{
             </div>
         </div>
         <div class="trkeInfo2">
-            <p><span class="bold">Cene:</span></p>
-            <p>28.04.2023 - 31.05.2023 -> 2000 dinara</p>
-            <p>01.06.2023 - 30.09.2023 -> 2200 dinara</p>
-            <p>01.10.2023 - 20.10.2023 -> 2400 dinara (uplata iznosa startnine najkasnije do 16:00 časova 20.10.2023)</p>
-            <p><span class="bold">STARTNINA ZA ŠTAFETNU TRKU:</span> po takmičaru 2000 posle promo perioda 2200 dinara, kasne prijave 2400.</p>
-            <p><span class="bold">UPLATA STARTNINE ZA TAKMIČARE ISKLJUČIVO NA RAČUN SPORTSKOG UDRUŽENJA „EČKA“</span> do 20.10.2023. godine (posle 20.10. prijave neće biti moguće) na dan trke je postoji mogućnost kupiti samo startni broj bez paketa u zavisnosti od broja prijavljenih učesnika, organizator će najaviti da li će biti moguće ili ne.
-            Svi prijavljeni takmičari će podatke za uplatu dobiti na portalu trka.rs nakom popunjenog prijavnog formulara.</p>
-            <p>Povodom akcije <span class="bold">SPORTOM ZA BOLJE SUTRA</span>, koju podržava Ulična trka Ečka, deo od svake kotizacije ide u humanitarne svrhe! </p>
-            <p><span class="bold">*Biće obezbeđen prevoz iz Beograda za trkače, bićete detaljno obavešteni.</span></p>
+            <p><span class="bold">{{ this.shortText.trkeSpan6 }}</span></p>
+            <p>{{ this.shortText.trkeInfo61 }}</p>
+            <p>{{ this.shortText.trkeInfo62 }}</p>
+            <p>{{ this.shortText.trkeInfo63 }}</p>
+            <p><span class="bold">{{ this.shortText.trkeSpan7 }}</span> {{ this.shortText.trkeInfo7 }}</p>
+            <p><span class="bold">{{ this.shortText.trkeSpan8 }}</span> {{ this.longText.trkeInfo8 }}</p>
+            <p>{{ this.shortText.trkeInfo91 }} <span class="bold">{{ this.shortText.trkeSpan9 }}</span>{{ this.shortText.trkeInfo92 }}</p>
+            <p><span class="bold">{{ this.shortText.trkeInfo10 }}</span></p>
         </div>
     </div>
     <div class="decijaTrkaWrapper">
@@ -168,14 +199,14 @@ export default{
             Your browser does not support the video tag.
         </video>
         <div class="decijaTrka">
-            <h2 class="decijaTrkaHeading">Dečija trka</h2>
-            <p>Start dečijih trka je od 14h pred početak glavne trke, kao i prošle godine.</p>
-            <p>Trudićemo se da i ove godine naši mališani učestvuju potpuno besplatno i da najbolji dobiju nagrade, a sva deca medalje i poklone.</p>
-            <p>Dečije trke - discipline:</p>
-            <p>- Devojčice/Dečaci - 1/2 razred 200 metara <br>
-            - Devojčice/Dečaci - 3/4 razred 300 metara <br> 
-            - Devojčice/Dečaci - 5/6 razred 300 metara <br>
-            - Devojčice/Dečaci - 7/8 razred 400 metara</p>
+            <h2 class="decijaTrkaHeading">{{ this.shortText.decijaTrkaHeading }}</h2>
+            <p>{{ this.shortText.decijaTrkaP1 }}</p>
+            <p>{{ this.shortText.decijaTrkaP2 }}</p>
+            <p>{{ this.shortText.decijaTrkaDis }}</p>
+            <p>{{ this.shortText.decijaDis1 }} <br>
+            {{ this.shortText.decijaDis2 }}<br> 
+            {{ this.shortText.decijaDis3 }} <br>
+            {{ this.shortText.decijaDis4 }}</p>
         </div>
     </div>
 </div>

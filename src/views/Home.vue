@@ -6,6 +6,7 @@ import { faXmark, faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-s
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import smallImg from '../assets/heroMob.jpg'
 import bigImg from '../assets/hero.jpg'
+import axios from 'axios'
 
 export default {
     data() {
@@ -15,7 +16,11 @@ export default {
             menu: false,
             smallImage: false,
             smallImg,
-            bigImg
+            bigImg,
+            lang: '',
+            language: {},
+            shortText: {},
+            longText: {},
         }
     },
     components: {
@@ -34,54 +39,86 @@ export default {
         el.addEventListener('transitionend', done);
         });
     },
-    leaveAnimation(el, done) {
+        leaveAnimation(el, done) {
 
-        el.classList.add('slide-out');
-        
-        el.addEventListener('transitionend', () => {
-        done();
-        });
-    }
+            el.classList.add('slide-out');
+            
+            el.addEventListener('transitionend', () => {
+            done();
+            });
+        },
+        changeLang() {
+            if (localStorage.getItem("lang") == "sr") {
+                localStorage.setItem("lang", "en")
+            }
+            else {
+                localStorage.setItem("lang", "sr")
+            }
+            this.fetchText()
+        },
+        async fetchText() {
+            let language = localStorage.getItem("lang")
+            try {
+                let res = await axios.get('http://093g123.mars2.mars-hosting.com/API/text', {
+                    params: {
+                        language: language
+                    }
+                })
+                this.language = res.data.trazeniTekst
+                for (let item of this.language) {
+                    this.shortText[item.tex_name] = item.tex_text
+                    this.longText[item.tex_name] = item.tex_long
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
-    mounted() {
-    let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
-
-    let x = setInterval(function() {
-
-        let now = new Date().getTime();
-
-        let distance = countDownDate - now;
-
-        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.querySelector(".countDown").innerHTML = days + "d " + hours + "h "
-        + minutes + "m " + seconds + "s ";
-
-        if (distance < 0) {
-        clearInterval(x);
-        document.querySelector(".countDown").innerHTML = "EXPIRED";
+    async mounted() {
+    try {
+        this.fetchText()
+        let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
+    
+        let x = setInterval(function() {
+    
+            let now = new Date().getTime();
+    
+            let distance = countDownDate - now;
+    
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+            document.querySelector(".countDown").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+    
+            if (distance < 0) {
+            clearInterval(x);
+            document.querySelector(".countDown").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+        if(window.screen.width <= 600) {
+            document.querySelector(".rec1").classList.add("fromTop1Small")
+            document.querySelector(".rec2").classList.add("fromTop2Small")
+            document.querySelector(".rec3").classList.add("fromTop3Small")
+            this.smallImage = true
         }
-    }, 1000);
-    if(window.screen.width <= 600) {
-        document.querySelector(".rec1").classList.add("fromTop1Small")
-        document.querySelector(".rec2").classList.add("fromTop2Small")
-        document.querySelector(".rec3").classList.add("fromTop3Small")
-        this.smallImage = true
-    }
-    else if(window.screen.width > 600 && window.screen.width < 1600) {
-        document.querySelector(".rec1").classList.add("fromTop1")
-        document.querySelector(".rec2").classList.add("fromTop2")
-        document.querySelector(".rec3").classList.add("fromTop3")
-        this.smallImage = false
-    }
-    else if(window.screen.width >= 1600) {
-        document.querySelector(".rec1").classList.add("fromTop1Big")
-        document.querySelector(".rec2").classList.add("fromTop2Big")
-        document.querySelector(".rec3").classList.add("fromTop3Big")
-        this.smallImage = false
+        else if(window.screen.width > 600 && window.screen.width < 1600) {
+            document.querySelector(".rec1").classList.add("fromTop1")
+            document.querySelector(".rec2").classList.add("fromTop2")
+            document.querySelector(".rec3").classList.add("fromTop3")
+            this.smallImage = false
+        }
+        else if(window.screen.width >= 1600) {
+            document.querySelector(".rec1").classList.add("fromTop1Big")
+            document.querySelector(".rec2").classList.add("fromTop2Big")
+            document.querySelector(".rec3").classList.add("fromTop3Big")
+            this.smallImage = false
+        }
+        localStorage.setItem('lang', 'sr')
+    } catch (error) {
+        console.log(error);
     }
     },
     created() {
@@ -98,11 +135,11 @@ export default {
         <nav class="nav">
         <img class="logo" src="../assets/logo.png" alt="">
         <ul class="navLista">
-            <li class="navLink"><a href="#trke">Događaji</a></li>
-            <li class="navLink">Rezultati</li>
-            <li class="navLink" @click="this.$router.push('/kontakt')">Kontakt</li>
-            <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></li>
-            <li class="language">
+            <li class="navLink"><a href="#trke">{{ this.shortText.dogadjajinaslov }}</a></li>
+            <li class="navLink">{{ this.shortText.rezultatinaslov }}</li>
+            <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
+            <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
+            <li class="language" @click="changeLang">
                 <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png">
                 <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
                 <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png">  
@@ -129,44 +166,43 @@ export default {
                 </div>
             </div>
         </div>
-        <p class="heroText"><span class="rec1">3. ULIČNA</span> <span class="rec2">TRKA</span> <span class="rec3">EČKA</span></p>
-        <div class="datumTrke">SUBOTA, 28. Oktobar 2023.</div>
+        <p class="heroText"><span class="rec1">{{ this.shortText.animeprva }}</span> <span class="rec2">{{ this.shortText.animedruga }}</span> <span class="rec3">{{ this.shortText.animetreca }}</span></p>
+        <div class="datumTrke">{{ this.shortText.datumtrke }}</div>
     </div>
     <div class="odbrojavanjeWrapper">
-        <h2 class="countdownHeader">Vreme do trke:</h2>
+        <h2 class="countdownHeader">{{ this.shortText.vreme }}</h2>
         <p class="countDown"></p>
-        <button class="countdownBtn"><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">PRIJAVI SE ODMAH!</a></button>
+        <button class="countdownBtn"><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.trk }}</a></button>
     </div>
     <div class="trkeWrapper" id="trke">
         <div class="trka trka1" @click="this.prvaTrka = !this.prvaTrka">
-            <p class="trkaNo">1. ULIČNA TRKA EČKA</p>
-            <p class="trkaGod">2021</p>
+            <p class="trkaNo">{{ this.shortText.trka1naslov }}</p>
+            <p class="trkaGod">{{ this.shortText.trka1god }}</p>
             <div class="overlay"></div>
         </div>
         <div class="trka trka2" @click="this.drugaTrka = !this.drugaTrka">
-            <p class="trkaNo">2. ULIČNA TRKA EČKA</p>
-            <p class="trkaGod">2022</p>
+            <p class="trkaNo">{{ this.shortText.trka2naslov }}</p>
+            <p class="trkaGod">{{ this.shortText.trka2god }}</p>
             <div class="overlay"></div>
         </div>
         <div class="trka trka3" @click="this.$router.push('/trka')">
-            <p class="trkaNo">3. ULIČNA TRKA EČKA</p>
-            <p class="trkaGod">2023</p>
+            <p class="trkaNo">{{ this.shortText.trka3naslov  }}</p>
+            <p class="trkaGod">{{ this.shortText.trka3god }}</p>
             <div class="overlay"></div>
         </div>
     </div>
     <div class="partneriTrke">
         <img class="decathlonImg" src="../assets/decathlon.jpg" alt="">
         <div class="decathlonText">
-        <h3 class="decathlonHeading">Ponosno predstavljamo ovogodišnjeg generalnog partnera trke, kompaniju <span>DECATHLON</span></h3>
-        <p class="decathlonParagraf">Decathlon je globalni lider u industriji sportske opreme, pružajući širok asortiman proizvoda i opreme za sve vaše sportske potrebe. Misija Decathlona je jednostavna - omogućiti svima da uživaju u sportu!</p>
-        <p class="decathlonParagraf">Šta čini Decathlon posebnim? Strast za sportom! Decathlon nije samo prodavnica, već sportska zajednica koja je posvećena pružanju najboljih proizvoda i iskustava za sve sportiste, bez obzira na njihov nivo veštine ili interesovanja.</p>
-        <p class="decathlonParagraf">Svi proizvodi su pažljivo dizajnirani i testirani kako bi pružili najbolje performanse, udobnost i izdržljivost.
-        U Decathlonu veruju da kvalitetna sportska oprema ne bi trebala biti luksuz, već dostupna svima koji žele da se bave sportom.</p>
-        <p class="decathlonParagraf">Nemojte čekati! Pridružite se Decathlon zajednici i pronađite sve što vam je potrebno da ostvarite svoje sportske snove. Bez obzira da li trčite, skijate, plivate ili igrate bilo koji drugi sport, Decathlon je tu da podrži vašu strast i pomogne vam da postignete vrhunske rezultate.</p>
+        <h3 class="decathlonHeading">{{ this.shortText.decathlonheading }} <span>{{ this.shortText.decathlonspan }}</span></h3>
+        <p class="decathlonParagraf">{{ this.shortText.decp1 }}</p>
+        <p class="decathlonParagraf">{{ this.shortText.decp2 }}</p>
+        <p class="decathlonParagraf">{{ this.shortText.decp3 }}</p>
+        <p class="decathlonParagraf">{{ this.longText.decp4 }}</p>
         </div>
     </div>
     <div class="editTrkeWrapper">
-        <h2 class="editTrkeHeader">Utisci sa prošlogodišnje trke</h2>
+        <h2 class="editTrkeHeader">{{ this.shortText.editTrkeHeader }}</h2>
         <video class="editTrke" controls>
             <source src="../assets/editTrke.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -202,12 +238,12 @@ export default {
                 </button>
             </div>
             <div class="prvaTrkaText">
-                <h2 class="prvaTrkaHeading">1. Ulična trka Ečka</h2>
-                <p class="datumTrkePopup">(30.10.2021.)</p>
-                <p class="prvaTrkaParagraf"> 400+ finišera na glavnoj trci</p>
-                <p class="prvaTrkaParagraf">U trci je učestvovalo dosta trkača iz susednih država te je trka dobila internacionalni karakter, kao i dosta naših reprezentativaca, veliki broj mališana u uzrastima od predškolaca pa do najstarnijih osnovaca. Naglasio bih da je trka za decu u potpunosti bila besplatna i da su svi mališani dobili startni paket, učesničku medalju i proglašenje najboljih isto kao i odrasli.</p>
-                <p class="prvaTrkaParagraf"><a href="">REZULTATI 1. ULIČNE TRKE</a></p>
-                <div class="ytWrapper"><a href="" class="prvaTrkaParagraf">Pogledajte kako je izgledala 1. Ulična trka Ečka </a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
+                <h2 class="prvaTrkaHeading">{{ this.shortText.prvaTrkaHeading }}</h2>
+                <p class="datumTrkePopup">{{ this.shortText.trka1popdate }}</p>
+                <p class="prvaTrkaParagraf">{{ this.shortText.trka1popfinish }}</p>
+                <p class="prvaTrkaParagraf">{{ this.longText.trka1popopis }}</p>
+                <p class="prvaTrkaParagraf"><a href="">{{ this.shortText.trka1poprez }}</a></p>
+                <div class="ytWrapper"><a href="" class="prvaTrkaParagraf">{{ this.shortText.trka1poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
             </div>
             <FontAwesomeIcon @click="this.prvaTrka = !this.prvaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
         </div>
@@ -243,12 +279,12 @@ export default {
                 </button>
             </div>
             <div class="drugaTrkaText">
-                <h2 class="drugaTrkaHeading">2. Ulična trka Ečka</h2>
-                <p class="datumTrkePopup">(29.10.2022.)</p>
-                <p class="drugaTrkaParagraf">Ove godine je bio rekordan broj prijava od 600 učesnika, na sam start trke je izašlo oko 500 ljudi, što je rekord u odnosu na prošlu godinu.</p>
-                <p class="drugaTrkaParagraf">U drugom izdanju Ulične trke Ečka su postignuti najbrži rezultati u Srbiji 2022. godine na trci od 10km (ženski i muški)!</p>
-                <p class="drugaTrkaParagraf"><a href="">REZULTATI 2. ULIČNE TRKE</a></p>
-                <div class="ytWrapper"><a href="" class="drugaTrkaParagraf">Pogledajte kako je izgledala 2. Ulična trka Ečka </a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
+                <h2 class="drugaTrkaHeading">{{ this.shortText.drugaTrkaHeading }}</h2>
+                <p class="datumTrkePopup">{{ this.shortText.trka2popdate }}</p>
+                <p class="drugaTrkaParagraf">{{ this.shortText.trka2popfinish }}</p>
+                <p class="drugaTrkaParagraf">{{ this.shortText.trka2popopis }}</p>
+                <p class="drugaTrkaParagraf"><a href="">{{ this.shortText.trka2poprez }}</a></p>
+                <div class="ytWrapper"><a href="" class="drugaTrkaParagraf">{{ this.shortText.trka2poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
             </div>
             <FontAwesomeIcon @click="this.drugaTrka = !this.drugaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
         </div>
@@ -347,7 +383,7 @@ text-decoration: none;
     font-size: 7em;
     font-weight: 700;
     color: #fff;
-    width: 5em;
+    width: 6em;
     text-align: center;
 }
 .fromTop1{
