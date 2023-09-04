@@ -1,7 +1,7 @@
 <script>
 import Footer from '../components/Footer.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faArrowRightArrowLeft} from '@fortawesome/free-solid-svg-icons'
+import { faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 
@@ -17,6 +17,7 @@ export default{
             isNameFocused: false,
             isEmailFocused: false,
             isPredmetFocused: false,
+            menu: false,
         }
     },
     components: {
@@ -36,8 +37,11 @@ export default{
         this.$refs[inputRef].focus();
         }
     },
+    mounted() {
+        window.scrollTo(0, 0);
+    },
     created() {
-        library.add(faArrowRightArrowLeft)
+        library.add(faArrowRightArrowLeft, faBars)
     }
 }
 </script>
@@ -58,6 +62,26 @@ export default{
             </li>
         </ul>
     </nav>
+    <div class="nav2">
+        <div class="menu">
+            <div class="menuWrapper">
+                <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="" @click="this.$router.push('/')"> Ulična trka Ečka</p>
+                <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
+            </div>
+            <div class="dropDownMenu" v-if="this.menu">
+                <p @click="this.menu = !this.menu" class="navLink2"><a href="#trke">Događaji</a>
+                </p>
+                <p @click="this.menu = !this.menu" class="navLink2">Rezultati</p>
+                <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">Kontakt</p>
+                <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></p>
+                <div class="lang2" @click="this.menu = !this.menu">
+                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png">
+                    <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="kontakt">
         <div class="kontaktInfo">
             <div class="contactUs">
@@ -160,5 +184,83 @@ input:focus{
 .mapa{
     width: 100%;
     height: 600px;
+}
+
+@media (min-width: 1900px) and (max-width: 2999px) {
+    .contactUs{
+        padding-bottom: 0.5em;
+    }
+    .contactUs .bold{
+        font-size: 1.5em;
+    }
+    .formField p{
+        line-height: 60px;
+        height: 60px;
+        font-size: 1.5em;
+    }
+    input{
+        line-height: 60px;
+        height: 60px;
+        font-size: 2em;
+    }
+    #message{
+        font-size: 2em;
+    }
+    .mapa{
+        height: 800px;
+    }
+}
+
+@media (min-width: 3000px) {
+    .navLink{
+        font-size: 2em;
+    }
+    .logo{
+        width: 9em;
+    }
+    .contactUs{
+        padding-bottom: 0.5em;
+    }
+    .contactUs .bold{
+        font-size: 2.5em;
+    }
+    .formField p{
+        line-height: 80px;
+        height: 80px;
+        font-size: 2em;
+    }
+    .formField.focused p{
+        top: -20px;
+    }
+    .formField{
+        margin: 3em 0;
+    }
+    input{
+        line-height: 80px;
+        height: 80px;
+        font-size: 2em;
+    }
+    #message{
+        font-size: 2em;
+    }
+    .mapa{
+        height: 1000px;
+    }
+    .formBtn{
+        font-size: 2.5em;
+        margin-top: 1em;
+        padding: 0.5em 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .kontakt{
+        flex-direction: column;
+        margin: 90px auto 0;
+    }
+    .mapaFrame{
+        flex-basis: 90%;
+        margin: 0;
+    }
 }
 </style>

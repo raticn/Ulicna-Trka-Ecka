@@ -2,14 +2,20 @@
 import Footer from '../components/Footer.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
-import { faXmark, faArrowRightArrowLeft} from '@fortawesome/free-solid-svg-icons'
+import { faXmark, faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import smallImg from '../assets/heroMob.jpg'
+import bigImg from '../assets/hero.jpg'
 
 export default {
     data() {
         return {
             prvaTrka: false,
-            drugaTrka: false
+            drugaTrka: false,
+            menu: false,
+            smallImage: false,
+            smallImg,
+            bigImg
         }
     },
     components: {
@@ -59,13 +65,27 @@ export default {
         document.querySelector(".countDown").innerHTML = "EXPIRED";
         }
     }, 1000);
-
-    document.querySelector(".rec1").classList.add("fromTop1")
-    document.querySelector(".rec2").classList.add("fromTop2")
-    document.querySelector(".rec3").classList.add("fromTop3")
+    if(window.screen.width <= 600) {
+        document.querySelector(".rec1").classList.add("fromTop1Small")
+        document.querySelector(".rec2").classList.add("fromTop2Small")
+        document.querySelector(".rec3").classList.add("fromTop3Small")
+        this.smallImage = true
+    }
+    else if(window.screen.width > 600 && window.screen.width < 1600) {
+        document.querySelector(".rec1").classList.add("fromTop1")
+        document.querySelector(".rec2").classList.add("fromTop2")
+        document.querySelector(".rec3").classList.add("fromTop3")
+        this.smallImage = false
+    }
+    else if(window.screen.width >= 1600) {
+        document.querySelector(".rec1").classList.add("fromTop1Big")
+        document.querySelector(".rec2").classList.add("fromTop2Big")
+        document.querySelector(".rec3").classList.add("fromTop3Big")
+        this.smallImage = false
+    }
     },
     created() {
-        library.add(faYoutube, faXmark, faArrowRightArrowLeft)
+        library.add(faYoutube, faXmark, faArrowRightArrowLeft, faBars)
     }
 }
 
@@ -74,11 +94,11 @@ export default {
 <template>
 <div class="appWrapper">
     <div class="heroWrapper">
-        <img src="../assets/hero.jpg" class="img-fluid" alt="Responsive image">
+        <img :src="smallImage ? smallImg : bigImg" class="img-fluid" alt="Responsive image">
         <nav class="nav">
         <img class="logo" src="../assets/logo.png" alt="">
         <ul class="navLista">
-            <li class="navLink">Događaji</li>
+            <li class="navLink"><a href="#trke">Događaji</a></li>
             <li class="navLink">Rezultati</li>
             <li class="navLink" @click="this.$router.push('/kontakt')">Kontakt</li>
             <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></li>
@@ -89,29 +109,49 @@ export default {
             </li>
         </ul>
         </nav>
+        <div class="nav2">
+            <div class="menu">
+                <div class="menuWrapper">
+                    <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="" @click="this.$router.push('/')"> Ulična trka Ečka</p>
+                    <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
+                </div>
+                <div class="dropDownMenu" v-if="this.menu">
+                    <p @click="this.menu = !this.menu" class="navLink2"><a href="#trke">Događaji</a>
+                    </p>
+                    <p @click="this.menu = !this.menu" class="navLink2">Rezultati</p>
+                    <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">Kontakt</p>
+                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></p>
+                    <div class="lang2" @click="this.menu = !this.menu">
+                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png">
+                        <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png">
+                    </div>
+                </div>
+            </div>
+        </div>
         <p class="heroText"><span class="rec1">3. ULIČNA</span> <span class="rec2">TRKA</span> <span class="rec3">EČKA</span></p>
         <div class="datumTrke">SUBOTA, 28. Oktobar 2023.</div>
     </div>
     <div class="odbrojavanjeWrapper">
         <h2 class="countdownHeader">Vreme do trke:</h2>
         <p class="countDown"></p>
-        <button class="countdownBtn"><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">TRK PO SVOJE MESTO!</a></button>
+        <button class="countdownBtn"><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">PRIJAVI SE ODMAH!</a></button>
     </div>
-    <div class="trkeWrapper">
+    <div class="trkeWrapper" id="trke">
         <div class="trka trka1" @click="this.prvaTrka = !this.prvaTrka">
             <p class="trkaNo">1. ULIČNA TRKA EČKA</p>
             <p class="trkaGod">2021</p>
             <div class="overlay"></div>
         </div>
         <div class="trka trka2" @click="this.drugaTrka = !this.drugaTrka">
-        <p class="trkaNo">2. ULIČNA TRKA EČKA</p>
-        <p class="trkaGod">2022</p>
-        <div class="overlay"></div>
+            <p class="trkaNo">2. ULIČNA TRKA EČKA</p>
+            <p class="trkaGod">2022</p>
+            <div class="overlay"></div>
         </div>
         <div class="trka trka3" @click="this.$router.push('/trka')">
-        <p class="trkaNo">3. ULIČNA TRKA EČKA</p>
-        <p class="trkaGod">2023</p>
-        <div class="overlay"></div>
+            <p class="trkaNo">3. ULIČNA TRKA EČKA</p>
+            <p class="trkaGod">2023</p>
+            <div class="overlay"></div>
         </div>
     </div>
     <div class="partneriTrke">
@@ -164,10 +204,10 @@ export default {
             <div class="prvaTrkaText">
                 <h2 class="prvaTrkaHeading">1. Ulična trka Ečka</h2>
                 <p class="datumTrkePopup">(30.10.2021.)</p>
-                <p> 400+ finišera na glavnoj trci</p>
-                <p>U trci je učestvovalo dosta trkača iz susednih država te je trka dobila internacionalni karakter, kao i dosta naših reprezentativaca, veliki broj mališana u uzrastima od predškolaca pa do najstarnijih osnovaca. Naglasio bih da je trka za decu u potpunosti bila besplatna i da su svi mališani dobili startni paket, učesničku medalju i proglašenje najboljih isto kao i odrasli.</p>
-                <p><a href="">REZULTATI 1. ULIČNE TRKE</a></p>
-                <div class="ytWrapper"><a href="">Pogledajte kako je izgledala 1. Ulična trka Ečka </a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
+                <p class="prvaTrkaParagraf"> 400+ finišera na glavnoj trci</p>
+                <p class="prvaTrkaParagraf">U trci je učestvovalo dosta trkača iz susednih država te je trka dobila internacionalni karakter, kao i dosta naših reprezentativaca, veliki broj mališana u uzrastima od predškolaca pa do najstarnijih osnovaca. Naglasio bih da je trka za decu u potpunosti bila besplatna i da su svi mališani dobili startni paket, učesničku medalju i proglašenje najboljih isto kao i odrasli.</p>
+                <p class="prvaTrkaParagraf"><a href="">REZULTATI 1. ULIČNE TRKE</a></p>
+                <div class="ytWrapper"><a href="" class="prvaTrkaParagraf">Pogledajte kako je izgledala 1. Ulična trka Ečka </a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
             </div>
             <FontAwesomeIcon @click="this.prvaTrka = !this.prvaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
         </div>
@@ -205,10 +245,10 @@ export default {
             <div class="drugaTrkaText">
                 <h2 class="drugaTrkaHeading">2. Ulična trka Ečka</h2>
                 <p class="datumTrkePopup">(29.10.2022.)</p>
-                <p>Ove godine je bio rekordan broj prijava od 600 učesnika, na sam start trke je izašlo oko 500 ljudi, što je rekord u odnosu na prošlu godinu.</p>
-                <p>U drugom izdanju Ulične trke Ečka su postignuti najbrži rezultati u Srbiji 2022. godine na trci od 10km (ženski i muški)!</p>
-                <p><a href="">REZULTATI 2. ULIČNE TRKE</a></p>
-                <div class="ytWrapper"><a href="">Pogledajte kako je izgledala 2. Ulična trka Ečka </a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
+                <p class="drugaTrkaParagraf">Ove godine je bio rekordan broj prijava od 600 učesnika, na sam start trke je izašlo oko 500 ljudi, što je rekord u odnosu na prošlu godinu.</p>
+                <p class="drugaTrkaParagraf">U drugom izdanju Ulične trke Ečka su postignuti najbrži rezultati u Srbiji 2022. godine na trci od 10km (ženski i muški)!</p>
+                <p class="drugaTrkaParagraf"><a href="">REZULTATI 2. ULIČNE TRKE</a></p>
+                <div class="ytWrapper"><a href="" class="drugaTrkaParagraf">Pogledajte kako je izgledala 2. Ulična trka Ečka </a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
             </div>
             <FontAwesomeIcon @click="this.drugaTrka = !this.drugaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
         </div>
@@ -224,6 +264,7 @@ export default {
 margin: 0;
 padding: 0;
 font-family: Poppins;
+scroll-behavior: smooth;
 }
 
 /* ------------------------------------------HERO SECTION--------------------------------------- */
@@ -235,6 +276,9 @@ position: relative;
 width: 100%;
 height: 95vh !important;
 }
+.nav2{
+    display: none;
+}
 .nav{
 position: absolute;
 top: 0;
@@ -243,6 +287,10 @@ display: flex;
 align-items: center;
 color: #fff;
 width: 100%;
+}
+li a{
+    color: #fff;
+    text-decoration: none;
 }
 .logo{
     width: 5em;
@@ -294,7 +342,7 @@ text-decoration: none;
 }
 .rec1, .rec2, .rec3{
     position: absolute;
-    right: 10%;
+    right: 5%;
     top: -20%;
     font-size: 7em;
     font-weight: 700;
@@ -314,7 +362,7 @@ text-decoration: none;
 @keyframes rec1 {
     0%{
         top: -20%;
-        font-size: 10em;
+        font-size: 11em;
     }
     100%{
         top: 20%;
@@ -324,21 +372,113 @@ text-decoration: none;
 @keyframes rec2 {
     0%{
         top: -20%;
-        font-size: 10em;
+        font-size: 11em;
     }
     100%{
-        top: 35%;
+        top: 40%;
         font-size: 7em;
     }
 }
 @keyframes rec3 {
     0%{
         top: -20%;
-        font-size: 10em;
+        font-size: 11em;
     }
     100%{
-        top: 50%;
+        top: 60%;
         font-size: 7em;
+    }
+}
+
+.fromTop1Big{
+    animation: rec1Big 2s forwards;
+}
+.fromTop2Big{
+    animation: rec2Big 2s forwards 0.5s;
+}
+.fromTop3Big{
+    animation: rec3Big 2s forwards 1s;
+}
+@keyframes rec1Big {
+    0%{
+        top: -20%;
+        font-size: 12em;
+    }
+    100%{
+        right: 2%;
+        top: 20%;
+        font-size: 9em;
+    }
+}
+@keyframes rec2Big {
+    0%{
+        top: -20%;
+        font-size: 12em;
+    }
+    100%{
+        right: 2%;
+        top: 40%;
+        font-size: 9em;
+    }
+}
+@keyframes rec3Big {
+    0%{
+        top: -20%;
+        font-size: 12em;
+    }
+    100%{
+        right: 2%;
+        top: 60%;
+        font-size: 9em;
+    }
+}
+.fromTop1Small{
+    animation: rec1Small 2s forwards;
+}
+.fromTop2Small{
+    animation: rec2Small 2s forwards 0.5s;
+}
+.fromTop3Small{
+    animation: rec3Small 2s forwards 1s;
+}
+@keyframes rec1Small {
+    0%{
+        left: 50%;
+        top: -20%;
+        font-size: 6em;
+    }
+    100%{
+        transform: translateX(-50%) translateY(50%);
+        left: 50%;
+        top: 20%;
+        font-size: 3em;
+        color: #000;
+    }
+}
+@keyframes rec2Small {
+    0%{
+        left: 50%;
+        top: -20%;
+        font-size: 6em;
+    }
+    100%{
+        transform: translateX(-50%) translateY(50%);
+        left: 50%;
+        top: 40%;
+        font-size: 3em;
+    }
+}
+@keyframes rec3Small {
+    0%{
+        left: 50%;
+        top: -20%;
+        font-size: 6em;
+    }
+    100%{
+        transform: translateX(-50%) translateY(50%);
+        left: 50%;
+        top: 60%;
+        font-size: 3em;
     }
 }
 .datumTrke{
@@ -411,7 +551,7 @@ background-position: center;
 background-size: cover;
 }
 .trka1{
-background-image: url("../assets/heroProba2.jpg");
+background-image: url("../assets/slika1.jpg");
 }
 .trka2{
 background-image: url("../assets/drugaTrka.jpg");
@@ -450,6 +590,9 @@ z-index: 2;
 display: flex;
 justify-content: center;
 align-items: center;
+}
+#carouselExampleCaptions button{
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 /* ------------------------------------------END OF TRKE-------------------------------------- */
@@ -503,7 +646,7 @@ padding: 0.5em 0;
     left: 0;
     right: 0;
     background-color: rgba(0,0,0,0.8);
-    z-index: 20;
+    z-index: 30;
 }
 .drugaTrkaPopup, .prvaTrkaPopup{
     display: flex;
@@ -547,4 +690,251 @@ padding: 0.5em 0;
     transition: transform 0.7s ease-in;
 }
 /* -----------------------------------END OF PRVA & DRUGA TRKA POPUP----------------------------- */
+/* -------------------------------------RESPONSIVE DESIGN----------------------------------- */
+
+@media (min-width: 1600px) and (max-width: 2199px) {
+    .navLink{
+        font-size: 1.4em;
+    }
+    .logo{
+        width: 6em;
+    }
+    .lang{
+        width: 3.5em;
+    }
+    .datumTrke{
+        font-size: 3.5em;
+    }
+    .decathlonHeading{
+        font-size: 2.5em;
+    }
+    .decathlonParagraf, .prvaTrkaParagraf, .drugaTrkaParagraf, .trkeInfo p, .trkeInfo2 p, .decijaTrka p{
+        font-size: 1.2em;
+    }
+}
+
+@media (min-width: 2200px) {
+    .navLink{
+        font-size: 1.8em;
+    }
+    .logo{
+        width: 7em;
+    }
+    .lang{
+        width: 4.5em;
+    }
+    .datumTrke{
+        font-size: 4.5em;
+    }
+    .odbrojavanjeWrapper{
+        margin: 7em 0 0;
+    }
+    .countdownHeader{
+        font-size: 6em;
+    }
+    .decathlonHeading{
+        font-size: 3.5em;
+    }
+    .decathlonParagraf{
+        font-size: 1.8em;
+    }
+    .trka{
+        flex-basis: 22%;
+    }
+    .trkaNo{
+        font-size: 3em;
+    }
+    .trkaGod{
+        font-size: 2.5em;
+    }
+    .prvaTrkaHeading, .drugaTrkaHeading{
+        font-size: 6em;
+    }
+    .prvaTrkaParagraf, .drugaTrkaParagraf{
+        font-size: 2em;
+    }
+    .editTrkeHeader{
+        font-size: 5em;
+    }
+}
+
+@media (max-width: 1350px) {
+    .datumTrke{
+        font-size: 2.5em;
+    }
+    .prvaTrkaHeading, .drugaTrkaHeading{
+        font-size: 3em;
+    }
+    .trka{
+        flex-basis: 27%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .nav{
+        flex-wrap: nowrap!important;;
+    }
+    .navLink{
+        padding: 0.5em 1em;
+    }
+    .datumTrke{
+        font-size: 2em;
+    }
+    .trka{
+        flex-basis: 31%;
+    }
+    .prvaTrkaWrapper, .drugaTrkaWrapper{
+        overflow-y: scroll;
+    }
+    .prvaTrkaPopup, .drugaTrkaPopup{
+        flex-direction: column-reverse;
+    }
+    .prvaTrkaText, .drugaTrkaText, .carouselPopup{
+        width: 90%;
+        margin: 0 auto;
+    }
+    .prvaTrkaPopup .xmark, .drugaTrkaPopup .xmark{
+        top: 1.5em;
+        right: 1.5em;
+        color: #000;
+    }
+    .prvaTrkaParagraf, .drugaTrkaParagraf, .decathlonParagraf{
+        font-size: 1.1em;
+    }
+    .partneriTrke{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .decathlonText, .decathlonImg, .editTrkeHeader, .editTrke{
+        width: 90%;
+    }
+    .editTrkeHeader{
+        font-size: 3em;
+        text-align: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .nav{
+        display: none !important;
+    }
+    /* .img-fluid{
+        height: 90vh !important;
+    } */
+    .datumTrke{
+        font-size: 1.3em;
+        width: 15em;
+        text-align: center;
+        padding: 0.5em;
+    }
+    .nav2 {
+        display: flex;
+        align-items: center;
+        position: fixed;
+        border-bottom: 1px solid #4A90E2;
+        top: 0;
+        width: 100vw;
+        z-index: 20;
+    }
+
+    .menu {
+        align-items: center;
+        width: 100vw;
+        background-color: #fff;
+    }
+
+    .menuWrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .bars {
+        font-size: 2em;
+        padding: 0.7em 0.5em 0.7em 0;
+        flex-basis: 5%;
+    }
+
+    .nav2Header {
+        font-size: 1.5em;
+        margin: 0;
+        flex-basis: 95%;
+        text-align: center;
+        font-weight: 700;
+    }
+    .dropDownMenu {
+        background-color: #fff;
+    }
+
+    .navLink2 {
+        font-size: 1.3em;
+        padding: 0.5em 1em;
+    }
+
+    .navLink2 a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .navLink2:hover a {
+        text-shadow: 0 0 10px #000;
+    }
+    .logo2 {
+        width: 3em;
+        margin: 0;
+    }
+    .lang2{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .langImg{
+        width: 3em;
+    }
+    .langSw{
+        font-size: 2em;
+    }
+    .prijava2{
+        background-color: #4A90E2;
+        font-weight: 700;
+    }
+    .editTrkeHeader{
+        font-size: 2em;
+    }
+    .countdownHeader, .countDown{
+        font-size: 2.5em;
+    }
+    .countdownBtn, .decathlonHeading{
+        font-size: 1.5em;
+    }
+    .trka{
+        flex-basis: 90%;
+        margin: 2em 0;
+    }
+    .partneriTrke{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .decathlonText, .decathlonImg, .editTrkeHeader, .editTrke{
+        width: 90%;
+    }
+    .editTrkeHeader{
+        text-align: center;
+    }
+    .prvaTrkaWrapper, .drugaTrkaWrapper{
+        overflow-y: scroll;
+    }
+    .prvaTrkaPopup, .drugaTrkaPopup{
+        flex-direction: column-reverse;
+    }
+    .prvaTrkaText, .drugaTrkaText, .carouselPopup{
+        width: 90%;
+        margin: 0 auto;
+    }
+    .prvaTrkaPopup .xmark, .drugaTrkaPopup .xmark{
+        top: 20px;
+        color: #000;
+    }
+}
+
 </style>

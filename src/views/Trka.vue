@@ -1,7 +1,7 @@
 <script>
 import Footer from '../components/Footer.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faArrowRightArrowLeft} from '@fortawesome/free-solid-svg-icons'
+import { faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap.js'
@@ -10,6 +10,7 @@ export default{
     data() {
         return {
             sertifikat: false,
+            menu: false,
         }
     },
     components: {
@@ -21,7 +22,7 @@ export default{
         window.scrollTo(0, 0);
     },
     created() {
-        library.add(faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faArrowRightArrowLeft)
+        library.add(faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faArrowRightArrowLeft, faBars)
     }
 }
 </script>
@@ -42,6 +43,26 @@ export default{
         </li>
     </ul>
     </nav>
+    <div class="nav2">
+        <div class="menu">
+            <div class="menuWrapper">
+                <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="" @click="this.$router.push('/')"> Ulična trka Ečka</p>
+                <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
+            </div>
+            <div class="dropDownMenu" v-if="this.menu">
+                <p @click="this.menu = !this.menu" class="navLink2"><a href="#trke">Događaji</a>
+                </p>
+                <p @click="this.menu = !this.menu" class="navLink2">Rezultati</p>
+                <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">Kontakt</p>
+                <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></p>
+                <div class="lang2" @click="this.menu = !this.menu">
+                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png">
+                    <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png">
+                </div>
+            </div>
+        </div>
+    </div>
     <video class="trkaVideo" controls muted autoplay>
         <source src="../assets/trkaVideo.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -105,16 +126,16 @@ export default{
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="5000">
-                        <img src="../assets/trka.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../assets/heroProba.jpg" class="d-block w-100" alt="...">
+                        <img src="../assets/slika1.jpg" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
                         <img src="../assets/heroProba2.jpg" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
-                        <img src="../assets/slika.jpg" class="d-block w-100" alt="...">
+                        <img src="../assets/heroProba2.jpg" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="../assets/slika2.jpg" class="d-block w-100" alt="...">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
@@ -183,7 +204,7 @@ export default{
 .ucesnickiPaket{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     text-align: center;
     background-color: #4A90E2;
@@ -257,7 +278,7 @@ export default{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    z-index: 15;
+    z-index: 25;
 }
 .sertifikat{
     flex-basis: 45%;
@@ -279,11 +300,155 @@ export default{
     margin: 3em 0;
 }
 .decijaTrkaVideo, .decijaTrka{
-    flex-basis: 45%;
+    width: 45%;
 }
 .decijaTrkaHeading{
     font-size: 4em;
     text-align: center;
 }
 /* --------------------------------------END OF DEČIJA TRKA------------------------------------ */
+/* --------------------------------------RESPONSIVE DESIGN------------------------------------ */
+
+@media (max-width: 1700px) {
+    .sertifikat{
+        width: 40%;
+    }
+}
+
+@media (max-width: 1400px) {
+    .sertifikat{
+        width: 45%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .vrsteTrka{
+        flex-direction: column;
+        width: 90%;
+        margin: 0 auto;
+    }
+    .decijaTrkaWrapper{
+        flex-direction: column-reverse;
+        align-items: center;
+        width: 90%;
+        margin: 0 auto;
+    }
+    .decijaTrka, .decijaTrkaVideo{
+        width: 90%;
+        margin-bottom: 1em;
+    }
+    .trkaVideo{
+        width: 90%;
+    }
+    .trkeInfo p, .trkeInfo2 p, .decijaTrka p{
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 1024px) and (max-height: 1370px) {
+    .sertifikatPopup{
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+    .sertifikat{
+        width: 80%;
+        margin-top: 2em;
+    }
+    .nav{
+        display: none;
+    }
+    .nav2 {
+        display: flex;
+        align-items: center;
+        position: fixed;
+        border-bottom: 1px solid #4A90E2;
+        top: 0;
+        width: 100vw;
+        z-index: 20;
+    }
+
+    .menu {
+        align-items: center;
+        width: 100vw;
+        background-color: #fff;
+    }
+
+    .menuWrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .bars {
+        font-size: 2em;
+        padding: 0.7em 0.5em 0.7em 0;
+        flex-basis: 5%;
+    }
+
+    .nav2Header {
+        font-size: 1.5em;
+        margin: 0;
+        flex-basis: 95%;
+        text-align: center;
+        font-weight: 700;
+    }
+    .dropDownMenu {
+        background-color: #fff;
+    }
+
+    .navLink2 {
+        font-size: 1.3em;
+        padding: 0.5em 1em;
+    }
+
+    .navLink2 a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .navLink2:hover a {
+        text-shadow: 0 0 10px #000;
+    }
+    .logo2 {
+        width: 3em;
+        margin: 0;
+    }
+    .lang2{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .langImg{
+        width: 3em;
+    }
+    .langSw{
+        font-size: 2em;
+    }
+    .prijava2{
+        background-color: #4A90E2;
+        font-weight: 700;
+    }
+}
+
+@media (max-width: 600px) {
+    .trkaVideo{
+        margin-top: 100px;
+        width: 90%;
+    }
+    .paketHeading, .trkeInfoHeader, .decijaTrkaHeading{
+        font-size: 2.5em;
+    }
+    .paket{
+        flex-basis: 45%;
+    }
+    .sertifikatPopup{
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+    .sertifikat{
+        width: 90%;
+        margin-top: 2em;
+    }
+}
+
 </style>

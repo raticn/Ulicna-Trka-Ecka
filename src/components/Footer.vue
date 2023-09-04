@@ -192,4 +192,7 @@ a:active {
     .quicklinks {
         height: 25em;
     }
+    .socialIcons{
+        font-size: 2em;
+    }
 }</style>
