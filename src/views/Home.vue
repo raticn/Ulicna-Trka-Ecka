@@ -362,7 +362,7 @@ position: relative;
     height: 4em !important;
 }
 .carousel-control-prev, .carousel-control-next {
-    width: 5%;
+    width: 5% !important;
 }
 .nav2{
     display: none;
