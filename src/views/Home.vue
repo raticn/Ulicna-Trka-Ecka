@@ -23,6 +23,7 @@ export default {
             longText: {},
             heroMon: [],
             heroTel: [],
+            popupImg: [],
         }
     },
     components: {
@@ -97,6 +98,20 @@ export default {
                 })
                 console.log(slike);
                 this.heroTel = slike.data.q
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async fetchTrkePicures(trka) {
+            console.log(trka, 'trka');
+            try {
+                let slike = await axios.get('http://093g123.mars2.mars-hosting.com/API/pictures', {
+                    params: {
+                        fil_type: trka
+                    }
+                })
+                console.log(slike);
+                this.popupImg = slike.data.q
             } catch (error) {
                 console.log(error);
             }
@@ -222,12 +237,12 @@ export default {
         <button class="countdownBtn"><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.trk }}</a></button>
     </div>
     <div class="trkeWrapper" id="trke">
-        <div class="trka trka1" @click="this.prvaTrka = !this.prvaTrka">
+        <div class="trka trka1" @click="fetchTrkePicures('T1'); this.prvaTrka = !this.prvaTrka">
             <p class="trkaNo">{{ this.shortText.trka1naslov }}</p>
             <p class="trkaGod">{{ this.shortText.trka1god }}</p>
             <div class="overlay"></div>
         </div>
-        <div class="trka trka2" @click="this.drugaTrka = !this.drugaTrka">
+        <div class="trka trka2" @click="fetchTrkePicures('T2'); this.drugaTrka = !this.drugaTrka">
             <p class="trkaNo">{{ this.shortText.trka2naslov }}</p>
             <p class="trkaGod">{{ this.shortText.trka2god }}</p>
             <div class="overlay"></div>
@@ -258,21 +273,19 @@ export default {
     <Transition @enter="enterAnimation" @leave="leaveAnimation">
     <div class="prvaTrkaWrapper" v-if="this.prvaTrka">
         <div class="prvaTrkaPopup">
-            <div id="carouselExampleCaptions" class="carousel slide carouselPopup" data-bs-ride="carousel" data-bs-interval="5000">
+            <div id="carouselExampleCaptions2" class="carousel slide carouselPopup" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
-                    <div class="carousel-item active" data-bs-interval="5000">
-                        <img src="../assets/slika1.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../assets/slika2.jpg" class="d-block w-100" alt="...">
+                    <div v-for="(img, index) in popupImg" :key="index" class="carousel-item"
+                        :class="{ 'active': index === 0 }" data-bs-interval="5000">
+                        <img :src="img.files_imageURL" class="d-block w-100" alt="...">
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2"
                     data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2"
                     data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
@@ -293,21 +306,19 @@ export default {
     <Transition @enter="enterAnimation" @leave="leaveAnimation">
     <div class="drugaTrkaWrapper" v-if="this.drugaTrka">
         <div class="drugaTrkaPopup">
-            <div id="carouselExampleCaptions" class="carousel slide carouselPopup" data-bs-ride="carousel" data-bs-interval="5000">
+            <div id="carouselExampleCaptions3" class="carousel slide carouselPopup" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="../assets/heroProba2.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../assets/slika2.jpg" class="d-block w-100" alt="...">
+                    <div v-for="(img, index) in popupImg" :key="index" class="carousel-item"
+                        :class="{ 'active': index === 0 }" data-bs-interval="5000">
+                        <img :src="img.files_imageURL" class="d-block w-100" alt="...">
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions3"
                     data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions3"
                     data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
@@ -661,9 +672,9 @@ display: flex;
 justify-content: center;
 align-items: center;
 }
-/* .prvaTrkaPopup #carouselExampleCaptions button, .drugaTrkaPopup #carouselExampleCaptions button{
+.prvaTrkaPopup #carouselExampleCaptions button, .drugaTrkaPopup #carouselExampleCaptions button{
     background-color: rgba(0, 0, 0, 0.3);
-} */
+}
 
 /* ------------------------------------------END OF TRKE-------------------------------------- */
 /* ------------------------------------------PARTNERI------------------------------------------ */
