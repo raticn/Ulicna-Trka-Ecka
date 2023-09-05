@@ -5,7 +5,7 @@ import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faXmark, faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import smallImg from '../assets/heroMob.jpg'
-import bigImg from '../assets/hero.jpg'
+import bigImg from '../assets/hero2.jpg'
 import axios from 'axios'
 
 export default {
@@ -21,6 +21,8 @@ export default {
             language: {},
             shortText: {},
             longText: {},
+            heroMon: [],
+            heroTel: [],
         }
     },
     components: {
@@ -73,10 +75,38 @@ export default {
                 console.log(error);
             }
         },
+        async fetchPicures() {
+            try {
+                let slike = await axios.get('http://093g123.mars2.mars-hosting.com/API/pictures', {
+                    params: {
+                        fil_type: 'heroMon'
+                    }
+                })
+                console.log(slike);
+                this.heroMon = slike.data.q
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async fetchMobPicures() {
+            try {
+                let slike = await axios.get('http://093g123.mars2.mars-hosting.com/API/pictures', {
+                    params: {
+                        fil_type: 'heroTel'
+                    }
+                })
+                console.log(slike);
+                this.heroTel = slike.data.q
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
     async mounted() {
     try {
         this.fetchText()
+        this.fetchPicures()
+        this.fetchMobPicures()
         let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
     
         let x = setInterval(function() {
@@ -131,12 +161,29 @@ export default {
 <template>
 <div class="appWrapper">
     <div class="heroWrapper">
-        <img :src="smallImage ? smallImg : bigImg" class="img-fluid" alt="Responsive image">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                <div class="carousel-inner">
+                    <div v-for="(img, index) in heroMon" :key="index" class="carousel-item"
+                        :class="{ 'active': index === 0 }" data-bs-interval="5000">
+                        <img :src="img.files_imageURL" class="d-block w-100 carouselImg" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
         <nav class="nav">
         <img class="logo" src="../assets/logo.png" alt="">
         <ul class="navLista">
             <li class="navLink"><a href="#trke">{{ this.shortText.dogadjajinaslov }}</a></li>
-            <li class="navLink">{{ this.shortText.rezultatinaslov }}</li>
+            <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
             <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
             <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
             <li class="language" @click="changeLang">
@@ -149,15 +196,15 @@ export default {
         <div class="nav2">
             <div class="menu">
                 <div class="menuWrapper">
-                    <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="" @click="this.$router.push('/')"> Ulična trka Ečka</p>
+                    <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
                     <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
                 </div>
                 <div class="dropDownMenu" v-if="this.menu">
-                    <p @click="this.menu = !this.menu" class="navLink2"><a href="#trke">Događaji</a>
+                    <p @click="this.menu = !this.menu" class="navLink2"><a href="#trke">{{ this.shortText.dogadjajinaslov }}</a>
                     </p>
-                    <p @click="this.menu = !this.menu" class="navLink2">Rezultati</p>
-                    <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">Kontakt</p>
-                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">Prijava</a></span></p>
+                    <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
+                    <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
+                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
                     <div class="lang2" @click="this.menu = !this.menu">
                         <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png">
                         <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
@@ -216,12 +263,6 @@ export default {
                     <div class="carousel-item active" data-bs-interval="5000">
                         <img src="../assets/slika1.jpg" class="d-block w-100" alt="...">
                     </div>
-                    <!-- <div class="carousel-item">
-                        <img src="../assets/heroProba.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../assets/heroProba2.jpg" class="d-block w-100" alt="...">
-                    </div> -->
                     <div class="carousel-item">
                         <img src="../assets/slika2.jpg" class="d-block w-100" alt="...">
                     </div>
@@ -243,7 +284,7 @@ export default {
                 <p class="prvaTrkaParagraf">{{ this.shortText.trka1popfinish }}</p>
                 <p class="prvaTrkaParagraf">{{ this.longText.trka1popopis }}</p>
                 <p class="prvaTrkaParagraf"><a href="">{{ this.shortText.trka1poprez }}</a></p>
-                <div class="ytWrapper"><a href="" class="prvaTrkaParagraf">{{ this.shortText.trka1poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
+                <div class="ytWrapper"><a href="https://youtu.be/P6kK6lt81E4?si=GEsAHkMsHU5yfD_m" class="prvaTrkaParagraf" target="_blank">{{ this.shortText.trka1poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
             </div>
             <FontAwesomeIcon @click="this.prvaTrka = !this.prvaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
         </div>
@@ -254,17 +295,11 @@ export default {
         <div class="drugaTrkaPopup">
             <div id="carouselExampleCaptions" class="carousel slide carouselPopup" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
-                    <div class="carousel-item active" data-bs-interval="5000">
-                        <img src="../assets/trka.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../assets/heroProba.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
+                    <div class="carousel-item active">
                         <img src="../assets/heroProba2.jpg" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
-                        <img src="../assets/slika.jpg" class="d-block w-100" alt="...">
+                        <img src="../assets/slika2.jpg" class="d-block w-100" alt="...">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
@@ -284,7 +319,7 @@ export default {
                 <p class="drugaTrkaParagraf">{{ this.shortText.trka2popfinish }}</p>
                 <p class="drugaTrkaParagraf">{{ this.shortText.trka2popopis }}</p>
                 <p class="drugaTrkaParagraf"><a href="">{{ this.shortText.trka2poprez }}</a></p>
-                <div class="ytWrapper"><a href="" class="drugaTrkaParagraf">{{ this.shortText.trka2poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
+                <div class="ytWrapper"><a href="https://youtu.be/blSz_Dvg7Ro?si=U4Xlgl20OfWBG45C" class="drugaTrkaParagraf" target="_blank">{{ this.shortText.trka2poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
             </div>
             <FontAwesomeIcon @click="this.drugaTrka = !this.drugaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
         </div>
@@ -308,7 +343,7 @@ scroll-behavior: smooth;
 .heroWrapper{
 position: relative;
 }
-.img-fluid{
+.carouselImg{
 width: 100%;
 height: 95vh !important;
 }
@@ -488,7 +523,6 @@ text-decoration: none;
         left: 50%;
         top: 20%;
         font-size: 3em;
-        color: #000;
     }
 }
 @keyframes rec2Small {
@@ -627,9 +661,9 @@ display: flex;
 justify-content: center;
 align-items: center;
 }
-#carouselExampleCaptions button{
+/* .prvaTrkaPopup #carouselExampleCaptions button, .drugaTrkaPopup #carouselExampleCaptions button{
     background-color: rgba(0, 0, 0, 0.3);
-}
+} */
 
 /* ------------------------------------------END OF TRKE-------------------------------------- */
 /* ------------------------------------------PARTNERI------------------------------------------ */
@@ -854,9 +888,9 @@ padding: 0.5em 0;
     .nav{
         display: none !important;
     }
-    /* .img-fluid{
-        height: 90vh !important;
-    } */
+    .carouselImg{
+        height: auto!important;
+    }
     .datumTrke{
         font-size: 1.3em;
         width: 15em;
@@ -931,7 +965,6 @@ padding: 0.5em 0;
         font-size: 2em;
     }
     .prijava2{
-        background-color: #4A90E2;
         font-weight: 700;
     }
     .editTrkeHeader{

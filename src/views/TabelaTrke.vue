@@ -1,17 +1,20 @@
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faArrowRightArrowLeft, faBars, faPersonRunning} from '@fortawesome/free-solid-svg-icons'
+import { faXmark, faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import axios from 'axios'
+import axios from 'axios';
 
-export default {
+export default{
     data() {
         return {
+            rez: {},
+            selectedGender: '',
             menu: false,
             lang: '',
             language: '',
             shortText: {},
             longText: {},
+            pol: 'Muški',
         }
     },
     components: {
@@ -44,22 +47,53 @@ export default {
                 console.log(error);
             }
         },
-        brojTrke(x) {
-            localStorage.setItem('trka', x)
-        }
+        async sendGender() {
+            try {
+                if(localStorage.getItem('trka') == 3 || localStorage.getItem('trka') == 6) {
+                    let trkaBr = localStorage.getItem('trka')
+                    let gender = await axios.get('http://093g123.mars2.mars-hosting.com/API/rezultati', {
+                        params: {
+                            trka: trkaBr
+                        }
+                    })
+                    this.rez = gender.data.res
+                }
+                else{
+                    let trkaBr = localStorage.getItem('trka')
+                    let gender = await axios.get('http://093g123.mars2.mars-hosting.com/API/rezultati', {
+                        params: {
+                            trka: trkaBr,
+                            gender: this.pol
+                        }
+                    })
+                    this.rez = gender.data.res
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
     async mounted() {
-        window.scrollTo(0, 0);
-        this.fetchText()
+        try {
+            this.fetchText()
+            this.sendGender()
+            // let rezultati = await axios.get('http://093g123.mars2.mars-hosting.com/API/rezultati', {
+            //     params: {
+            //         trka: trkaBr
+            //     }
+            // })
+            // this.rez = rezultati.data.res
+        } catch (error) {
+            console.log(error);
+        }
     },
     created() {
-        library.add(faArrowRightArrowLeft, faBars, faPersonRunning)
+        library.add(faXmark, faArrowRightArrowLeft, faBars)
     }
 }
 </script>
 
 <template>
-<h2 class="mainRezHeader">{{ this.shortText.rezHeader }}</h2>
 <nav class="nav fixed">
     <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="">
     <ul class="navLista">
@@ -94,59 +128,80 @@ export default {
             </div>
         </div>
     </div>
-<div class="rezultatiWrapper">
-    <div class="rezultati">
-        <p class="rezultatiHeader">{{ this.shortText.prvaTrkaHeading }}</p>
-        <p class="rezultatiGod">(2021)</p>
-        <button class="rezBtn" @click="brojTrke(1); this.$router.push('/tabela')">5km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
-        <button class="rezBtn" @click="brojTrke(2); this.$router.push('/tabela')">10km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
-        <button class="rezBtn" @click="brojTrke(3); this.$router.push('/tabela')">{{ this.shortText.stafetaRez }} <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon><FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
+<div class="tableWrapper">
+    <div class="pol">
+        {{ this.shortText.tablePol }}: <button class="polBtn"  @click="this.pol = 'Muški'; sendGender()">{{ this.shortText.polM }}</button> / <button class="polBtn" @click="this.pol = 'Ženski'; sendGender()">{{ this.shortText.polZ }}</button>
     </div>
-    <div class="rezultati">
-        <p class="rezultatiHeader">{{ this.shortText.drugaTrkaHeading }}</p>
-        <p class="rezultatiGod">(2022)</p>
-        <button class="rezBtn" @click="brojTrke(4); this.$router.push('/tabela')">5km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
-        <button class="rezBtn" @click="brojTrke(5); this.$router.push('/tabela')">10km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
-        <button class="rezBtn" @click="brojTrke(6); this.$router.push('/tabela')">{{ this.shortText.stafetaRez }} <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon><FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
+    <table>
+        <thead>
+        <tr>
+            <th>Rank</th>
+            <th>{{ this.shortText.tableNum }}</th>
+            <th>{{ this.shortText.tableIme }}</th>
+            <th>{{ this.shortText.tablePrezime }}</th>
+            <th>{{ this.shortText.tableGod }}</th>
+            <th>{{ this.shortText.tablePol }}</th>
+            <th>{{ this.shortText.tableKlub }}</th>
+            <th>{{ this.shortText.tableZemlja }}</th>
+            <th>{{ this.shortText.tableGrad }}</th>
+            <th>{{ this.shortText.tableBruto }}</th>
+            <th>{{ this.shortText.tableNeto }}</th>
+            <th>Status</th>
+            <th>{{ this.shortText.tableId }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(result, index) in this.rez" :key="result.rez_id">
+            <td>{{ index + 1 }}</td>
+            <td>{{ result.rez_number }}</td>
+            <td>{{ result.rez_first_name }}</td>
+            <td>{{ result.rez_last_name }}</td>
+            <td>{{ result.rez_birth_year }}</td>
+            <td>{{ result.rez_gender }}</td>
+            <td>{{ result.rez_club }}</td>
+            <td>{{ result.rez_country }}</td>
+            <td>{{ result.rez_city }}</td>
+            <td>{{ result.rez_gun_time }}</td>
+            <td>{{ result.rez_chip_time }}</td>
+            <td>{{ result.rez_status }}</td>
+            <td>{{ result.rez_race_id }}</td>
+        </tr>
+        </tbody>
+    </table>
     </div>
-</div>
-
 </template>
 
 <style>
-.rezultatiWrapper{
+.tableWrapper{
+    margin: 10% 0 0 0;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
+    overflow-x: auto;
 }
-.rezultati{
-    width: 40%;
-    margin: 2% auto 0;
-    text-align: center;
+table{
+    margin: 1em auto;
 }
-.mainRezHeader{
-    width: 5em;
-    font-size: 4em;
-    margin: 2em auto 0;
-    border-bottom: 3px solid #4A90E2;
-    text-align: center;
+.table {
+  width: 100%;
+  border-collapse: collapse;
 }
-.rezultatiHeader{
-    font-size: 4em;
+
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
 }
-.rezultatiGod{
-    font-size: 3em;
+
+th {
+  background-color: #f2f2f2;
 }
-.rezBtn{
+.pol{
+    font-size: 1.5em;
+    margin-left: 2em;
+}
+.polBtn{
     border: none;
-    background-color: #4A90E2;
-    color: #fff;
-    font-weight: 700;
-    padding: 15px;
-    border-radius: 20px;
-    margin: 0.2em 0.5em;
+    background-color: transparent;
+    color: rgb(118, 28, 243);
     cursor: pointer;
 }
 </style>
