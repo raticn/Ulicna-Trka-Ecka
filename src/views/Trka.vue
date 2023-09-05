@@ -16,6 +16,7 @@ export default{
             language: '',
             shortText: {},
             longText: {},
+            trke: [],
         }
     },
     components: {
@@ -49,10 +50,23 @@ export default{
                 console.log(error);
             }
         },
+        async fetchTrkePicures() {
+            try {
+                let slike = await axios.get('http://093g123.mars2.mars-hosting.com/API/pictures', {
+                    params: {
+                        fil_type: "T3"
+                    }
+                })
+                this.trke = slike.data.q
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
     async mounted() {
         window.scrollTo(0, 0);
         this.fetchText()
+        this.fetchTrkePicures()
     },
     created() {
         library.add(faMicrochip, faCamera, faGift, faMedal, faBottleWater, faMoneyCheckDollar, faCoins, faSuitcaseMedical, faXmark, faArrowRightArrowLeft, faBars)
@@ -155,27 +169,19 @@ export default{
             {{ this.shortText.kategorija6 }}</span></p>
         </div>
         <div class="carouselWrapper">
-            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+            <div id="carouselExampleCaptions4" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
-                    <div class="carousel-item active" data-bs-interval="5000">
-                        <img src="../assets/slika1.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../assets/heroProba2.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../assets/heroProba2.jpg" class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../assets/slika2.jpg" class="d-block w-100" alt="...">
+                    <div v-for="(img, index) in trke" :key="index" class="carousel-item"
+                        :class="{ 'active': index === 0 }" data-bs-interval="5000">
+                        <img :src="img.files_imageURL" class="d-block w-100" alt="...">
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions4"
                     data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions4"
                     data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
@@ -266,9 +272,11 @@ export default{
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
+    align-items: center;
 }
 .carouselWrapper{
     flex-basis: 45%;
+    margin-left: 1em;
 }
 .trkeInfo{
     flex-basis: 45%;

@@ -44,13 +44,6 @@ export default {
                         </a></p>
                 </div>
             </div>
-            <div class="footer_links">
-                <p>Linkovi</p>
-                <ul class="quicklinks">
-                    <div class="quicklinksLink" @click="this.$router.push('/')">Politika privatnosti</div>
-                    <div class="quicklinksLink" @click="this.$router.push('/')">Uslovi korišćenja</div>
-                </ul>
-            </div>
         </div>
         <div class="copyright">
             &copy;
@@ -74,7 +67,8 @@ export default {
     color: #fff;
     display: flex;
     align-items: center;
-
+    justify-content: center;
+    width: 100%;
 }
 
 .footer_info {
@@ -129,12 +123,6 @@ export default {
     padding: 0;
 }
 
-.quicklinksLink  {
-    margin: 1em 0;
-    font-weight: 500;
-    cursor: pointer;
-}
-
 .copyright {
     font-size: 2em;
     color: #fff;
@@ -163,11 +151,13 @@ a:active {
 @media (max-width: 1150px) {
     .footer_wrapper {
         flex-direction: column;
+        align-items: center;
     }
 
     .footer_info {
         width: 90%;
         margin: 2em auto;
+        text-align: center;
     }
 
     .footer_links {

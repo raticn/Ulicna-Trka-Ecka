@@ -4,8 +4,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faXmark, faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import smallImg from '../assets/heroMob.jpg'
-import bigImg from '../assets/hero2.jpg'
 import axios from 'axios'
 
 export default {
@@ -15,8 +13,6 @@ export default {
             drugaTrka: false,
             menu: false,
             smallImage: false,
-            smallImg,
-            bigImg,
             lang: '',
             language: {},
             shortText: {},
@@ -83,7 +79,6 @@ export default {
                         fil_type: 'heroMon'
                     }
                 })
-                console.log(slike);
                 this.heroMon = slike.data.q
             } catch (error) {
                 console.log(error);
@@ -96,7 +91,6 @@ export default {
                         fil_type: 'heroTel'
                     }
                 })
-                console.log(slike);
                 this.heroTel = slike.data.q
             } catch (error) {
                 console.log(error);
@@ -296,7 +290,7 @@ export default {
                 <p class="datumTrkePopup">{{ this.shortText.trka1popdate }}</p>
                 <p class="prvaTrkaParagraf">{{ this.shortText.trka1popfinish }}</p>
                 <p class="prvaTrkaParagraf">{{ this.longText.trka1popopis }}</p>
-                <p class="prvaTrkaParagraf"><a href="">{{ this.shortText.trka1poprez }}</a></p>
+                <p class="prvaTrkaParagraf" @click="this.$router.push('/rezultati')"><a href="">{{ this.shortText.trka1poprez }}</a></p>
                 <div class="ytWrapper"><a href="https://youtu.be/P6kK6lt81E4?si=GEsAHkMsHU5yfD_m" class="prvaTrkaParagraf" target="_blank">{{ this.shortText.trka1poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
             </div>
             <FontAwesomeIcon @click="this.prvaTrka = !this.prvaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
@@ -329,7 +323,7 @@ export default {
                 <p class="datumTrkePopup">{{ this.shortText.trka2popdate }}</p>
                 <p class="drugaTrkaParagraf">{{ this.shortText.trka2popfinish }}</p>
                 <p class="drugaTrkaParagraf">{{ this.shortText.trka2popopis }}</p>
-                <p class="drugaTrkaParagraf"><a href="">{{ this.shortText.trka2poprez }}</a></p>
+                <p class="drugaTrkaParagraf" @click="this.$router.push('/rezultati')"><a href="">{{ this.shortText.trka2poprez }}</a></p>
                 <div class="ytWrapper"><a href="https://youtu.be/blSz_Dvg7Ro?si=U4Xlgl20OfWBG45C" class="drugaTrkaParagraf" target="_blank">{{ this.shortText.trka2poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
             </div>
             <FontAwesomeIcon @click="this.drugaTrka = !this.drugaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
