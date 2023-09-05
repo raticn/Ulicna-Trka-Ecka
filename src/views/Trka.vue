@@ -464,7 +464,6 @@ export default{
         font-size: 2em;
     }
     .prijava2{
-        background-color: #4A90E2;
         font-weight: 700;
     }
 }

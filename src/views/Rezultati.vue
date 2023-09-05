@@ -149,4 +149,23 @@ export default {
     margin: 0.2em 0.5em;
     cursor: pointer;
 }
+
+@media (max-width: 1000px) {
+    .rezultatiWrapper{
+        flex-direction: column;
+    }
+    .rezultati{
+        margin: 5% auto;
+        width: 90%;
+    }
+}
+
+@media (max-width: 600px) {
+    .mainRezHeader, .rezultatiHeader{
+        font-size: 3em;
+    }
+    .rezultatiGod{
+        font-size: 2em;
+    }
+}
 </style>

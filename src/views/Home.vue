@@ -20,6 +20,8 @@ export default {
             heroMon: [],
             heroTel: [],
             popupImg: [],
+            sponzoriArr: [],
+            hero: [],
         }
     },
     components: {
@@ -73,49 +75,49 @@ export default {
             }
         },
         async fetchPicures() {
-            try {
-                let slike = await axios.get('http://093g123.mars2.mars-hosting.com/API/pictures', {
-                    params: {
-                        fil_type: 'heroMon'
-                    }
-                })
-                this.heroMon = slike.data.q
-            } catch (error) {
-                console.log(error);
+            if(window.screen.width <= 600) {
+                this.heroMon = "heroTel"
             }
-        },
-        async fetchMobPicures() {
+            else if(window.screen.width > 600){
+                this.heroMon = "heroMon"
+            }
             try {
                 let slike = await axios.get('http://093g123.mars2.mars-hosting.com/API/pictures', {
                     params: {
-                        fil_type: 'heroTel'
+                        fil_type: this.heroMon
                     }
                 })
                 this.heroTel = slike.data.q
+                    this.hero = this.heroTel
+
             } catch (error) {
                 console.log(error);
             }
         },
-        async fetchTrkePicures(trka) {
-            console.log(trka, 'trka');
-            try {
-                let slike = await axios.get('http://093g123.mars2.mars-hosting.com/API/pictures', {
-                    params: {
-                        fil_type: trka
+        async fetchTrkePicures(param) {
+                try {
+                    let slike = await axios.get('http://093g123.mars2.mars-hosting.com/API/pictures', {
+                        params: {
+                            fil_type: param
+                        }
+                    })
+                    console.log(slike);
+                    if(param == 'T1' || param == 'T2'){
+                        this.popupImg = slike.data.q
                     }
-                })
-                console.log(slike);
-                this.popupImg = slike.data.q
-            } catch (error) {
-                console.log(error);
-            }
+                    else if(param == 'sponzor'){
+                        this.sponzoriArr = slike.data.q
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         },
-    },
     async mounted() {
     try {
         this.fetchText()
         this.fetchPicures()
-        this.fetchMobPicures()
+        this.fetchTrkePicures('sponzor')
         let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
     
         let x = setInterval(function() {
@@ -141,19 +143,16 @@ export default {
             document.querySelector(".rec1").classList.add("fromTop1Small")
             document.querySelector(".rec2").classList.add("fromTop2Small")
             document.querySelector(".rec3").classList.add("fromTop3Small")
-            this.smallImage = true
         }
         else if(window.screen.width > 600 && window.screen.width < 1600) {
             document.querySelector(".rec1").classList.add("fromTop1")
             document.querySelector(".rec2").classList.add("fromTop2")
             document.querySelector(".rec3").classList.add("fromTop3")
-            this.smallImage = false
         }
         else if(window.screen.width >= 1600) {
             document.querySelector(".rec1").classList.add("fromTop1Big")
             document.querySelector(".rec2").classList.add("fromTop2Big")
             document.querySelector(".rec3").classList.add("fromTop3Big")
-            this.smallImage = false
         }
         localStorage.setItem('lang', 'sr')
     } catch (error) {
@@ -172,7 +171,7 @@ export default {
     <div class="heroWrapper">
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
-                    <div v-for="(img, index) in heroMon" :key="index" class="carousel-item"
+                    <div v-for="(img, index) in hero" :key="index" class="carousel-item"
                         :class="{ 'active': index === 0 }" data-bs-interval="5000">
                         <img :src="img.files_imageURL" class="d-block w-100 carouselImg" alt="...">
                     </div>
@@ -264,6 +263,12 @@ export default {
             Your browser does not support the video tag.
         </video>
     </div>
+    <h2 class="sponzoriHeader">Sponzori</h2>
+    <div class="sponzoriWrapper">
+        <div class="sponzor" v-for="(sponzor, index) in sponzoriArr" :key="index">
+            <img class="sponzorImg" :src="sponzor.files_imageURL" alt="">
+        </div>
+    </div>
     <Transition @enter="enterAnimation" @leave="leaveAnimation">
     <div class="prvaTrkaWrapper" v-if="this.prvaTrka">
         <div class="prvaTrkaPopup">
@@ -349,20 +354,27 @@ scroll-behavior: smooth;
 position: relative;
 }
 .carouselImg{
-width: 100%;
-height: 95vh !important;
+    width: 100%;
+    height: 95vh !important;
+}
+.carousel-control-prev-icon, .carousel-control-next-icon{
+    width: 4em !important;
+    height: 4em !important;
+}
+.carousel-control-prev, .carousel-control-next {
+    width: 5%;
 }
 .nav2{
     display: none;
 }
 .nav{
-position: absolute;
-top: 0;
-left: 0;
-display: flex;
-align-items: center;
-color: #fff;
-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    width: 100%;
 }
 li a{
     color: #fff;
@@ -405,16 +417,16 @@ li a{
     z-index: 10;
 }
 .prijava{
-transform: skew(-20deg);
-background-color: #4A90E2;
+    transform: skew(-20deg);
+    background-color: #4A90E2;
 }
 .prijava span{
-display: block;
-transform: skew(20deg);
+    display: block;
+    transform: skew(20deg);
 }
 .prijava a{
-color: #fff;
-text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 .rec1, .rec2, .rec3{
     position: absolute;
@@ -483,7 +495,7 @@ text-decoration: none;
     100%{
         right: 2%;
         top: 20%;
-        font-size: 9em;
+        font-size: 8em;
     }
 }
 @keyframes rec2Big {
@@ -494,7 +506,7 @@ text-decoration: none;
     100%{
         right: 2%;
         top: 40%;
-        font-size: 9em;
+        font-size: 8em;
     }
 }
 @keyframes rec3Big {
@@ -505,7 +517,7 @@ text-decoration: none;
     100%{
         right: 2%;
         top: 60%;
-        font-size: 9em;
+        font-size: 8em;
     }
 }
 .fromTop1Small{
@@ -713,6 +725,30 @@ padding: 0.5em 0;
     width: 80%;
 }
 /* ------------------------------------------END OF EDIT TRKE------------------------------------ */
+/* ------------------------------------------SPONZORI------------------------------------ */
+
+.sponzoriWrapper{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 0 auto 2em;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.sponzoriHeader{
+    font-size: 4em;
+    text-align: center;
+    /* margin-top: 2em; */
+}
+.sponzor{
+    width: 18%;
+}
+.sponzorImg{
+    width: 100%;
+}
+
+
+/* -----------------------------------------END OF SPONZORI------------------------------------ */
 /* ----------------------------------------PRVA & DRUGA TRKA POPUP-------------------------------- */
 .drugaTrkaWrapper, .prvaTrkaWrapper{
     position: fixed;
@@ -887,6 +923,9 @@ padding: 0.5em 0;
         font-size: 3em;
         text-align: center;
     }
+    .sponzor{
+        width: 22%;
+    }
 }
 
 @media (max-width: 600px) {
@@ -972,7 +1011,7 @@ padding: 0.5em 0;
     .prijava2{
         font-weight: 700;
     }
-    .editTrkeHeader{
+    .editTrkeHeader, .sponzoriHeader{
         font-size: 2em;
     }
     .countdownHeader, .countDown{
@@ -1006,8 +1045,12 @@ padding: 0.5em 0;
         margin: 0 auto;
     }
     .prvaTrkaPopup .xmark, .drugaTrkaPopup .xmark{
-        top: 20px;
+        top: 25px;
+        right: 25px;
         color: #000;
+    }
+    .sponzor{
+        width: 30%;
     }
 }
 

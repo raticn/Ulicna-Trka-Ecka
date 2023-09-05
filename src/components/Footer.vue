@@ -38,8 +38,7 @@ export default {
                     <p><a href="https://www.instagram.com/ulicna_trka_ecka/" target="_blank">
                             <FontAwesomeIcon class="socialIcons" icon="fa-brands fa-instagram"></FontAwesomeIcon>
                         </a></p>
-                    <p><a href="https://www.instagram.com/ulicna_trka_ecka/"
-                            target="_blank">
+                    <p><a href="https://www.facebook.com/ulicnatrkaecka" target="_blank">
                             <FontAwesomeIcon class="socialIcons" icon="fa-brands fa-facebook"></FontAwesomeIcon>
                         </a></p>
                 </div>
