@@ -13,7 +13,7 @@ const router = createRouter({
       name: 'home',
       component: Home,
       meta: {
-        title: "Ulična Trka Ečka: Prošli i Budući Događaji",
+        title: "Ulična Trka Ečka: Sve što Treba da Znate",
         description: "Učestvujte u Uličnoj trci Ecka i trkajte se na različitim stazama kao što su dečija trka i štafetna trka. Osvojite novčane nagrade i unikatne medalje. Registracija je otvorena do 20.10.2023."
       }
     },
