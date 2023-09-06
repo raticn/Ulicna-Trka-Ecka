@@ -213,7 +213,7 @@ export default {
                     <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
                     <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
                     <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
-                    <div class="lang2" @click="this.menu = !this.menu">
+                    <div class="lang2" @click="changeLang(); this.menu = !this.menu">
                         <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png">
                         <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
                         <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png">
@@ -263,7 +263,7 @@ export default {
             Your browser does not support the video tag.
         </video>
     </div>
-    <h2 class="sponzoriHeader">Sponzori</h2>
+    <h2 class="sponzoriHeader">{{ this.shortText.sponzoriHeader }}</h2>
     <div class="sponzoriWrapper">
         <div class="sponzor" v-for="(sponzor, index) in sponzoriArr" :key="index">
             <img class="sponzorImg" :src="sponzor.files_imageURL" alt="">
@@ -346,6 +346,9 @@ margin: 0;
 padding: 0;
 font-family: Poppins;
 scroll-behavior: smooth;
+}
+body{
+    overflow-x: hidden;
 }
 
 /* ------------------------------------------HERO SECTION--------------------------------------- */
@@ -877,7 +880,7 @@ padding: 0.5em 0;
         font-size: 3em;
     }
     .trka{
-        flex-basis: 27%;
+        flex-basis: 30%;
     }
 }
 
@@ -925,6 +928,16 @@ padding: 0.5em 0;
     }
     .sponzor{
         width: 22%;
+    }
+}
+
+@media (max-width: 850px) {
+    .trkeWrapper{
+        flex-direction: column;
+    }
+    .trka{
+        width: 60%;
+        margin: 1em auto;
     }
 }
 

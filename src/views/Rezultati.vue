@@ -86,7 +86,7 @@ export default {
                 <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
                 <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
                 <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
-                <div class="lang2" @click="this.menu = !this.menu">
+                <div class="lang2" @click="changeLang(); this.menu = !this.menu">
                     <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png">
                     <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
                     <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png">
