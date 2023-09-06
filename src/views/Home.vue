@@ -1034,8 +1034,8 @@ padding: 0.5em 0;
         font-size: 1.5em;
     }
     .trka{
-        flex-basis: 90%;
-        margin: 2em 0;
+        width: 90%;
+        margin: 2em auto;
     }
     .partneriTrke{
         flex-direction: column-reverse;
