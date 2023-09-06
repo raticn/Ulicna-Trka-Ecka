@@ -54,7 +54,7 @@ export default{
         async fetchText() {
             let language = localStorage.getItem("lang")
             try {
-                let res = await axios.get('http://093g123.mars2.mars-hosting.com/API/text', {
+                let res = await axios.get('https://093g123.mars2.mars-hosting.com/API/text', {
                     params: {
                         language: language
                     }
@@ -82,23 +82,23 @@ export default{
 <template>
 <div class="kontaktWrapper">
     <nav class="nav fixed">
-        <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="">
+        <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
         <ul class="navLista">
             <li class="navLink">{{ this.shortText.dogadjajinaslov }}</li>
             <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
             <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
             <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
             <li class="language" @click="changeLang">
-                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png">
+                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
                 <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png">  
+                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">  
             </li>
         </ul>
     </nav>
     <div class="nav2">
         <div class="menu">
             <div class="menuWrapper">
-                <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
+                <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
                 <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
             </div>
             <div class="dropDownMenu" v-if="this.menu">
@@ -108,9 +108,9 @@ export default{
                 <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
                 <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
                 <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png">
+                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
                     <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png">
+                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@ export default{
                 <p class="bold">Beogradska 64, Zrenjanin</p>
                 <p class="bold">+381 62 543-543</p>
             </div>
-            <form id="form" action="https://formsubmit.co/@gmail.com" method="POST">
+            <form id="form" action="https://formsubmit.co/ulicnatrkaecka@gmail.com" method="POST">
                 <div class="formInfo">
                     <div class="formField" :class="{ focused: isNameFocused || form.name !== '' }">
                         <p @click="focusInput('imeInput')">{{ this.shortText.imeInput }}</p>

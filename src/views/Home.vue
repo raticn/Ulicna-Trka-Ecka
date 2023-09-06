@@ -60,7 +60,7 @@ export default {
         async fetchText() {
             let language = localStorage.getItem("lang")
             try {
-                let res = await axios.get('http://093g123.mars2.mars-hosting.com/API/text', {
+                let res = await axios.get('https://093g123.mars2.mars-hosting.com/API/text', {
                     params: {
                         language: language
                     }
@@ -82,7 +82,7 @@ export default {
                 this.heroMon = "heroMon"
             }
             try {
-                let slike = await axios.get('http://093g123.mars2.mars-hosting.com/API/pictures', {
+                let slike = await axios.get('https://093g123.mars2.mars-hosting.com/API/pictures', {
                     params: {
                         fil_type: this.heroMon
                     }
@@ -96,12 +96,11 @@ export default {
         },
         async fetchTrkePicures(param) {
                 try {
-                    let slike = await axios.get('http://093g123.mars2.mars-hosting.com/API/pictures', {
+                    let slike = await axios.get('https://093g123.mars2.mars-hosting.com/API/pictures', {
                         params: {
                             fil_type: param
                         }
                     })
-                    console.log(slike);
                     if(param == 'T1' || param == 'T2'){
                         this.popupImg = slike.data.q
                     }
@@ -173,7 +172,7 @@ export default {
                 <div class="carousel-inner">
                     <div v-for="(img, index) in hero" :key="index" class="carousel-item"
                         :class="{ 'active': index === 0 }" data-bs-interval="5000">
-                        <img :src="img.files_imageURL" class="d-block w-100 carouselImg" alt="...">
+                        <img :src="img.files_imageURL" class="d-block w-100 carouselImg" alt="Ulicna trka Ecka hero slike">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
@@ -188,23 +187,23 @@ export default {
                 </button>
             </div>
         <nav class="nav">
-        <img class="logo" src="../assets/logo.png" alt="">
+        <img class="logo" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
         <ul class="navLista">
             <li class="navLink"><a href="#trke">{{ this.shortText.dogadjajinaslov }}</a></li>
             <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
             <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
             <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
             <li class="language" @click="changeLang">
-                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png">
+                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
                 <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png">  
+                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">  
             </li>
         </ul>
         </nav>
         <div class="nav2">
             <div class="menu">
                 <div class="menuWrapper">
-                    <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
+                    <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
                     <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
                 </div>
                 <div class="dropDownMenu" v-if="this.menu">
@@ -214,9 +213,9 @@ export default {
                     <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
                     <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
                     <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png">
+                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
                         <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png">
+                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">
                     </div>
                 </div>
             </div>
@@ -247,7 +246,7 @@ export default {
         </div>
     </div>
     <div class="partneriTrke">
-        <img class="decathlonImg" src="../assets/decathlon.jpg" alt="">
+        <img class="decathlonImg" src="../assets/decathlon.jpg" alt="Decathlon - slike">
         <div class="decathlonText">
         <h3 class="decathlonHeading">{{ this.shortText.decathlonheading }} <span>{{ this.shortText.decathlonspan }}</span></h3>
         <p class="decathlonParagraf">{{ this.shortText.decp1 }}</p>
@@ -266,7 +265,7 @@ export default {
     <h2 class="sponzoriHeader">{{ this.shortText.sponzoriHeader }}</h2>
     <div class="sponzoriWrapper">
         <div class="sponzor" v-for="(sponzor, index) in sponzoriArr" :key="index">
-            <img class="sponzorImg" :src="sponzor.files_imageURL" alt="">
+            <img class="sponzorImg" :src="sponzor.files_imageURL" alt="Sponzor slika">
         </div>
     </div>
     <Transition @enter="enterAnimation" @leave="leaveAnimation">
@@ -276,7 +275,7 @@ export default {
                 <div class="carousel-inner">
                     <div v-for="(img, index) in popupImg" :key="index" class="carousel-item"
                         :class="{ 'active': index === 0 }" data-bs-interval="5000">
-                        <img :src="img.files_imageURL" class="d-block w-100" alt="...">
+                        <img :src="img.files_imageURL" class="d-block w-100" alt="Prva ulicna trka Ecka slike">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2"
@@ -309,7 +308,7 @@ export default {
                 <div class="carousel-inner">
                     <div v-for="(img, index) in popupImg" :key="index" class="carousel-item"
                         :class="{ 'active': index === 0 }" data-bs-interval="5000">
-                        <img :src="img.files_imageURL" class="d-block w-100" alt="...">
+                        <img :src="img.files_imageURL" class="d-block w-100" alt="Druga ulicna trka Ecka slike">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions3"
@@ -364,7 +363,7 @@ position: relative;
     width: 4em !important;
     height: 4em !important;
 }
-.carousel-control-prev, .carousel-control-next {
+#carouselExampleCaptions .carousel-control-prev, #carouselExampleCaptions .carousel-control-next {
     width: 5% !important;
 }
 .nav2{
