@@ -14,7 +14,7 @@ const router = createRouter({
       component: Home,
       meta: {
         title: "Ulična Trka Ečka: Sve što Treba da Znate",
-        description: "Učestvujte u Uličnoj trci Ecka i trkajte se na različitim stazama kao što su dečija trka i štafetna trka. Osvojite novčane nagrade i unikatne medalje. Registracija je otvorena do 20.10.2023."
+        description: "Učestvujte u Uličnoj trci Ečka i trkajte se u različitim trkama kao što su trka na 10km, trka na 5km, dečija trka i štafetna trka. Osvojite novčane nagrade i unikatne medalje. Registracija je otvorena do 20.10.2023."
       }
     },
     {
@@ -23,7 +23,7 @@ const router = createRouter({
       component: Trka,
       meta: {
         title: "Treća Ulična Trka Ecka: Informacije i Detalji",
-        description: 'Saznajte sve o trećem izdanju Ulične trke Ecka, stazama, kategorijama i nagradama.'
+        description: 'Saznajte sve o trećem izdanju Ulične trke Ečka, stazama, kategorijama i nagradama.'
       }
     },
     {
@@ -32,7 +32,7 @@ const router = createRouter({
       component: Kontakt,
       meta: {
         title: "Kontaktirajte nas - Ulična Trka Ecka",
-        description: "Kontaktirajte organizatore Ulične trke Ecka za više informacija o događaju, registraciji i sponzorstvu."
+        description: "Kontaktirajte organizatore Ulične trke Ečka za više informacija o događaju, registraciji i sponzorstvu."
       }
     },
     {
@@ -41,7 +41,7 @@ const router = createRouter({
       component: Rezultati,
       meta: {
         title: "Rezultati Poslednjih Uličnih Trka u Ečkoj",
-        description: "Pregledajte rezultate prošlih i aktuelnih izdanja Ulične trke Ecka. Pronađite svoje vreme, rang i uporedite se sa drugim učesnicima."
+        description: "Pregledajte rezultate prošlih i aktuelnih izdanja Ulične trke Ečka. Pronađite svoje vreme, rang i uporedite se sa drugim učesnicima."
       }
     },
     {
@@ -50,7 +50,7 @@ const router = createRouter({
       component: TabelaTrke,
       meta: {
         title: "Tabele Rezultata: Ulična Trka Ecka",
-        description: "Detaljna tabela sa rezultatima Ulične trke Ecka. Pregledajte vremena, pozicije i kategorije za svaku trku."
+        description: "Detaljna tabela sa rezultatima Ulične trke Ečka. Pregledajte vremena, pozicije i kategorije za svaku trku."
       }
     }
   ],
