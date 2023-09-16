@@ -371,7 +371,7 @@ margin: 0;
 padding: 0;
 font-family: Poppins;
 scroll-behavior: smooth;
-font-display: optinal;
+font-display: optional;
 }
 body{
     overflow-x: hidden;
