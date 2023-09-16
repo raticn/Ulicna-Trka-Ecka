@@ -113,6 +113,23 @@ export default {
                     console.log(error);
                 }
             },
+            layoutShift() {
+                if(window.screen.width >= 1600) {
+                    document.querySelector(".datumTrke").style.minHeight = "106px"
+                }
+                else if (window.screen.width > 1350 && window.screen.width < 1600) {
+                    document.querySelector(".datumTrke").style.minHeight = "91px"
+                }
+                else if (window.screen.width > 1000 && window.screen.width <= 1350) {
+                    document.querySelector(".datumTrke").style.minHeight = "76px"
+                }
+                else if (window.screen.width > 600 && window.screen.width <= 1000) {
+                    document.querySelector(".datumTrke").style.minHeight = "60px"
+                }
+                else if (window.screen.width <= 600) {
+                    document.querySelector(".datumTrke").style.minHeight = "51px"
+                }
+            },
         },
     async mounted() {
     try {
@@ -231,7 +248,7 @@ export default {
                 </button>
             </div>
             <h1 class="heroText"><span class="rec1">{{ this.shortText.animeprva }}</span> <span class="rec2">{{ this.shortText.animedruga }}</span> <span class="rec3">{{ this.shortText.animetreca }}</span></h1>
-            <div class="datumTrke"><span class="countDownSkeleton">SUBOTA, 28. Oktobar 2023.</span>{{ this.shortText.datumtrke }}</div>
+            <div class="datumTrke">{{ this.shortText.datumtrke }}</div>
         </section>
     </div>
     <section aria-label="Sekcija: Odbrojavanje do trke">
@@ -611,16 +628,6 @@ h1{
     color: #fff;
     z-index: 5;
 }
-.countDownSkeleton{
-    position: absolute;
-    z-index: 2;
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
-    padding: 0.2em 0.5em;
-    width: 100%;
-    color: transparent;
-}
 /* ---------------------------------------END OF HERO SECTION------------------------------------ */
 
 /* ---------------------------------------------COUNTDOWN----------------------------------------- */
@@ -946,6 +953,8 @@ padding: 0.5em 0;
     }
     .datumTrke{
         font-size: 2em;
+        width: 80%;
+        text-align: center;
     }
     .trka{
         flex-basis: 31%;
@@ -1005,9 +1014,6 @@ padding: 0.5em 0;
         font-size: 1.3em;
         width: 15em;
         text-align: center;
-        padding: 0.5em;
-    }
-    .countDownSkeleton{
         padding: 0.5em;
     }
     .nav2 {
