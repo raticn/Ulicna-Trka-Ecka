@@ -459,7 +459,7 @@ li a{
     text-decoration: none;
 }
 h1{
-    font-size: 1.5em !important;
+    font-size: 1.2em !important;
 }
 .rec1, .rec2, .rec3{
     position: absolute;
@@ -905,6 +905,12 @@ padding: 0.5em 0;
     }
     .editTrkeHeader{
         font-size: 5em;
+    }
+}
+
+@media (max-width: 1450px) {
+    h1{
+        font-size: 1em !important;
     }
 }
 
