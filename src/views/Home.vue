@@ -22,6 +22,7 @@ export default {
             popupImg: [],
             sponzoriArr: [],
             hero: [],
+            countDownSkeleton: true,
         }
     },
     components: {
@@ -72,6 +73,7 @@ export default {
                     this.shortText[item.tex_name] = item.tex_text
                     this.longText[item.tex_name] = item.tex_long
                 }
+                this.countDownSkeleton = false
             } catch (error) {
                 console.log(error);
             }
@@ -231,7 +233,7 @@ export default {
                 </button>
             </div>
             <h1 class="heroText"><span class="rec1">{{ this.shortText.animeprva }}</span> <span class="rec2">{{ this.shortText.animedruga }}</span> <span class="rec3">{{ this.shortText.animetreca }}</span></h1>
-            <div class="datumTrke">{{ this.shortText.datumtrke }}</div>
+            <div class="datumTrke"><span v-if="this.countDownSkeleton" class="countDownSkeleton">SUBOTA, 28. Oktobar 2023.</span>{{ this.shortText.datumtrke }}</div>
         </section>
     </div>
     <section aria-label="Sekcija: Odbrojavanje do trke">
