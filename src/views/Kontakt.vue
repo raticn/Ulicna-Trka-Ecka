@@ -81,73 +81,76 @@ export default{
 
 <template>
 <div class="kontaktWrapper">
-    <nav class="nav fixed">
-        <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
-        <ul class="navLista">
-            <li class="navLink">{{ this.shortText.dogadjajinaslov }}</li>
-            <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
-            <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
-            <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
-            <li class="language" @click="changeLang">
-                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
-                <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">  
-            </li>
-        </ul>
-    </nav>
-    <div class="nav2">
-        <div class="menu">
-            <div class="menuWrapper">
-                <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
-                <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
+    <header>
+        <nav>
+            <div class="nav fixed">
+                <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
+                <ul class="navLista">
+                    <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
+                    <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
+                    <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
+                    <li class="language" @click="changeLang">
+                        <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                        <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                        <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">  
+                    </li>
+                </ul>
             </div>
-            <div class="dropDownMenu" v-if="this.menu">
-                <p @click="this.menu = !this.menu" class="navLink2"><a href="#trke">{{ this.shortText.dogadjajinaslov }}</a>
-                </p>
-                <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
-                <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
-                <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
-                <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
-                    <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">
+            <div class="nav2">
+                <div class="menu">
+                    <div class="menuWrapper">
+                        <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
+                        <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
+                    </div>
+                    <div class="dropDownMenu" v-if="this.menu">
+                        <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
+                        <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
+                        <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
+                        <div class="lang2" @click="changeLang(); this.menu = !this.menu">
+                            <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                            <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                            <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </nav>
+    </header>
     <div class="kontakt">
         <div class="kontaktInfo">
-            <div class="contactUs">
-                <p class="bold">Sportsko udruženje Ulična trka Ečka</p>
-                <p class="bold">Beogradska 64, Zrenjanin</p>
-                <p class="bold">+381 62 543-543</p>
-            </div>
-            <form id="form" action="https://formsubmit.co/ulicnatrkaecka@gmail.com" method="POST">
-                <div class="formInfo">
-                    <div class="formField" :class="{ focused: isNameFocused || form.name !== '' }">
-                        <p @click="focusInput('imeInput')">{{ this.shortText.imeInput }}</p>
-                        <input ref="imeInput" name="Ime" type="text" v-model="form.name" required @focus="onFocus('isNameFocused')" @blur="onBlur('isNameFocused', 'name')"/>
+            <section class="contactUs" aria-label="Sekcija: Kontakt informacije">
+                    <p class="bold">Sportsko udruženje Ulična trka Ečka</p>
+                    <p class="bold">Beogradska 64, Zrenjanin</p>
+                    <p class="bold">+381 62 543-543</p>
+            </section>
+            <section aria-label="Sekcija: Kontakt forma">
+                <form id="form" action="https://formsubmit.co/ulicnatrkaecka@gmail.com" method="POST">
+                    <div class="formInfo">
+                        <div class="formField" :class="{ focused: isNameFocused || form.name !== '' }">
+                            <p @click="focusInput('imeInput')">{{ this.shortText.imeInput }}</p>
+                            <input ref="imeInput" name="Ime" type="text" v-model="form.name" required @focus="onFocus('isNameFocused')" @blur="onBlur('isNameFocused', 'name')"/>
+                        </div>
+                        <div class="formField" :class="{ focused: isEmailFocused || form.email !== '' }">
+                            <p @click="focusInput('emailInput')">{{ this.shortText.emailInput }}</p>
+                            <input ref="emailInput" name="Email" type="email" v-model="form.email" required @focus="onFocus('isEmailFocused')" @blur="onBlur('isEmailFocused', 'email')"/>
+                        </div>
+                        <div class="formField" :class="{ focused: isPredmetFocused || form.predmet !== '' }">
+                            <p @click="focusInput('predmetInput')">{{ this.shortText.predmetInput }}</p>
+                            <input ref="predmetInput" name="Predmet" type="text" v-model="form.predmet" required @focus="onFocus('isPredmetFocused')" @blur="onBlur('isPredmetFocused', 'predmet')"/>
+                        </div>
                     </div>
-                    <div class="formField" :class="{ focused: isEmailFocused || form.email !== '' }">
-                        <p @click="focusInput('emailInput')">{{ this.shortText.emailInput }}</p>
-                        <input ref="emailInput" name="Email" type="email" v-model="form.email" required @focus="onFocus('isEmailFocused')" @blur="onBlur('isEmailFocused', 'email')"/>
+                    <div class="formMessage">
+                        <div class="formField">
+                            <textarea name="Poruka" id="message" v-model="form.message" cols="30" rows="10" required :placeholder="placeholder == 'sr' ? 'Poruka' : 'Message' "></textarea>
+                            <button class="formBtn" type="submit">{{ this.shortText.posaljiBtn }}</button>
+                        </div>
                     </div>
-                    <div class="formField" :class="{ focused: isPredmetFocused || form.predmet !== '' }">
-                        <p @click="focusInput('predmetInput')">{{ this.shortText.predmetInput }}</p>
-                        <input ref="predmetInput" name="Predmet" type="text" v-model="form.predmet" required @focus="onFocus('isPredmetFocused')" @blur="onBlur('isPredmetFocused', 'predmet')"/>
-                    </div>
-                </div>
-                <div class="formMessage">
-                    <div class="formField">
-                        <textarea name="Poruka" id="message" v-model="form.message" cols="30" rows="10" required :placeholder="placeholder == 'sr' ? 'Poruka' : 'Message' "></textarea>
-                        <button class="formBtn" type="submit">{{ this.shortText.posaljiBtn }}</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </section>
         </div>
-        <div class="mapaFrame">
-            <iframe class="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2805.342349493463!2d20.431614576266234!3d45.321708871071955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475ac3a93f9eb7bf%3A0x75c654c82e06604d!2z0KXQvtGC0LXQuyDQmtCw0YjRgtC10Lsg0JXRh9C60LA!5e0!3m2!1ssr!2srs!4v1693728683502!5m2!1ssr!2srs" style="border:0;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+        <section class="mapaFrame" aria-label="Sekcija: Mapa">
+                <iframe class="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2805.342349493463!2d20.431614576266234!3d45.321708871071955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475ac3a93f9eb7bf%3A0x75c654c82e06604d!2z0KXQvtGC0LXQuyDQmtCw0YjRgtC10Lsg0JXRh9C60LA!5e0!3m2!1ssr!2srs!4v1693728683502!5m2!1ssr!2srs" style="border:0;" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </section>
     </div>
 </div>
 <Footer/>

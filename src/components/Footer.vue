@@ -19,7 +19,6 @@ export default {
     <div class="footer">
         <div class="footer_wrapper">
             <div class="footer_info">
-                <!-- <img class="footer_logo" src="../assets/logo.png" alt="MMD logo"> -->
                 <p>
                     <FontAwesomeIcon class="footerIcons" icon="fa-solid fa-location-dot"></FontAwesomeIcon>Sportsko
                     udruženje Ulična trka Ečka, Beogradska 64, Zrenjanin
@@ -35,10 +34,10 @@ export default {
             <div class="socials">
                 <p>Pratite nas na društvenim mrežama</p>
                 <div class="socialsLinks">
-                    <p><a href="https://www.instagram.com/ulicna_trka_ecka/" target="_blank">
+                    <p><a aria-label="Pogledajte nasu Instagram stranicu" href="https://www.instagram.com/ulicna_trka_ecka/" target="_blank">
                             <FontAwesomeIcon class="socialIcons" icon="fa-brands fa-instagram"></FontAwesomeIcon>
                         </a></p>
-                    <p><a href="https://www.facebook.com/ulicnatrkaecka" target="_blank">
+                    <p><a aria-label="Pogledajte nasu Facebook stranicu" href="https://www.facebook.com/ulicnatrkaecka" target="_blank">
                             <FontAwesomeIcon class="socialIcons" icon="fa-brands fa-facebook"></FontAwesomeIcon>
                         </a></p>
                 </div>

@@ -94,44 +94,45 @@ export default{
 </script>
 
 <template>
-<nav class="nav fixed">
-    <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
-    <ul class="navLista">
-        <li class="navLink">{{ this.shortText.dogadjajinaslov }}</li>
-        <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
-        <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
-        <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
-        <li class="language" @click="changeLang">
-            <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
-            <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-            <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">  
-        </li>
-    </ul>
-    </nav>
-    <div class="nav2">
-        <div class="menu">
-            <div class="menuWrapper">
-                <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
-                <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
-            </div>
-            <div class="dropDownMenu" v-if="this.menu">
-                <p @click="this.menu = !this.menu" class="navLink2"><a href="#trke">{{ this.shortText.dogadjajinaslov }}</a>
-                </p>
-                <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
-                <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
-                <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
-                <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
-                    <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">
+<header>
+    <nav>
+        <div class="nav fixed">
+            <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
+            <ul class="navLista">
+                <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
+                <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
+                <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
+                <li class="language" @click="changeLang">
+                    <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                    <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                    <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">  
+                </li>
+            </ul>
+        </div>
+        <div class="nav2">
+            <div class="menu">
+                <div class="menuWrapper">
+                    <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
+                    <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
+                </div>
+                <div class="dropDownMenu" v-if="this.menu">
+                    <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
+                    <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
+                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
+                    <div class="lang2" @click="changeLang(); this.menu = !this.menu">
+                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                        <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </nav>
+</header>
 <div class="tableWrapper">
-    <div class="pol">
+    <section class="pol" aria-label="Sekcija: Odabir pola ucesnika trke">
         {{ this.shortText.tablePol }}: <button class="polBtn"  @click="this.pol = 'Muški'; sendGender()">{{ this.shortText.polM }}</button> / <button class="polBtn" @click="this.pol = 'Ženski'; sendGender()">{{ this.shortText.polZ }}</button>
-    </div>
+    </section>
     <table>
         <thead>
         <tr>

@@ -75,48 +75,49 @@ export default{
 </script>
 
 <template>
-<div class="trkaHero">
-    <nav class="nav fixed">
-    <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
-    <ul class="navLista">
-        <li class="navLink">{{ this.shortText.dogadjajinaslov }}</li>
-        <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
-        <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
-        <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
-        <li class="language" @click="changeLang">
-            <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
-            <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-            <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">  
-        </li>
-    </ul>
-    </nav>
-    <div class="nav2">
-        <div class="menu">
-            <div class="menuWrapper">
-                <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
-                <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
+    <header>
+        <nav>
+            <div class="nav fixed">
+                <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
+                <ul class="navLista">
+                    <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
+                    <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
+                    <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
+                    <li class="language" @click="changeLang">
+                        <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                        <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                        <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">  
+                    </li>
+                </ul>
             </div>
-            <div class="dropDownMenu" v-if="this.menu">
-                <p @click="this.menu = !this.menu" class="navLink2"><a href="#trke">{{ this.shortText.dogadjajinaslov }}</a>
-                </p>
-                <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
-                <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
-                <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
-                <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
-                    <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                    <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">
+            <div class="nav2">
+                <div class="menu">
+                    <div class="menuWrapper">
+                        <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
+                        <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
+                    </div>
+                    <div class="dropDownMenu" v-if="this.menu">
+                        <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
+                        <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
+                        <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
+                        <div class="lang2" @click="changeLang(); this.menu = !this.menu">
+                            <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                            <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                            <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <video class="trkaVideo" controls muted autoplay>
-        <source src="../assets/trkaVideo.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-</div>
+        </nav>
+    </header>
+    <section class="trkaHero">
+        <video class="trkaVideo" controls muted autoplay aria-label="Video prikaz putanje Ulicne trke Ecka">
+            <source src="../assets/trkaVideo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </section>
 <h2 class="paketHeading">{{ this.shortText.paketHeading }}</h2>
-<div class="ucesnickiPaket">
+<section class="ucesnickiPaket" aria-label="Sekcija: Ucesnicki paket - sta sve ucesnik trke dobija">
     <div class="paket">
         <FontAwesomeIcon class="paketiIcons" icon="fa-solid fa-microchip"></FontAwesomeIcon>
         <p>{{ this.shortText.paketp1 }}</p>
@@ -149,10 +150,10 @@ export default{
         <FontAwesomeIcon class="paketiIcons" icon="fa-solid fa-suitcase-medical"></FontAwesomeIcon>
         <p>{{ this.shortText.paketp8 }}</p>
     </div>
-</div>
+</section>
 <div class="trkeInfoWrapper">
     <div class="vrsteTrka">
-        <div class="trkeInfo">
+        <section class="trkeInfo">
             <h2 class="trkeInfoHeader">{{ this.shortText.trkeInfoHeader }}</h2>
             <p><span class="bold">{{ this.shortText.trkeSpan1 }} </span>  {{ this.shortText.trkeInfo1 }}</p>
             <p><span class="bold">{{ this.shortText.trkeSpan2 }}</span> {{ this.shortText.trkeInfo21 }} <span class="sertifikat" @click="this.sertifikat = !this.sertifikat"> {{ this.shortText.trkeInfo22 }} </span> {{ this.shortText.trkeInfo23 }}</p>
@@ -167,8 +168,8 @@ export default{
             {{ this.shortText.kategorija4 }} <br>
             {{ this.shortText.kategorija5 }} <br>
             {{ this.shortText.kategorija6 }}</span></p>
-        </div>
-        <div class="carouselWrapper">
+        </section>
+        <section class="carouselWrapper" aria-label="Sekcija: Carousel slika za 3. Ulicnu trku Ecka">
             <div id="carouselExampleCaptions4" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
                     <div v-for="(img, index) in trke" :key="index" class="carousel-item"
@@ -187,8 +188,8 @@ export default{
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-        </div>
-        <div class="trkeInfo2">
+        </section>
+        <section class="trkeInfo2" aria-label="Sekcija: Informacije o dogadjaju 2. deo">
             <p><span class="bold">{{ this.shortText.trkeSpan6 }}</span></p>
             <p>{{ this.shortText.trkeInfo61 }}</p>
             <p>{{ this.shortText.trkeInfo62 }}</p>
@@ -197,14 +198,14 @@ export default{
             <p><span class="bold">{{ this.shortText.trkeSpan8 }}</span> {{ this.longText.trkeInfo8 }}</p>
             <p>{{ this.shortText.trkeInfo91 }} <span class="bold">{{ this.shortText.trkeSpan9 }}</span>{{ this.shortText.trkeInfo92 }}</p>
             <p><span class="bold">{{ this.shortText.trkeInfo10 }}</span></p>
-        </div>
+        </section>
     </div>
     <div class="decijaTrkaWrapper">
-        <video class="decijaTrkaVideo" controls muted>
+        <video class="decijaTrkaVideo" controls muted aria-label="Video prikaz decije trke">
             <source src="../assets/decijatrka.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <div class="decijaTrka">
+        <section class="decijaTrka">
             <h2 class="decijaTrkaHeading">{{ this.shortText.decijaTrkaHeading }}</h2>
             <p>{{ this.shortText.decijaTrkaP1 }}</p>
             <p>{{ this.shortText.decijaTrkaP2 }}</p>
@@ -213,14 +214,14 @@ export default{
             {{ this.shortText.decijaDis2 }}<br> 
             {{ this.shortText.decijaDis3 }} <br>
             {{ this.shortText.decijaDis4 }}</p>
-        </div>
+        </section>
     </div>
 </div>
-<div class="sertifikatPopup" v-if="this.sertifikat">
+<section class="sertifikatPopup" v-if="this.sertifikat" aria-label="Sekcija: Slike sertifikata trke od 5km i 10km">
     <FontAwesomeIcon @click="this.sertifikat = !this.sertifikat" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
     <img class="sertifikat" src="../assets/sertifikat1.jpg" alt="Sertifikat1 slika">
     <img class="sertifikat" src="../assets/sertifikat2.jpg" alt="Sertifikat2 slika">
-</div>
+</section>
 <Footer/>
 </template>
 

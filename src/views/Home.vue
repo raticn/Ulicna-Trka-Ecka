@@ -51,9 +51,11 @@ export default {
         changeLang() {
             if (localStorage.getItem("lang") == "sr") {
                 localStorage.setItem("lang", "en")
+                document.documentElement.lang = "en"
             }
             else {
                 localStorage.setItem("lang", "sr")
+                document.documentElement.lang = "sr"
             }
             this.fetchText()
         },
@@ -129,9 +131,11 @@ export default {
             let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-            document.querySelector(".countDown").innerHTML = days + "d " + hours + "h "
-            + minutes + "m " + seconds + "s ";
+            
+            let countDown = document.querySelector(".countDown")
+            if(countDown){
+                countDown.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            }
     
             if (distance < 0) {
             clearInterval(x);
@@ -166,9 +170,49 @@ export default {
 </script>
 
 <template>
-<div class="appWrapper">
+<main>
+    <div class="appWrapper">
+    <header>
+        <nav>
+        <div class="nav">
+            <img class="logo" src="../assets/logo.png"  alt="Ulicna trka Ecka logo">
+            <ul class="navLista">
+                <li class="navLink"><a aria-label="Pregled trka" href="#trke">{{ this.shortText.dogadjajinaslov }}</a></li>
+                <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
+                <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
+                <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
+                <li class="language" @click="changeLang">
+                    <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                    <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                    <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">  
+                </li>
+            </ul>
+        </div>
+        <div class="nav2">
+            <div class="menu">
+                <div class="menuWrapper">
+                    <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
+                    <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
+                </div>
+                <div class="dropDownMenu" v-if="this.menu">
+                    <p @click="this.menu = !this.menu" class="navLink2"><a aria-label="Pregled trka" href="#trke">{{ this.shortText.dogadjajinaslov }}</a>
+                    </p>
+                    <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
+                    <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
+                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
+                    <div class="lang2" @click="changeLang(); this.menu = !this.menu">
+                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                        <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
+                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        </nav>
+    </header>
     <div class="heroWrapper">
-        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+        <section aria-label="Sekcija: Landing page">
+            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
                     <div v-for="(img, index) in hero" :key="index" class="carousel-item"
                         :class="{ 'active': index === 0 }" data-bs-interval="5000">
@@ -186,117 +230,96 @@ export default {
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-        <nav class="nav">
-        <img class="logo" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
-        <ul class="navLista">
-            <li class="navLink"><a href="#trke">{{ this.shortText.dogadjajinaslov }}</a></li>
-            <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
-            <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
-            <li class="navLink prijava"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
-            <li class="language" @click="changeLang">
-                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
-                <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">  
-            </li>
-        </ul>
-        </nav>
-        <div class="nav2">
-            <div class="menu">
-                <div class="menuWrapper">
-                    <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
-                    <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
-                </div>
-                <div class="dropDownMenu" v-if="this.menu">
-                    <p @click="this.menu = !this.menu" class="navLink2"><a href="#trke">{{ this.shortText.dogadjajinaslov }}</a>
-                    </p>
-                    <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
-                    <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
-                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
-                    <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" alt="Serbian flag image">
-                        <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" alt="USA flag image">
-                    </div>
-                </div>
+            <h1 class="heroText"><span class="rec1">{{ this.shortText.animeprva }}</span> <span class="rec2">{{ this.shortText.animedruga }}</span> <span class="rec3">{{ this.shortText.animetreca }}</span></h1>
+            <div class="datumTrke">{{ this.shortText.datumtrke }}</div>
+        </section>
+    </div>
+    <section aria-label="Sekcija: Odbrojavanje do trke">
+        <div class="odbrojavanjeWrapper">
+            <h2 class="countdownHeader">{{ this.shortText.vreme }}</h2>
+            <p class="countDown" aria-live="polite" aria-atomic="true"></p>
+            <a class="countdownBtn" aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.trk }}</a>
+        </div>
+    </section>
+    <section aria-label="Sekcija: Dosadasnje trke">
+        <div class="trkeWrapper" id="trke">
+            <div class="trka trka1" @click="fetchTrkePicures('T1'); this.prvaTrka = !this.prvaTrka">
+                <p class="trkaNo">{{ this.shortText.trka1naslov }}</p>
+                <p class="trkaGod">{{ this.shortText.trka1god }}</p>
+                <div class="overlay"></div>
+            </div>
+            <div class="trka trka2" @click="fetchTrkePicures('T2'); this.drugaTrka = !this.drugaTrka">
+                <p class="trkaNo">{{ this.shortText.trka2naslov }}</p>
+                <p class="trkaGod">{{ this.shortText.trka2god }}</p>
+                <div class="overlay"></div>
+            </div>
+            <div class="trka trka3" @click="this.$router.push('/trka')">
+                <p class="trkaNo">{{ this.shortText.trka3naslov  }}</p>
+                <p class="trkaGod">{{ this.shortText.trka3god }}</p>
+                <div class="overlay"></div>
             </div>
         </div>
-        <p class="heroText"><span class="rec1">{{ this.shortText.animeprva }}</span> <span class="rec2">{{ this.shortText.animedruga }}</span> <span class="rec3">{{ this.shortText.animetreca }}</span></p>
-        <div class="datumTrke">{{ this.shortText.datumtrke }}</div>
-    </div>
-    <div class="odbrojavanjeWrapper">
-        <h2 class="countdownHeader">{{ this.shortText.vreme }}</h2>
-        <p class="countDown"></p>
-        <button class="countdownBtn"><a href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.trk }}</a></button>
-    </div>
-    <div class="trkeWrapper" id="trke">
-        <div class="trka trka1" @click="fetchTrkePicures('T1'); this.prvaTrka = !this.prvaTrka">
-            <p class="trkaNo">{{ this.shortText.trka1naslov }}</p>
-            <p class="trkaGod">{{ this.shortText.trka1god }}</p>
-            <div class="overlay"></div>
+    </section>
+    <section>
+        <div class="partneriTrke">
+            <img class="decathlonImg" src="../assets/decathlon.jpg" alt="Decathlon - slike">
+            <div class="decathlonText">
+            <h3 class="decathlonHeading">{{ this.shortText.decathlonheading }} <span>{{ this.shortText.decathlonspan }}</span></h3>
+            <p class="decathlonParagraf">{{ this.shortText.decp1 }}</p>
+            <p class="decathlonParagraf">{{ this.shortText.decp2 }}</p>
+            <p class="decathlonParagraf">{{ this.shortText.decp3 }}</p>
+            <p class="decathlonParagraf">{{ this.longText.decp4 }}</p>
+            </div>
         </div>
-        <div class="trka trka2" @click="fetchTrkePicures('T2'); this.drugaTrka = !this.drugaTrka">
-            <p class="trkaNo">{{ this.shortText.trka2naslov }}</p>
-            <p class="trkaGod">{{ this.shortText.trka2god }}</p>
-            <div class="overlay"></div>
+    </section>
+    <section>
+        <div class="editTrkeWrapper">
+            <h2 class="editTrkeHeader">{{ this.shortText.editTrkeHeader }}</h2>
+            <video class="editTrke" controls aria-label="Video montaza 2. Ulicne trke Ecka">
+                <source src="../assets/editTrke.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
-        <div class="trka trka3" @click="this.$router.push('/trka')">
-            <p class="trkaNo">{{ this.shortText.trka3naslov  }}</p>
-            <p class="trkaGod">{{ this.shortText.trka3god }}</p>
-            <div class="overlay"></div>
+    </section>
+    <section>
+        <h2 class="sponzoriHeader">{{ this.shortText.sponzoriHeader }}</h2>
+        <div class="sponzoriWrapper">
+            <div class="sponzor" v-for="(sponzor, index) in sponzoriArr" :key="index">
+                <img class="sponzorImg" :src="sponzor.files_imageURL" width="380" height="380" alt="Sponzor slika">
+            </div>
         </div>
-    </div>
-    <div class="partneriTrke">
-        <img class="decathlonImg" src="../assets/decathlon.jpg" alt="Decathlon - slike">
-        <div class="decathlonText">
-        <h3 class="decathlonHeading">{{ this.shortText.decathlonheading }} <span>{{ this.shortText.decathlonspan }}</span></h3>
-        <p class="decathlonParagraf">{{ this.shortText.decp1 }}</p>
-        <p class="decathlonParagraf">{{ this.shortText.decp2 }}</p>
-        <p class="decathlonParagraf">{{ this.shortText.decp3 }}</p>
-        <p class="decathlonParagraf">{{ this.longText.decp4 }}</p>
-        </div>
-    </div>
-    <div class="editTrkeWrapper">
-        <h2 class="editTrkeHeader">{{ this.shortText.editTrkeHeader }}</h2>
-        <video class="editTrke" controls>
-            <source src="../assets/editTrke.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-    <h2 class="sponzoriHeader">{{ this.shortText.sponzoriHeader }}</h2>
-    <div class="sponzoriWrapper">
-        <div class="sponzor" v-for="(sponzor, index) in sponzoriArr" :key="index">
-            <img class="sponzorImg" :src="sponzor.files_imageURL" alt="Sponzor slika">
-        </div>
-    </div>
+    </section>
     <Transition @enter="enterAnimation" @leave="leaveAnimation">
     <div class="prvaTrkaWrapper" v-if="this.prvaTrka">
         <div class="prvaTrkaPopup">
-            <div id="carouselExampleCaptions2" class="carousel slide carouselPopup" data-bs-ride="carousel" data-bs-interval="5000">
-                <div class="carousel-inner">
-                    <div v-for="(img, index) in popupImg" :key="index" class="carousel-item"
-                        :class="{ 'active': index === 0 }" data-bs-interval="5000">
-                        <img :src="img.files_imageURL" class="d-block w-100" alt="Prva ulicna trka Ecka slike">
+            <section class="carouselPopup" aria-label="Sekcija: Carousel slika 1. Ulicne trke Ecka">
+                <div id="carouselExampleCaptions2" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                    <div class="carousel-inner">
+                        <div v-for="(img, index) in popupImg" :key="index" class="carousel-item"
+                            :class="{ 'active': index === 0 }" data-bs-interval="5000">
+                            <img :src="img.files_imageURL" class="d-block w-100" alt="Prva ulicna trka Ecka slike">
+                        </div>
                     </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            <div class="prvaTrkaText">
+            </section>
+            <section class="prvaTrkaText">
                 <h2 class="prvaTrkaHeading">{{ this.shortText.prvaTrkaHeading }}</h2>
                 <p class="datumTrkePopup">{{ this.shortText.trka1popdate }}</p>
                 <p class="prvaTrkaParagraf">{{ this.shortText.trka1popfinish }}</p>
                 <p class="prvaTrkaParagraf">{{ this.longText.trka1popopis }}</p>
-                <p class="prvaTrkaParagraf" @click="this.$router.push('/rezultati')"><a href="">{{ this.shortText.trka1poprez }}</a></p>
-                <div class="ytWrapper"><a href="https://youtu.be/P6kK6lt81E4?si=GEsAHkMsHU5yfD_m" class="prvaTrkaParagraf" target="_blank">{{ this.shortText.trka1poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
-            </div>
+                <p class="prvaTrkaParagraf trkaLink" @click="this.$router.push('/rezultati')">{{ this.shortText.trka1poprez }}</p>
+                <div class="ytWrapper"><a aria-label="Pogledajte video prve trke na YouTube-u" href="https://youtu.be/P6kK6lt81E4?si=GEsAHkMsHU5yfD_m" class="prvaTrkaParagraf" target="_blank">{{ this.shortText.trka1poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
+            </section>
             <FontAwesomeIcon @click="this.prvaTrka = !this.prvaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
         </div>
     </div>
@@ -304,38 +327,41 @@ export default {
     <Transition @enter="enterAnimation" @leave="leaveAnimation">
     <div class="drugaTrkaWrapper" v-if="this.drugaTrka">
         <div class="drugaTrkaPopup">
-            <div id="carouselExampleCaptions3" class="carousel slide carouselPopup" data-bs-ride="carousel" data-bs-interval="5000">
-                <div class="carousel-inner">
-                    <div v-for="(img, index) in popupImg" :key="index" class="carousel-item"
-                        :class="{ 'active': index === 0 }" data-bs-interval="5000">
-                        <img :src="img.files_imageURL" class="d-block w-100" alt="Druga ulicna trka Ecka slike">
+            <section class="carouselPopup" aria-label="Sekcija: Carousel slika 2. Ulicne trke Ecka">
+                <div id="carouselExampleCaptions3" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                    <div class="carousel-inner">
+                        <div v-for="(img, index) in popupImg" :key="index" class="carousel-item"
+                            :class="{ 'active': index === 0 }" data-bs-interval="5000">
+                            <img :src="img.files_imageURL" class="d-block w-100" alt="Druga ulicna trka Ecka slike">
+                        </div>
                     </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions3"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions3"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions3"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions3"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            <div class="drugaTrkaText">
+            </section>
+            <section class="drugaTrkaText">
                 <h2 class="drugaTrkaHeading">{{ this.shortText.drugaTrkaHeading }}</h2>
                 <p class="datumTrkePopup">{{ this.shortText.trka2popdate }}</p>
                 <p class="drugaTrkaParagraf">{{ this.shortText.trka2popfinish }}</p>
                 <p class="drugaTrkaParagraf">{{ this.shortText.trka2popopis }}</p>
-                <p class="drugaTrkaParagraf" @click="this.$router.push('/rezultati')"><a href="">{{ this.shortText.trka2poprez }}</a></p>
-                <div class="ytWrapper"><a href="https://youtu.be/blSz_Dvg7Ro?si=U4Xlgl20OfWBG45C" class="drugaTrkaParagraf" target="_blank">{{ this.shortText.trka2poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
-            </div>
+                <p class="drugaTrkaParagraf trkaLink" @click="this.$router.push('/rezultati')">{{ this.shortText.trka2poprez }}</p>
+                <div class="ytWrapper"><a aria-label="Pogledajte video druge trke na YouTube-u" href="https://youtu.be/blSz_Dvg7Ro?si=U4Xlgl20OfWBG45C" class="drugaTrkaParagraf" target="_blank">{{ this.shortText.trka2poppogledaj }}</a><FontAwesomeIcon class="yt" icon="fa-brands fa-youtube"></FontAwesomeIcon></div>
+            </section>
             <FontAwesomeIcon @click="this.drugaTrka = !this.drugaTrka" class="xmark" icon="fa-solid fa-xmark"></FontAwesomeIcon>
         </div>
     </div>
     </Transition>
 </div>
 <RouterView></RouterView>
+</main>
 <Footer/>
 </template>
 
@@ -377,6 +403,7 @@ position: relative;
     align-items: center;
     color: #fff;
     width: 100%;
+    z-index: 500;
 }
 li a{
     color: #fff;
@@ -407,6 +434,7 @@ li a{
 }
 .lang{
     width: 3em;
+    height: auto;
 }
 .changeLang{
     font-size: 1.5em;
@@ -430,11 +458,13 @@ li a{
     color: #fff;
     text-decoration: none;
 }
+h1{
+    font-size: 1.5em !important;
+}
 .rec1, .rec2, .rec3{
     position: absolute;
     right: 5%;
-    top: -20%;
-    font-size: 7em;
+    top: -40%;
     font-weight: 700;
     color: #fff;
     width: 6em;
@@ -451,7 +481,7 @@ li a{
 }
 @keyframes rec1 {
     0%{
-        top: -20%;
+        top: -40%;
         font-size: 11em;
     }
     100%{
@@ -461,7 +491,7 @@ li a{
 }
 @keyframes rec2 {
     0%{
-        top: -20%;
+        top: -40%;
         font-size: 11em;
     }
     100%{
@@ -471,7 +501,7 @@ li a{
 }
 @keyframes rec3 {
     0%{
-        top: -20%;
+        top: -40%;
         font-size: 11em;
     }
     100%{
@@ -491,7 +521,7 @@ li a{
 }
 @keyframes rec1Big {
     0%{
-        top: -20%;
+        top: -30%;
         font-size: 12em;
     }
     100%{
@@ -502,7 +532,7 @@ li a{
 }
 @keyframes rec2Big {
     0%{
-        top: -20%;
+        top: -30%;
         font-size: 12em;
     }
     100%{
@@ -513,7 +543,7 @@ li a{
 }
 @keyframes rec3Big {
     0%{
-        top: -20%;
+        top: -30%;
         font-size: 12em;
     }
     100%{
@@ -534,7 +564,7 @@ li a{
 @keyframes rec1Small {
     0%{
         left: 50%;
-        top: -20%;
+        top: -30%;
         font-size: 6em;
     }
     100%{
@@ -547,7 +577,7 @@ li a{
 @keyframes rec2Small {
     0%{
         left: 50%;
-        top: -20%;
+        top: -30%;
         font-size: 6em;
     }
     100%{
@@ -560,7 +590,7 @@ li a{
 @keyframes rec3Small {
     0%{
         left: 50%;
-        top: -20%;
+        top: -30%;
         font-size: 6em;
     }
     100%{
@@ -599,12 +629,13 @@ font-size: 4em;
 font-size: 6em;
 }
 .countdownBtn{
-border: 4px solid #4A90E2;
-background-color: #fff;
-padding: 0.5em;
-margin: 1em 0 2em 0;
-font-size: 2em;
-font-weight: 700;
+    border: 4px solid #4A90E2;
+    background-color: #fff;
+    padding: 0.5em;
+    margin: 1em 0 2em 0;
+    font-size: 2em;
+    font-weight: 700;
+    text-decoration: none;
 }
 .countdownBtn a{
 text-decoration: none;
@@ -747,6 +778,7 @@ padding: 0.5em 0;
 }
 .sponzorImg{
     width: 100%;
+    height: auto;
 }
 
 
@@ -783,6 +815,11 @@ padding: 0.5em 0;
     font-weight: 700;
     text-align: center;
     font-size: 2em;
+}
+.trkaLink{
+    cursor:pointer;
+    color: #0f6fff;
+    text-decoration: underline;
 }
 .ytWrapper{
     display: flex;
@@ -1016,6 +1053,7 @@ padding: 0.5em 0;
     }
     .langImg{
         width: 3em;
+        height: auto;
     }
     .langSw{
         font-size: 2em;
