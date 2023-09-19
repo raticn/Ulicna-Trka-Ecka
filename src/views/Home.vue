@@ -135,6 +135,7 @@ export default {
             await this.fetchText()
             await this.fetchPicures()
             await this.fetchTrkePicures('sponzor')
+            await this.layoutShift()
         },
     async mounted() {
         try {
