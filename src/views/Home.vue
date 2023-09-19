@@ -131,7 +131,7 @@ export default {
                 }
             },
         },
-        async beforeMount() {
+        async beforeCreate() {
             await this.fetchText()
             await this.fetchPicures()
             await this.fetchTrkePicures('sponzor')
