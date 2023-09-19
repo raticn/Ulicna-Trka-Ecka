@@ -233,12 +233,9 @@ export default {
         <section aria-label="Sekcija: Landing page">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
-                    <!-- <div v-for="(img, index) in hero" :key="index" class="carousel-item"
+                    <div v-for="(img, index) in hero" :key="index" class="carousel-item"
                         :class="{ 'active': index === 0 }" data-bs-interval="5000">
                         <img v-preload :src="img.files_imageURL" class="d-block w-100 carouselImg" alt="Ulicna trka Ecka hero slike">
-                    </div> -->
-                    <div class="carousel-item">
-                        <img src="../assets/trecaTrka.jpg" alt="">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
