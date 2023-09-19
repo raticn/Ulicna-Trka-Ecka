@@ -135,9 +135,9 @@ export default {
             await this.fetchText()
             await this.fetchPicures()
             await this.fetchTrkePicures('sponzor')
-            await this.layoutShift()
         },
-    async mounted() {
+        async mounted() {
+        this.layoutShift()
         try {
         let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
     
