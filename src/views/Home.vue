@@ -138,6 +138,15 @@ export default {
         },
         async mounted() {
         this.layoutShift()
+        this.fetchPictures().then(() => {
+        this.hero.forEach(img => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.href = img.files_imageURL;
+            link.as = 'image';
+            document.head.appendChild(link);
+        });
+    });
         try {
         let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
     
@@ -184,7 +193,15 @@ export default {
     },
     created() {
         library.add(faYoutube, faXmark, faArrowRightArrowLeft, faBars)
-    }
+    },
+    beforeDestroy() {
+    this.hero.forEach(img => {
+        const link = document.querySelector(`link[rel="preload"][href="${img.files_imageURL}"]`);
+        if (link) {
+            document.head.removeChild(link);
+        }
+    });
+}
 }
 
 </script>
