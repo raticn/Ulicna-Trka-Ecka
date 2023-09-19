@@ -131,11 +131,13 @@ export default {
                 }
             },
         },
+        beforeMount() {
+            this.fetchText()
+            this.fetchPicures()
+            this.fetchTrkePicures('sponzor')
+        },
     async mounted() {
-    try {
-        this.fetchText()
-        this.fetchPicures()
-        this.fetchTrkePicures('sponzor')
+        try {
         let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
     
         let x = setInterval(function() {
