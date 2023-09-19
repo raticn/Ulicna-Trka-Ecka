@@ -144,6 +144,7 @@ export default {
             link.rel = 'preload';
             link.href = img.files_imageURL;
             link.as = 'image';
+            link.fetchPriority = 'high'
             document.head.appendChild(link);
         });
     });
