@@ -131,10 +131,10 @@ export default {
                 }
             },
         },
-        beforeMount() {
-            this.fetchText()
-            this.fetchPicures()
-            this.fetchTrkePicures('sponzor')
+        async beforeMount() {
+            await this.fetchText()
+            await this.fetchPicures()
+            await this.fetchTrkePicures('sponzor')
         },
     async mounted() {
         try {
