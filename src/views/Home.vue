@@ -115,20 +115,20 @@ export default {
             },
             layoutShift() {
                 if(window.screen.width >= 1600) {
-                    document.querySelector(".datumTrke").style.minHeight = "106px"
+                    document.querySelectorAll(".trka").style.minHeight = "355px"
                 }
-                else if (window.screen.width > 1350 && window.screen.width < 1600) {
-                    document.querySelector(".datumTrke").style.minHeight = "91px"
+                else if (window.screen.width > 450 && window.screen.width < 851) {
+                    document.querySelectorAll(".trka").style.minHeight = "305px"
                 }
-                else if (window.screen.width > 1000 && window.screen.width <= 1350) {
-                    document.querySelector(".datumTrke").style.minHeight = "76px"
+                else if (window.screen.width <= 450) {
+                    document.querySelectorAll(".trka").style.minHeight = "355px"
                 }
-                else if (window.screen.width > 600 && window.screen.width <= 1000) {
-                    document.querySelector(".datumTrke").style.minHeight = "60px"
-                }
-                else if (window.screen.width <= 600) {
-                    document.querySelector(".datumTrke").style.minHeight = "51px"
-                }
+                // else if (window.screen.width > 600 && window.screen.width <= 1000) {
+                //     document.querySelectorAll(".trka").style.minHeight = "60px"
+                // }
+                // else if (window.screen.width <= 600) {
+                //     document.querySelectorAll(".trka").style.minHeight = "51px"
+                // }
             },
         },
         async beforeCreate() {
