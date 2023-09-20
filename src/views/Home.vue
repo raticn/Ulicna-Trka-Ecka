@@ -117,16 +117,19 @@ export default {
                 if(window.screen.width >= 1600) {
                     document.querySelectorAll(".trka").forEach( trka => {
                         trka.style.minHeight = "355px"
+                        trka.style.maxHeight = "356px"
                     })
                 }
                 else if (window.screen.width > 450 && window.screen.width < 851) {
                     document.querySelectorAll(".trka").forEach( trka => {
                         trka.style.minHeight = "305px"
+                        trka.style.maxHeight = "306px"
                     })
                 }
                 else if (window.screen.width <= 450) {
                     document.querySelectorAll(".trka").forEach( trka => {
                         trka.style.minHeight = "355px"
+                        trka.style.maxHeight = "356px"
                     })
                 }
                 // else if (window.screen.width > 600 && window.screen.width <= 1000) {
