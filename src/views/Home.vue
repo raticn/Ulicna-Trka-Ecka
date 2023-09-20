@@ -115,13 +115,19 @@ export default {
             },
             layoutShift() {
                 if(window.screen.width >= 1600) {
-                    document.querySelectorAll(".trka").style.minHeight = "355px"
+                    document.querySelectorAll(".trka").forEach( trka => {
+                        trka.style.minHeight = "355px"
+                    })
                 }
                 else if (window.screen.width > 450 && window.screen.width < 851) {
-                    document.querySelectorAll(".trka").style.minHeight = "305px"
+                    document.querySelectorAll(".trka").forEach( trka => {
+                        trka.style.minHeight = "305px"
+                    })
                 }
                 else if (window.screen.width <= 450) {
-                    document.querySelectorAll(".trka").style.minHeight = "355px"
+                    document.querySelectorAll(".trka").forEach( trka => {
+                        trka.style.minHeight = "355px"
+                    })
                 }
                 // else if (window.screen.width > 600 && window.screen.width <= 1000) {
                 //     document.querySelectorAll(".trka").style.minHeight = "60px"
