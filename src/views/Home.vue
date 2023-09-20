@@ -146,7 +146,7 @@ export default {
             await this.fetchTrkePicures('sponzor')
         },
         async mounted() {
-        this.layoutShift()
+        // this.layoutShift()
         this.fetchPictures().then(() => {
         this.hero.forEach(img => {
             const link = document.createElement('link');
