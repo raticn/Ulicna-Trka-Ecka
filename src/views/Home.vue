@@ -142,7 +142,7 @@ export default {
         },
         async beforeMount() {
             await this.fetchText()
-            await this.fetchPicures()
+            // await this.fetchPicures()
             await this.fetchTrkePicures('sponzor')
         },
         async mounted() {
