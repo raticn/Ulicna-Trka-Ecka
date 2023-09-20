@@ -76,7 +76,7 @@ export default {
                 console.log(error);
             }
         },
-        async fetchPicures() {
+        async fetchPictures() {
             if(window.screen.width <= 600) {
                 this.heroMon = "heroTel"
             }
