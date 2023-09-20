@@ -709,7 +709,7 @@ margin: 4em 0;
 background-position: center;
 background-size: cover;
 }
-.trka1{
+/* .trka1{
 background-image: url("../assets/slika1.jpg");
 }
 .trka2{
@@ -717,7 +717,7 @@ background-image: url("../assets/drugaTrka.jpg");
 }
 .trka3{
 background-image: url("../assets/trecaTrka.jpg");
-}
+} */
 .trkaNo{
 position: relative;
 z-index: 3;
