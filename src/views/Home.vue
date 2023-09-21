@@ -218,6 +218,7 @@ export default {
 
 <template>
 <main>
+    <a href="https://www.instagram.com/p/Cxc_qWIs_8N/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==" aria-label="Link do Instagram objave o takmicenju u Decathlon-u" class="novosti" target="_blank">Novosti!</a>
     <div class="appWrapper">
     <header>
         <nav>
@@ -423,6 +424,30 @@ body{
     overflow-x: hidden;
 }
 
+.novosti{
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    border: none;
+    text-decoration: none;
+    background-color: rgb(241, 22, 22);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.2em;
+    padding: 15px;
+    z-index: 1000;
+    box-shadow: 0 0 10px #fff;
+    cursor: pointer;
+    animation: jump 0.5s infinite alternate;
+}
+@keyframes jump {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-15px);
+    }
+}
 /* ------------------------------------------HERO SECTION--------------------------------------- */
 
 .heroWrapper{
