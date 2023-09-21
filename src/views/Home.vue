@@ -264,7 +264,7 @@ export default {
                 <div class="carousel-inner">
                     <div v-for="(img, index) in hero" :key="index" class="carousel-item"
                         :class="{ 'active': index === 0 }" data-bs-interval="5000">
-                        <img :src="img.files_imageURL" class="d-block w-100 carouselImg" alt="Ulicna trka Ecka hero slike">
+                        <img :src="img.files_imageURL" class="d-block w-100 carouselImg" alt="Ulicna trka Ecka hero slike" preload="auto">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
