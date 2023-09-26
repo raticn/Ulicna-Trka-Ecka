@@ -152,11 +152,13 @@ export default {
             const link = document.createElement('link');
             link.rel = 'preload';
             link.href = img.files_imageURL;
-            link.type = 'image/png';
+            link.as = 'image';
             link.fetchPriority = 'high'
+            console.log(img);
             document.head.appendChild(link);
         });
     });
+    console.log(this.hero, 'hero');
         try {
         let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
     
