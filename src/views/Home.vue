@@ -152,7 +152,7 @@ export default {
             const link = document.createElement('link');
             link.rel = 'preload';
             link.href = img.files_imageURL;
-            link.as = 'image';
+            link.as = 'image/png';
             link.fetchPriority = 'high'
             document.head.appendChild(link);
         });
