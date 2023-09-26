@@ -154,7 +154,6 @@ export default {
             link.href = img.files_imageURL;
             link.as = 'image';
             link.fetchPriority = 'high'
-            console.log(img);
             document.head.appendChild(link);
         });
     });
