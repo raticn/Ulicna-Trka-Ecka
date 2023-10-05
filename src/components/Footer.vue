@@ -44,7 +44,7 @@ export default {
             </div>
         </div>
         <div class="copyright">
-            &copy;
+            &copy;2023  <a href="https://space-coders.com" aria-label="Link do web sajta: Space Coders">space-coders.com</a>
         </div>
     </div>
 </template>
@@ -127,6 +127,9 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.copyright a{
+    padding-left: .5em;
 }
 
 .footerIcons {

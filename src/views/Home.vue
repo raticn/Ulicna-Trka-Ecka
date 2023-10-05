@@ -219,7 +219,7 @@ export default {
 
 <template>
 <main>
-    <!-- <a href="https://www.instagram.com/p/Cxc_qWIs_8N/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==" aria-label="Link do Instagram objave o takmicenju u Decathlon-u" class="novosti" target="_blank">Novosti!</a> -->
+    <a href="https://www.instagram.com/p/CyBYDqls2iU/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==" aria-label="Link do Instagram objave o startnom paketu za trke" class="novosti" target="_blank">Novosti!</a>
     <div class="appWrapper">
     <header>
         <nav>
