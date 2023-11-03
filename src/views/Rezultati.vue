@@ -110,6 +110,13 @@ export default {
             <button class="rezBtn" @click="brojTrke(4); this.$router.push('/tabela')" aria-label="Rezultati trke od 10km - 2022. godina">10km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
             <button class="rezBtn" @click="brojTrke(6); this.$router.push('/tabela')" aria-label="Rezultati stafetne trke - 2022. godina">{{ this.shortText.stafetaRez }} <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon><FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
     </section>
+    <section class="rezultati">
+            <p class="rezultatiHeader">{{ this.shortText.trecaTrkaHeading }}</p>
+            <p class="rezultatiGod">(2023)</p>
+            <button class="rezBtn" @click="brojTrke(7); this.$router.push('/tabela')" aria-label="Rezultati trke od 5km - 2023. godina">5km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
+            <button class="rezBtn" @click="brojTrke(8); this.$router.push('/tabela')" aria-label="Rezultati trke od 10km - 2023. godina">10km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
+            <button class="rezBtn" @click="brojTrke(9); this.$router.push('/tabela')" aria-label="Rezultati stafetne trke - 2023. godina">{{ this.shortText.stafetaRez }} <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon><FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
+    </section>
 </div>
 
 </template>
