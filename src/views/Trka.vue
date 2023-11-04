@@ -110,6 +110,9 @@ export default{
             </div>
         </nav>
     </header>
+    <p class="fbSlike">
+        {{ this.shortText.fbSlikeLink }} <a href="https://www.facebook.com/ulicnatrkaecka" target="_blank" aria-label="Link do naše Facebook stranice"> facebook.com/ulicnatrkaecka</a>
+    </p>
     <section class="trkaHero">
         <video class="trkaVideo" controls muted autoplay aria-label="Video prikaz putanje Ulicne trke Ecka">
             <source src="../assets/trkaVideo.mp4" type="video/mp4">
@@ -234,7 +237,14 @@ export default{
 }
 .trkaVideo{
     width: 80%;
-    margin-top: 150px;
+}
+.fbSlike{
+    width: 80%;
+    text-align: center;
+    margin: 150px auto 50px;
+    border: 5px dotted #4A90E2;
+    padding: 20px 0;
+    font-weight: 700;
 }
 /* ------------------------------------END OF TRKE HERO-------------------------------------------- */
 /* ------------------------------------UČESNIČKI PAKETI-------------------------------------------- */
@@ -349,6 +359,12 @@ export default{
 /* --------------------------------------END OF DEČIJA TRKA------------------------------------ */
 /* --------------------------------------RESPONSIVE DESIGN------------------------------------ */
 
+@media (min-width: 1900px) {
+    .trkeInfo p, .trkeInfo2 p, .decijaTrka p, .paket p, .fbSlike{
+        font-size: 1.5em;
+    }
+}
+
 @media (max-width: 1700px) {
     .sertifikat{
         width: 40%;
@@ -382,6 +398,9 @@ export default{
     }
     .trkeInfo p, .trkeInfo2 p, .decijaTrka p{
         font-size: 1.1em;
+    }
+    .fbSlike{
+        margin: 110px auto 30px;
     }
 }
 
@@ -487,6 +506,12 @@ export default{
     .sertifikat{
         width: 90%;
         margin-top: 2em;
+    }
+    .fbSlike{
+        margin: 110px auto 0;
+    }
+    .trkaVideo{
+        margin-top: 30px;
     }
 }
 
