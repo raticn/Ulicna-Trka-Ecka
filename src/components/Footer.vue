@@ -171,6 +171,10 @@ a:active {
     .quicklinks li {
         font-size: 0.8em;
     }
+    .copyright{
+        font-size: 1.5em;
+        padding: 10px 0;
+    }
 }
 
 @media (max-width: 480px) {
