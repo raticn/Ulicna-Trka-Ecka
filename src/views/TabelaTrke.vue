@@ -87,31 +87,31 @@ export default{
             // this.rez = rezultati.data.res
             switch (trka) {
                 case '1':
-                    this.pdf = '../assets/PDF/2021_5km.zip'
+                    this.pdf = '../assets/2021_5km.zip'
                     break;
                 case '2':
-                    this.pdf = '../assets/PDF/2021_10km.zip'
+                    this.pdf = '../assets/2021_10km.zip'
                     break;
                 case '3':
-                    this.pdf = '../assets/PDF/2021_2x5km.zip'
+                    this.pdf = '../assets/2021_2x5km.zip'
                     break;
                 case '4':
-                    this.pdf = '../assets/PDF/2022_10km.zip'
+                    this.pdf = '../assets/2022_10km.zip'
                     break;
                 case '5':
-                    this.pdf = '../assets/PDF/2022_5km.zip'
+                    this.pdf = '../assets/2022_5km.zip'
                     break;
                 case '6':
-                    this.pdf = '../assets/PDF/2022_2x5km.zip'
+                    this.pdf = '../assets/2022_2x5km.zip'
                     break;
                 case '7':
-                    this.pdf = '../assets/PDF/2023_5km.zip'
+                    this.pdf = '../assets/2023_5km.zip'
                     break;
                 case '8':
-                    this.pdf = '../assets/PDF/2023_10km.zip'
+                    this.pdf = '../assets/2023_10km.zip'
                     break;
                 case '9':
-                    this.pdf = '../assets/PDF/2023_2x5km.zip'
+                    this.pdf = '../assets/2023_2x5km.zip'
                     break;
                 default:
                     break;
