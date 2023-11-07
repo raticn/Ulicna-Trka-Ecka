@@ -1,6 +1,6 @@
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faXmark, faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-svg-icons'
+import { faXmark, faArrowRightArrowLeft, faBars, faCloudArrowDown} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import axios from 'axios';
 
@@ -15,6 +15,7 @@ export default{
             shortText: {},
             longText: {},
             pol: 'Muški',
+            pdf: '',
         }
     },
     components: {
@@ -77,18 +78,50 @@ export default{
         try {
             this.fetchText()
             this.sendGender()
+            let trka = localStorage.getItem('trka')
             // let rezultati = await axios.get('https://093g123.mars2.mars-hosting.com/API/rezultati', {
             //     params: {
             //         trka: trkaBr
             //     }
             // })
             // this.rez = rezultati.data.res
+            switch (trka) {
+                case '1':
+                    this.pdf = '../assets/PDF/2021_5km.zip'
+                    break;
+                case '2':
+                    this.pdf = '../assets/PDF/2021_10km.zip'
+                    break;
+                case '3':
+                    this.pdf = '../assets/PDF/2021_2x5km.zip'
+                    break;
+                case '4':
+                    this.pdf = '../assets/PDF/2022_10km.zip'
+                    break;
+                case '5':
+                    this.pdf = '../assets/PDF/2022_5km.zip'
+                    break;
+                case '6':
+                    this.pdf = '../assets/PDF/2022_2x5km.zip'
+                    break;
+                case '7':
+                    this.pdf = '../assets/PDF/2023_5km.zip'
+                    break;
+                case '8':
+                    this.pdf = '../assets/PDF/2023_10km.zip'
+                    break;
+                case '9':
+                    this.pdf = '../assets/PDF/2023_2x5km.zip'
+                    break;
+                default:
+                    break;
+            }
         } catch (error) {
             console.log(error);
         }
     },
     created() {
-        library.add(faXmark, faArrowRightArrowLeft, faBars)
+        library.add(faXmark, faArrowRightArrowLeft, faBars, faCloudArrowDown)
     }
 }
 </script>
@@ -103,9 +136,9 @@ export default{
                 <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
                 <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
                 <li class="language" @click="changeLang">
-                    <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                    <img class="lang" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                     <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                    <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">  
+                    <img class="lang" src="../assets/amerika.png" width="64" height="64" alt="USA flag image">  
                 </li>
             </ul>
         </div>
@@ -120,9 +153,9 @@ export default{
                     <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
                     <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
                     <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                        <img class="langImg" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                         <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">
+                        <img class="langImg" src="../assets/amerika.png" width="64" height="64" alt="USA flag image">
                     </div>
                 </div>
             </div>
@@ -130,8 +163,9 @@ export default{
     </nav>
 </header>
 <div class="tableWrapper">
-    <section class="pol" aria-label="Sekcija: Odabir pola ucesnika trke">
+    <section class="pol" aria-label="Sekcija: Odabir pola ucesnika trke i preuzimanje fajla rezultata">
         {{ this.shortText.tablePol }}: <button class="polBtn"  @click="this.pol = 'Muški'; sendGender()">{{ this.shortText.polM }}</button> / <button class="polBtn" @click="this.pol = 'Ženski'; sendGender()">{{ this.shortText.polZ }}</button>
+        <a class="pdfLink" :href="this.pdf" download>Download <FontAwesomeIcon icon="fa-solid fa-cloud-arrow-down"></FontAwesomeIcon></a>
     </section>
     <table>
         <thead>
@@ -204,5 +238,20 @@ th {
     background-color: transparent;
     color: rgb(118, 28, 243);
     cursor: pointer;
+}
+.pdfLink{
+    margin-left: 1em;
+}
+
+@media (max-width: 800px) {
+    .pol{
+        margin: 2em 1em 0 1em;
+    }
+}
+
+@media (max-width: 600px) {
+    .pol{
+        margin: 2.5em 1em 0 1em;
+    }
 }
 </style>

@@ -44,7 +44,7 @@ export default {
             </div>
         </div>
         <div class="copyright">
-            &copy;
+            &copy;2023  <a href="https://space-coders.com" aria-label="Link do web sajta: Space Coders">space-coders.com</a>
         </div>
     </div>
 </template>
@@ -128,6 +128,9 @@ export default {
     justify-content: center;
     align-items: center;
 }
+.copyright a{
+    padding-left: .5em;
+}
 
 .footerIcons {
     margin-right: 0.5em;
@@ -167,6 +170,10 @@ a:active {
 @media (max-width: 749px) {
     .quicklinks li {
         font-size: 0.8em;
+    }
+    .copyright{
+        font-size: 1.5em;
+        padding: 10px 0;
     }
 }
 

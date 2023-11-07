@@ -76,7 +76,7 @@ export default {
                 console.log(error);
             }
         },
-        async fetchPicures() {
+        async fetchPictures() {
             if(window.screen.width <= 600) {
                 this.heroMon = "heroTel"
             }
@@ -113,12 +113,52 @@ export default {
                     console.log(error);
                 }
             },
+            layoutShift() {
+                if(window.screen.width >= 1600) {
+                    document.querySelectorAll(".trka").forEach( trka => {
+                        trka.style.minHeight = "355px"
+                        trka.style.maxHeight = "356px"
+                    })
+                }
+                else if (window.screen.width > 450 && window.screen.width < 851) {
+                    document.querySelectorAll(".trka").forEach( trka => {
+                        trka.style.minHeight = "305px"
+                        trka.style.maxHeight = "306px"
+                    })
+                }
+                else if (window.screen.width <= 450) {
+                    document.querySelectorAll(".trka").forEach( trka => {
+                        trka.style.minHeight = "355px"
+                        trka.style.maxHeight = "356px"
+                    })
+                }
+                // else if (window.screen.width > 600 && window.screen.width <= 1000) {
+                //     document.querySelectorAll(".trka").style.minHeight = "60px"
+                // }
+                // else if (window.screen.width <= 600) {
+                //     document.querySelectorAll(".trka").style.minHeight = "51px"
+                // }
+            },
         },
-    async mounted() {
-    try {
-        this.fetchText()
-        this.fetchPicures()
-        this.fetchTrkePicures('sponzor')
+        async beforeMount() {
+            await this.fetchText()
+            // await this.fetchPicures()
+            await this.fetchTrkePicures('sponzor')
+        },
+        async mounted() {
+        // this.layoutShift()
+        this.fetchPictures().then(() => {
+        this.hero.forEach(img => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.href = img.files_imageURL;
+            link.as = 'image';
+            link.fetchPriority = 'high'
+            document.head.appendChild(link);
+        });
+    });
+    console.log(this.hero, 'hero');
+        try {
         let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
     
         let x = setInterval(function() {
@@ -164,13 +204,22 @@ export default {
     },
     created() {
         library.add(faYoutube, faXmark, faArrowRightArrowLeft, faBars)
-    }
+    },
+    beforeDestroy() {
+    this.hero.forEach(img => {
+        const link = document.querySelector(`link[rel="preload"][href="${img.files_imageURL}"]`);
+        if (link) {
+            document.head.removeChild(link);
+        }
+    });
+}
 }
 
 </script>
 
 <template>
 <main>
+    <!-- <a href="https://www.instagram.com/p/CyBYDqls2iU/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==" aria-label="Link do Instagram objave o startnom paketu za trke" class="novosti" target="_blank">Novosti!</a> -->
     <div class="appWrapper">
     <header>
         <nav>
@@ -182,9 +231,9 @@ export default {
                 <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
                 <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
                 <li class="language" @click="changeLang">
-                    <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                    <img class="lang" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                     <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                    <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">  
+                    <img class="lang" src="../assets/amerika.png" width="64" height="64" alt="USA flag image">  
                 </li>
             </ul>
         </div>
@@ -201,9 +250,9 @@ export default {
                     <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
                     <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
                     <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                        <img class="langImg" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                         <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">
+                        <img class="langImg" src="../assets/amerika.png" width="64" height="64" alt="USA flag image">
                     </div>
                 </div>
             </div>
@@ -216,7 +265,7 @@ export default {
                 <div class="carousel-inner">
                     <div v-for="(img, index) in hero" :key="index" class="carousel-item"
                         :class="{ 'active': index === 0 }" data-bs-interval="5000">
-                        <img :src="img.files_imageURL" class="d-block w-100 carouselImg" alt="Ulicna trka Ecka hero slike">
+                        <img :src="img.files_imageURL" class="d-block w-100 carouselImg" alt="Ulicna trka Ecka hero slike" preload="auto">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
@@ -376,6 +425,30 @@ body{
     overflow-x: hidden;
 }
 
+.novosti{
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    border: none;
+    text-decoration: none;
+    background-color: rgb(241, 22, 22);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.2em;
+    padding: 15px;
+    z-index: 1000;
+    box-shadow: 0 0 10px #fff;
+    cursor: pointer;
+    animation: jump 0.5s infinite alternate;
+}
+@keyframes jump {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-15px);
+    }
+}
 /* ------------------------------------------HERO SECTION--------------------------------------- */
 
 .heroWrapper{
@@ -459,7 +532,7 @@ li a{
     text-decoration: none;
 }
 h1{
-    font-size: 1.5em !important;
+    font-size: 1.2em !important;
 }
 .rec1, .rec2, .rec3{
     position: absolute;
@@ -609,6 +682,7 @@ h1{
     font-size: 3em;
     background-color: #4A90E2;
     color: #fff;
+    z-index: 5;
 }
 /* ---------------------------------------END OF HERO SECTION------------------------------------ */
 
@@ -908,6 +982,12 @@ padding: 0.5em 0;
     }
 }
 
+@media (max-width: 1450px) {
+    h1{
+        font-size: 1em !important;
+    }
+}
+
 @media (max-width: 1350px) {
     .datumTrke{
         font-size: 2.5em;
@@ -929,6 +1009,8 @@ padding: 0.5em 0;
     }
     .datumTrke{
         font-size: 2em;
+        width: 80%;
+        text-align: center;
     }
     .trka{
         flex-basis: 31%;

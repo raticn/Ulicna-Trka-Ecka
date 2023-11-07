@@ -69,9 +69,9 @@ export default {
                 <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
                 <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
                 <li class="language" @click="changeLang">
-                    <img class="lang" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                    <img class="lang" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                     <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                    <img class="lang" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">  
+                    <img class="lang" src="../assets/amerika.png" width="64" height="64" alt="USA flag image">  
                 </li>
             </ul>
         </div>
@@ -86,9 +86,9 @@ export default {
                     <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
                     <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
                     <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/RS.png" width="64" height="64" alt="Serbian flag image">
+                        <img class="langImg" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                         <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                        <img class="langImg" src="https://www.countryflagicons.com/SHINY/64/US.png" width="64" height="64" alt="USA flag image">
+                        <img class="langImg" src="../assets/amerika.png" width="64" height="64" alt="USA flag image">
                     </div>
                 </div>
             </div>
@@ -109,6 +109,13 @@ export default {
             <button class="rezBtn" @click="brojTrke(5); this.$router.push('/tabela')" aria-label="Rezultati trke od 5km - 2022. godina">5km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
             <button class="rezBtn" @click="brojTrke(4); this.$router.push('/tabela')" aria-label="Rezultati trke od 10km - 2022. godina">10km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
             <button class="rezBtn" @click="brojTrke(6); this.$router.push('/tabela')" aria-label="Rezultati stafetne trke - 2022. godina">{{ this.shortText.stafetaRez }} <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon><FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
+    </section>
+    <section class="rezultati">
+            <p class="rezultatiHeader">{{ this.shortText.trecaTrkaHeading }}</p>
+            <p class="rezultatiGod">(2023)</p>
+            <button class="rezBtn" @click="brojTrke(7); this.$router.push('/tabela')" aria-label="Rezultati trke od 5km - 2023. godina">5km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
+            <button class="rezBtn" @click="brojTrke(8); this.$router.push('/tabela')" aria-label="Rezultati trke od 10km - 2023. godina">10km <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
+            <button class="rezBtn" @click="brojTrke(9); this.$router.push('/tabela')" aria-label="Rezultati stafetne trke - 2023. godina">{{ this.shortText.stafetaRez }} <FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon><FontAwesomeIcon icon="fa-solid fa-person-running"></FontAwesomeIcon></button>
     </section>
 </div>
 
