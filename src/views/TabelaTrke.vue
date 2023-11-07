@@ -1,6 +1,6 @@
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faXmark, faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-svg-icons'
+import { faXmark, faArrowRightArrowLeft, faBars, faCloudArrowDown} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import axios from 'axios';
 
@@ -15,6 +15,7 @@ export default{
             shortText: {},
             longText: {},
             pol: 'Muški',
+            pdf: '',
         }
     },
     components: {
@@ -77,18 +78,50 @@ export default{
         try {
             this.fetchText()
             this.sendGender()
+            let trka = localStorage.getItem('trka')
             // let rezultati = await axios.get('https://093g123.mars2.mars-hosting.com/API/rezultati', {
             //     params: {
             //         trka: trkaBr
             //     }
             // })
             // this.rez = rezultati.data.res
+            switch (trka) {
+                case '1':
+                    this.pdf = '../assets/PDF/2021_5km.zip'
+                    break;
+                case '2':
+                    this.pdf = '../assets/PDF/2021_10km.zip'
+                    break;
+                case '3':
+                    this.pdf = '../assets/PDF/2021_2x5km.zip'
+                    break;
+                case '4':
+                    this.pdf = '../assets/PDF/2022_10km.zip'
+                    break;
+                case '5':
+                    this.pdf = '../assets/PDF/2022_5km.zip'
+                    break;
+                case '6':
+                    this.pdf = '../assets/PDF/2022_2x5km.zip'
+                    break;
+                case '7':
+                    this.pdf = '../assets/PDF/2023_5km.zip'
+                    break;
+                case '8':
+                    this.pdf = '../assets/PDF/2023_10km.zip'
+                    break;
+                case '9':
+                    this.pdf = '../assets/PDF/2023_2x5km.zip'
+                    break;
+                default:
+                    break;
+            }
         } catch (error) {
             console.log(error);
         }
     },
     created() {
-        library.add(faXmark, faArrowRightArrowLeft, faBars)
+        library.add(faXmark, faArrowRightArrowLeft, faBars, faCloudArrowDown)
     }
 }
 </script>
@@ -130,8 +163,9 @@ export default{
     </nav>
 </header>
 <div class="tableWrapper">
-    <section class="pol" aria-label="Sekcija: Odabir pola ucesnika trke">
+    <section class="pol" aria-label="Sekcija: Odabir pola ucesnika trke i preuzimanje fajla rezultata">
         {{ this.shortText.tablePol }}: <button class="polBtn"  @click="this.pol = 'Muški'; sendGender()">{{ this.shortText.polM }}</button> / <button class="polBtn" @click="this.pol = 'Ženski'; sendGender()">{{ this.shortText.polZ }}</button>
+        <a class="pdfLink" :href="this.pdf" download>Download <FontAwesomeIcon icon="fa-solid fa-cloud-arrow-down"></FontAwesomeIcon></a>
     </section>
     <table>
         <thead>
@@ -204,5 +238,8 @@ th {
     background-color: transparent;
     color: rgb(118, 28, 243);
     cursor: pointer;
+}
+.pdfLink{
+    margin-left: 1em;
 }
 </style>
