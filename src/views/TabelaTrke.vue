@@ -242,4 +242,16 @@ th {
 .pdfLink{
     margin-left: 1em;
 }
+
+@media (max-width: 800px) {
+    .pol{
+        margin: 2em 1em 0 1em;
+    }
+}
+
+@media (max-width: 600px) {
+    .pol{
+        margin: 2.5em 1em 0 1em;
+    }
+}
 </style>
