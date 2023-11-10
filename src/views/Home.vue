@@ -159,7 +159,7 @@ export default {
     });
     console.log(this.hero, 'hero');
         try {
-        let countDownDate = new Date("Oct 28, 2023 13:00:00").getTime();
+        let countDownDate = new Date("Oct 26, 2024 13:00:00").getTime();
     
         let x = setInterval(function() {
     
