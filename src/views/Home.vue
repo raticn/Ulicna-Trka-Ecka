@@ -157,7 +157,6 @@ export default {
             document.head.appendChild(link);
         });
     });
-    console.log(this.hero, 'hero');
         try {
         let countDownDate = new Date("Oct 26, 2024 13:00:00").getTime();
     
@@ -229,7 +228,7 @@ export default {
                 <li class="navLink"><a aria-label="Pregled trka" href="#trke">{{ this.shortText.dogadjajinaslov }}</a></li>
                 <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
                 <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
-                <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
+                <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
                 <li class="language" @click="changeLang">
                     <img class="lang" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                     <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
@@ -248,7 +247,7 @@ export default {
                     </p>
                     <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
                     <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
-                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
+                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
                     <div class="lang2" @click="changeLang(); this.menu = !this.menu">
                         <img class="langImg" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                         <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
@@ -287,7 +286,7 @@ export default {
         <div class="odbrojavanjeWrapper">
             <h2 class="countdownHeader">{{ this.shortText.vreme }}</h2>
             <p class="countDown" aria-live="polite" aria-atomic="true"></p>
-            <a class="countdownBtn" aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/409/?fbclid=IwAR0439TWd9ax2e5pLN7DJeBJS80zWFwAlzpKAo5NQTtDY-xnm_ik68OPmWk" target="_blank">{{ this.shortText.trk }}</a>
+            <a class="countdownBtn" aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.trk }}</a>
         </div>
     </section>
     <section aria-label="Sekcija: Dosadasnje trke">
@@ -323,9 +322,16 @@ export default {
     </section>
     <section>
         <div class="editTrkeWrapper">
+            <h2 class="editTrkeHeader">{{ this.shortText.editTrkeHeader3 }}</h2>
+            <video class="editTrke" controls aria-label="Video montaža 3. Ulične trke Ečka" preload="metadata">
+                <source src="../assets/editTreceTrke.mp4#t=1" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="editTrkeWrapper">
             <h2 class="editTrkeHeader">{{ this.shortText.editTrkeHeader }}</h2>
-            <video class="editTrke" controls aria-label="Video montaza 2. Ulicne trke Ecka">
-                <source src="../assets/editTrke.mp4" type="video/mp4">
+            <video class="editTrke" controls aria-label="Video montaža 2. Ulične trke Ečka" preload="metadata">
+                <source src="../assets/editTrke.mp4#t=2" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
@@ -822,6 +828,7 @@ padding: 0.5em 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 1em;
 }
 .editTrkeHeader{
     font-size: 4em;
