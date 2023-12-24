@@ -92,7 +92,7 @@ export default{
                     <li class="language" @click="changeLang">
                         <img class="lang" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                         <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                        <img class="lang" src="../assets/amerika.png" width="64" height="64" alt="USA flag image">  
+                        <img class="lang" src="../assets/engleska.jpg" width="64" height="64" alt="English flag image">  
                     </li>
                 </ul>
             </div>
@@ -109,7 +109,7 @@ export default{
                         <div class="lang2" @click="changeLang(); this.menu = !this.menu">
                             <img class="langImg" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                             <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                            <img class="langImg" src="../assets/amerika.png" width="64" height="64" alt="USA flag image">
+                            <img class="langImg" src="../assets/engleska.jpg" width="64" height="64" alt="English flag image">
                         </div>
                     </div>
                 </div>
