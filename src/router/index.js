@@ -69,7 +69,20 @@ router.beforeEach((to, from, next) => {
     document.getElementsByTagName('head')[0].appendChild(newMetaDesc);
   }
 
+  const canonicalLink = document.querySelector('link[rel="canonical"]');
+  if (canonicalLink) {
+    canonicalLink.setAttribute('href', getCanonicalUrl(to));
+  } else {
+    const newCanonicalLink = document.createElement('link');
+    newCanonicalLink.rel = "canonical";
+    newCanonicalLink.href = getCanonicalUrl(to);
+    document.getElementsByTagName('head')[0].appendChild(newCanonicalLink);
+  }
+
   next();
 });
 
+function getCanonicalUrl(route) {
+  return window.location.origin + route.fullPath;
+}
 export default router
