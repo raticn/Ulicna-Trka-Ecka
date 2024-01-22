@@ -14,7 +14,7 @@ const router = createRouter({
       component: Home,
       meta: {
         title: "Ulična Trka Ečka: Sve što Treba da Znate",
-        description: "Dobrodošli na Uličnu trku Ečka! Pridružite nam se u uzbudljivim trkama na 5 km i 10 km, stafetnoj trci ili dečijoj trci. Doživite uzbuđenje trkačkog duha u prelepom okruženju Ečke i zaronite u svet trkačkog izazova i zajedništva!"
+        description: "Dobrodošli na Uličnu trku Ečka! Pridružite se uzbudljivim trkama na 5 i 10 km, štafetnoj ili dečijoj trci i doživite trkački duh u prelepom okruženju Ečke!"
       }
     },
     {
@@ -31,7 +31,7 @@ const router = createRouter({
       name: 'kontakt',
       component: Kontakt,
       meta: {
-        title: "Kontaktirajte nas - Ulična Trka Ecka",
+        title: "Kontaktirajte organizatore - Ulična Trka Ecka",
         description: "Kontaktirajte organizatore Ulične trke Ečka za više informacija o događaju, registraciji i sponzorstvu."
       }
     },
@@ -49,7 +49,7 @@ const router = createRouter({
       name: 'tabela',
       component: TabelaTrke,
       meta: {
-        title: "Tabele Rezultata: Ulična Trka Ecka",
+        title: "Tabele Rezultata Trkača: Ulična Trka Ecka",
         description: "Detaljna tabela sa rezultatima Ulične trke Ečka. Pregledajte vremena, pozicije i kategorije za svaku trku."
       }
     }
