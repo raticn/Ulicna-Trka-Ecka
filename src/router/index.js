@@ -4,6 +4,9 @@ import Home from "../views/Home.vue"
 import Kontakt from "../views/Kontakt.vue"
 import Rezultati from "../views/Rezultati.vue"
 import TabelaTrke from "../views/TabelaTrke.vue"
+import Onama from "../views/Onama.vue"
+import Rekordi from "../views/Rekordi.vue"
+import Trka4 from "../views/Trka4.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,7 +16,7 @@ const router = createRouter({
       name: 'home',
       component: Home,
       meta: {
-        title: "Ulična Trka Ečka: Sve što Treba da Znate",
+        title: "4. Ulična Trka Ečka: Sve što Treba da Znate",
         description: "Dobrodošli na Uličnu trku Ečka! Pridružite se uzbudljivim trkama na 5 i 10 km, štafetnoj ili dečijoj trci i doživite trkački duh u prelepom okruženju Ečke!"
       }
     },
@@ -52,7 +55,34 @@ const router = createRouter({
         title: "Tabele Rezultata Trkača: Ulična Trka Ecka",
         description: "Detaljna tabela sa rezultatima Ulične trke Ečka. Pregledajte vremena, pozicije i kategorije za svaku trku."
       }
-    }
+    },
+    {
+      path: '/onama',
+      name: 'onama',
+      component: Onama,
+      meta: {
+        title: "O nama - Informacije o Uličnoj trci Ečka",
+        description: "Saznajte više o organizaciji i timu iza Ulične trke Ečka. Pridružite nam se i budite deo trkačke zajednice!"
+      }
+    },
+    {
+      path: '/rekordi',
+      name: 'rekordi',
+      component: Rekordi,
+      meta: {
+        title: "Rekordi staze 5 i 10 km - Ulična trka Ečka",
+        description: "Pogledajte rekorde trka na 5 km i 10 km u muškoj i ženskoj kategoriji na Uličnoj trci Ečka."
+      }
+    },
+    {
+      path: '/cetvrta-trka-info',
+      name: 'cetvrta-trka-info',
+      component: Trka4,
+      meta: {
+        title: "Sve Potrebne Informacije o 4. Uličnoj trci Ečka",
+        description: "Sve informacije o 4. Uličnoj trci Ečka, uključujući datume, rute, kotizacije, prijave..."
+      }
+    },
   ],
 })
 

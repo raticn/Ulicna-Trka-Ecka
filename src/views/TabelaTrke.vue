@@ -3,6 +3,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faXmark, faArrowRightArrowLeft, faBars, faCloudArrowDown} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import axios from 'axios';
+import Nav from '../components/Nav.vue'
+import Footer from '../components/Footer.vue'
+import { mapActions, mapState } from 'pinia'
+import { useEckaStore } from '../stores/eckaStore'
 
 export default{
     data() {
@@ -10,44 +14,17 @@ export default{
             rez: {},
             selectedGender: '',
             menu: false,
-            lang: '',
-            language: '',
-            shortText: {},
-            longText: {},
             pol: 'Muški',
             pdf: '',
         }
     },
     components: {
         FontAwesomeIcon,
+        Nav,
+        Footer
     },
     methods: {
-        changeLang() {
-            if (localStorage.getItem("lang") == "sr") {
-                localStorage.setItem("lang", "en")
-            }
-            else {
-                localStorage.setItem("lang", "sr")
-            }
-            this.fetchText()
-        },
-        async fetchText() {
-            let language = localStorage.getItem("lang")
-            try {
-                let res = await axios.get('https://093g123.mars2.mars-hosting.com/API/text', {
-                    params: {
-                        language: language
-                    }
-                })
-                this.language = res.data.trazeniTekst
-                for (let item of this.language) {
-                    this.shortText[item.tex_name] = item.tex_text
-                    this.longText[item.tex_name] = item.tex_long
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        },
+        ...mapActions(useEckaStore, ['fetchText']),
         async sendGender() {
             try {
                 if(localStorage.getItem('trka') == 3 || localStorage.getItem('trka') == 6) {
@@ -73,6 +50,9 @@ export default{
                 console.log(error);
             }
         },
+    },
+    computed: {
+        ...mapState(useEckaStore, ['textObj', 'longText', 'lang', 'shortText']),
     },
     async mounted() {
         try {
@@ -127,42 +107,10 @@ export default{
 </script>
 
 <template>
-<header>
-    <nav>
-        <div class="nav fixed">
-            <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
-            <ul class="navLista">
-                <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
-                <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
-                <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
-                <li class="language" @click="changeLang">
-                    <img class="lang" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
-                    <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                    <img class="lang" src="../assets/engleska.jpg" width="64" height="64" alt="English flag image">  
-                </li>
-            </ul>
-        </div>
-        <div class="nav2">
-            <div class="menu">
-                <div class="menuWrapper">
-                    <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
-                    <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
-                </div>
-                <div class="dropDownMenu" v-if="this.menu">
-                    <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
-                    <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
-                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
-                    <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                        <img class="langImg" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
-                        <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                        <img class="langImg" src="../assets/engleska.jpg" width="64" height="64" alt="English flag image">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
-<div class="tableWrapper">
+    <div class="tableWrapper">
+    <header>
+        <Nav />
+    </header>
     <section class="pol" aria-label="Sekcija: Odabir pola ucesnika trke i preuzimanje fajla rezultata">
         {{ this.shortText.tablePol }}: <button class="polBtn"  @click="this.pol = 'Muški'; sendGender()">{{ this.shortText.polM }}</button> / <button class="polBtn" @click="this.pol = 'Ženski'; sendGender()">{{ this.shortText.polZ }}</button>
         <a class="pdfLink" :href="this.pdf" download>Download <FontAwesomeIcon icon="fa-solid fa-cloud-arrow-down"></FontAwesomeIcon></a>
@@ -204,6 +152,7 @@ export default{
         </tbody>
     </table>
     </div>
+    <Footer />
 </template>
 
 <style>
@@ -211,6 +160,13 @@ export default{
     margin: 10% 0 0 0;
     width: 100%;
     overflow-x: auto;
+}
+.tableWrapper .nav{
+    position: fixed;
+    background-color: rgb(255, 255, 255);
+    color: #4A90E2;
+    border-bottom: 1px solid #4A90E2;
+    z-index: 10;
 }
 table{
     margin: 1em auto;

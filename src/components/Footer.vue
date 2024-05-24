@@ -3,14 +3,14 @@ import { RouterLink, RouterView } from 'vue-router';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faLocationDot, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faInstagram, faFacebook, faTiktok } from '@fortawesome/free-brands-svg-icons';
+import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
 
 export default {
     components: {
         FontAwesomeIcon,
     },
     created() {
-        library.add(faLocationDot, faPhone, faEnvelope, faInstagram, faFacebook, faTiktok)
+        library.add(faLocationDot, faPhone, faEnvelope, faInstagram, faFacebook)
     }
 }
 </script>

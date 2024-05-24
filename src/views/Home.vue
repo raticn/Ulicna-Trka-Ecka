@@ -5,6 +5,9 @@ import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faXmark, faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import axios from 'axios'
+import Nav from '../components/Nav.vue'
+import { mapActions, mapState } from 'pinia'
+import { useEckaStore } from '../stores/eckaStore'
 
 export default {
     data() {
@@ -13,10 +16,6 @@ export default {
             drugaTrka: false,
             menu: false,
             smallImage: false,
-            lang: '',
-            language: {},
-            shortText: {},
-            longText: {},
             heroMon: [],
             heroTel: [],
             popupImg: [],
@@ -27,8 +26,10 @@ export default {
     components: {
         FontAwesomeIcon,
         Footer,
+        Nav
     },
     methods: {
+    ...mapActions(useEckaStore, ['fetchText']),
     enterAnimation(el, done) {
         el.style.transform = 'translateY(100%)';
 
@@ -40,110 +41,83 @@ export default {
         el.addEventListener('transitionend', done);
         });
     },
-        leaveAnimation(el, done) {
+    leaveAnimation(el, done) {
 
-            el.classList.add('slide-out');
-            
-            el.addEventListener('transitionend', () => {
-            done();
-            });
-        },
-        changeLang() {
-            if (localStorage.getItem("lang") == "sr") {
-                localStorage.setItem("lang", "en")
-                document.documentElement.lang = "en"
-            }
-            else {
-                localStorage.setItem("lang", "sr")
-                document.documentElement.lang = "sr"
-            }
-            this.fetchText()
-        },
-        async fetchText() {
-            let language = localStorage.getItem("lang")
-            try {
-                let res = await axios.get('https://093g123.mars2.mars-hosting.com/API/text', {
-                    params: {
-                        language: language
-                    }
-                })
-                this.language = res.data.trazeniTekst
-                for (let item of this.language) {
-                    this.shortText[item.tex_name] = item.tex_text
-                    this.longText[item.tex_name] = item.tex_long
+        el.classList.add('slide-out');
+        
+        el.addEventListener('transitionend', () => {
+        done();
+        });
+    },
+    async fetchPictures() {
+        if(window.screen.width <= 600) {
+            this.heroMon = "heroTel"
+        }
+        else if(window.screen.width > 600){
+            this.heroMon = "heroMon"
+        }
+        try {
+            let slike = await axios.get('https://093g123.mars2.mars-hosting.com/API/pictures', {
+                params: {
+                    fil_type: this.heroMon
                 }
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        async fetchPictures() {
-            if(window.screen.width <= 600) {
-                this.heroMon = "heroTel"
-            }
-            else if(window.screen.width > 600){
-                this.heroMon = "heroMon"
-            }
+            })
+            this.heroTel = slike.data.q
+                this.hero = this.heroTel
+
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    async fetchTrkePicures(param) {
             try {
                 let slike = await axios.get('https://093g123.mars2.mars-hosting.com/API/pictures', {
                     params: {
-                        fil_type: this.heroMon
+                        fil_type: param
                     }
                 })
-                this.heroTel = slike.data.q
-                    this.hero = this.heroTel
-
+                if(param == 'T1' || param == 'T2'){
+                    this.popupImg = slike.data.q
+                }
+                else if(param == 'sponzor'){
+                    this.sponzoriArr = slike.data.q
+                }
             } catch (error) {
                 console.log(error);
             }
         },
-        async fetchTrkePicures(param) {
-                try {
-                    let slike = await axios.get('https://093g123.mars2.mars-hosting.com/API/pictures', {
-                        params: {
-                            fil_type: param
-                        }
-                    })
-                    if(param == 'T1' || param == 'T2'){
-                        this.popupImg = slike.data.q
-                    }
-                    else if(param == 'sponzor'){
-                        this.sponzoriArr = slike.data.q
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            },
-            layoutShift() {
-                if(window.screen.width >= 1600) {
-                    document.querySelectorAll(".trka").forEach( trka => {
-                        trka.style.minHeight = "355px"
-                        trka.style.maxHeight = "356px"
-                    })
-                }
-                else if (window.screen.width > 450 && window.screen.width < 851) {
-                    document.querySelectorAll(".trka").forEach( trka => {
-                        trka.style.minHeight = "305px"
-                        trka.style.maxHeight = "306px"
-                    })
-                }
-                else if (window.screen.width <= 450) {
-                    document.querySelectorAll(".trka").forEach( trka => {
-                        trka.style.minHeight = "355px"
-                        trka.style.maxHeight = "356px"
-                    })
-                }
-                // else if (window.screen.width > 600 && window.screen.width <= 1000) {
-                //     document.querySelectorAll(".trka").style.minHeight = "60px"
-                // }
-                // else if (window.screen.width <= 600) {
-                //     document.querySelectorAll(".trka").style.minHeight = "51px"
-                // }
-            },
+        layoutShift() {
+            if(window.screen.width >= 1600) {
+                document.querySelectorAll(".trka").forEach( trka => {
+                    trka.style.minHeight = "355px"
+                    trka.style.maxHeight = "356px"
+                })
+            }
+            else if (window.screen.width > 450 && window.screen.width < 851) {
+                document.querySelectorAll(".trka").forEach( trka => {
+                    trka.style.minHeight = "305px"
+                    trka.style.maxHeight = "306px"
+                })
+            }
+            else if (window.screen.width <= 450) {
+                document.querySelectorAll(".trka").forEach( trka => {
+                    trka.style.minHeight = "355px"
+                    trka.style.maxHeight = "356px"
+                })
+            }
+            // else if (window.screen.width > 600 && window.screen.width <= 1000) {
+            //     document.querySelectorAll(".trka").style.minHeight = "60px"
+            // }
+            // else if (window.screen.width <= 600) {
+            //     document.querySelectorAll(".trka").style.minHeight = "51px"
+            // }
+        },
         },
         async beforeMount() {
-            await this.fetchText()
-            // await this.fetchPicures()
             await this.fetchTrkePicures('sponzor')
+        },
+        computed: {
+            ...mapState(useEckaStore, ['textObj', 'longText', 'lang', 'shortText']),
         },
         async mounted() {
         // this.layoutShift()
@@ -196,7 +170,7 @@ export default {
             document.querySelector(".rec2").classList.add("fromTop2Big")
             document.querySelector(".rec3").classList.add("fromTop3Big")
         }
-        localStorage.setItem('lang', 'sr')
+        this.fetchText()
     } catch (error) {
         console.log(error);
     }
@@ -221,42 +195,7 @@ export default {
     <!-- <a href="https://www.instagram.com/p/CyBYDqls2iU/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA==" aria-label="Link do Instagram objave o startnom paketu za trke" class="novosti" target="_blank">Novosti!</a> -->
     <div class="appWrapper">
     <header>
-        <nav>
-        <div class="nav">
-            <img class="logo" src="../assets/logo.png"  alt="Ulicna trka Ecka logo">
-            <ul class="navLista">
-                <li class="navLink"><a aria-label="Pregled trka" href="#trke">{{ this.shortText.dogadjajinaslov }}</a></li>
-                <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
-                <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
-                <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
-                <li class="language" @click="changeLang">
-                    <img class="lang" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
-                    <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                    <img class="lang" src="../assets/engleska.jpg" width="64" height="64" alt="English flag image">  
-                </li>
-            </ul>
-        </div>
-        <div class="nav2">
-            <div class="menu">
-                <div class="menuWrapper">
-                    <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
-                    <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
-                </div>
-                <div class="dropDownMenu" v-if="this.menu">
-                    <p @click="this.menu = !this.menu" class="navLink2"><a aria-label="Pregled trka" href="#trke">{{ this.shortText.dogadjajinaslov }}</a>
-                    </p>
-                    <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
-                    <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
-                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
-                    <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                        <img class="langImg" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
-                        <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                        <img class="langImg" src="../assets/engleska.jpg" width="64" height="64" alt="English flag image">
-                    </div>
-                </div>
-            </div>
-        </div>
-        </nav>
+        <Nav />
     </header>
     <div class="heroWrapper">
         <section aria-label="Sekcija: Landing page">
@@ -306,9 +245,14 @@ export default {
                 <p class="trkaGod">{{ this.shortText.trka3god }}</p>
                 <div class="overlay"></div>
             </div>
+            <div class="trka trka4" @click="this.$router.push('/cetvrta-trka-info')">
+                <p class="trkaNo">{{ this.shortText.trka4Naslov  }}</p>
+                <p class="trkaGod">{{ this.shortText.trka4god }}</p>
+                <div class="overlay"></div>
+            </div>
         </div>
     </section>
-    <section>
+    <!-- <section>
         <div class="partneriTrke">
             <img class="decathlonImg" src="../assets/decathlon.jpg" alt="Decathlon - slike">
             <div class="decathlonText">
@@ -318,6 +262,13 @@ export default {
             <p class="decathlonParagraf">{{ this.shortText.decp3 }}</p>
             <p class="decathlonParagraf">{{ this.longText.decp4 }}</p>
             </div>
+        </div>
+    </section> -->
+    <section aria-label="Sekcija: Najava za 4. Uličnu trku Ečka">
+        <div class="zrLiga">
+        <p class="zrLigaNajava">{{ this.shortText.zrLiga1 }}  <a href="https://zrligatrcanja.rs/" aria-label="Link do web sajta zrligatrcanja.rs" target="_blank">{{ this.shortText.zrLiga2 }}</a></p>
+        <div class="overlay"></div>
+        <a class="zrLigaBtn" aria-label="Prijavi se za 4. Uličnu trku Ečka (otvara se u novom prozoru)" href="https://zrligatrcanja.rs/" target="_blank">{{ this.shortText.zrLiga3 }}</a>
         </div>
     </section>
     <section>
@@ -500,7 +451,7 @@ li a{
 }
 .navLink{
     list-style: none;
-    font-size: 1.2em;
+    font-size: 1em;
     padding: 0.5em 1.5em;
     cursor: pointer;
 }
@@ -518,13 +469,6 @@ li a{
 .changeLang{
     font-size: 1.5em;
 }
-.fixed{
-    position: fixed;
-    background-color: rgb(255, 255, 255);
-    color: #4A90E2;
-    border-bottom: 1px solid #4A90E2;
-    z-index: 10;
-}
 .prijava{
     transform: skew(-20deg);
     background-color: #4A90E2;
@@ -537,7 +481,7 @@ li a{
     color: #fff;
     text-decoration: none;
 }
-h1{
+.heroWrapper h1{
     font-size: 1.2em !important;
 }
 .rec1, .rec2, .rec3{
@@ -734,21 +678,22 @@ color: #fff;
 /* -----------------------------------------------TRKE----------------------------------------- */
 
 .trkeWrapper{
-display: flex;
-flex-wrap: wrap;
-justify-content: space-evenly;
-width: 100%;
-background-color: #f8f6f6;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+    background-color: #f8f6f6;
+    padding: 20px 0;
 }
 .trka{
-position: relative;
-flex-basis: 22%;
-border: 2px solid #fff;
-font-weight: 700;
-color: #fff;
-margin: 4em 0;
-background-position: center;
-background-size: cover;
+    position: relative;
+    flex-basis: 22%;
+    border: 2px solid #fff;
+    font-weight: 700;
+    color: #fff;
+    margin: 2em 0;
+    background-position: center;
+    background-size: cover;
 }
 .trka1{
 background-image: url("../assets/slika1.jpg");
@@ -758,6 +703,9 @@ background-image: url("../assets/drugaTrka.jpg");
 }
 .trka3{
 background-image: url("../assets/trecaTrka.jpg");
+}
+.trka4{
+background-image: url("https://093g123.mars2.mars-hosting.com/API/pictures/112");
 }
 .trkaNo{
 position: relative;
@@ -798,7 +746,7 @@ align-items: center;
 /* ------------------------------------------END OF TRKE-------------------------------------- */
 /* ------------------------------------------PARTNERI------------------------------------------ */
 
-.partneriTrke{
+/* .partneriTrke{
 display: flex;
 width: 100%;
 justify-content: space-around;
@@ -820,8 +768,70 @@ color: #0679ba;
 }
 .decathlonParagraf{
 padding: 0.5em 0;
-}
+} */
 /* ------------------------------------------END OF PARTNERI-------------------------------------- */
+
+
+/* ------------------------------------------ZR LIGA-------------------------------------- */
+.zrLiga{
+  background-image: url('https://238p123.mars2.mars-hosting.com/API/pictures/11');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 90vh;
+  width: 90vw;
+  margin: 4em auto 0;
+  padding-top: 9em;
+  position: relative;
+}
+.zrLiga:hover .zrLigaNajava a{
+  color: #4A90E2;
+}
+.zrLigaNajava{
+  color: #fff;
+  font-size: 3em;
+  position: relative;
+  z-index: 3;
+  font-weight: 900;
+  text-align: center;
+  margin-top: 3em;
+}
+.zrLigaNajava a{
+  color: #fff;
+}
+.zrLigaBtn{
+    display: flex;
+    justify-content: center;
+    border: 2px solid #fff;
+    width: 40%;
+    padding: 5px 0;
+    border-radius: 20px;
+    color: #1f3242;
+    font-size: 2em;
+    position: relative;
+    z-index: 3;
+    font-weight: 700;
+    text-align: center;
+    margin: .5em auto 0;
+    text-decoration: none;
+    background-color: #fff;
+}
+.overlay {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.2);
+z-index: 2;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+/* ------------------------------------------END OF ZR LIGA----------------------------------- */
+
+
 /* ------------------------------------------EDIT TRKE-------------------------------------- */
 
 .editTrkeWrapper{
@@ -833,6 +843,7 @@ padding: 0.5em 0;
 .editTrkeHeader{
     font-size: 4em;
     border-bottom: 3px solid #4A90E2;
+    margin-top: 1em
 }
 .editTrke{
     margin: 2em 0;
@@ -925,7 +936,7 @@ padding: 0.5em 0;
 
 @media (min-width: 1600px) and (max-width: 2199px) {
     .navLink{
-        font-size: 1.4em;
+        font-size: 1.3em;
     }
     .logo{
         width: 6em;
@@ -936,8 +947,14 @@ padding: 0.5em 0;
     .datumTrke{
         font-size: 3.5em;
     }
-    .decathlonHeading{
+    /* .decathlonHeading{
         font-size: 2.5em;
+    } */
+    .zrLigaNajava{
+        margin-top: 9em;
+    }
+    .zrLigaBtn{
+        margin-top: .5em;
     }
     .decathlonParagraf, .prvaTrkaParagraf, .drugaTrkaParagraf, .trkeInfo p, .trkeInfo2 p, .decijaTrka p{
         font-size: 1.2em;
@@ -989,9 +1006,29 @@ padding: 0.5em 0;
     }
 }
 
+@media (max-width: 1600px) {
+    .zrLigaNajava{
+        margin-top: 7em
+    }
+}
+
 @media (max-width: 1450px) {
-    h1{
+    .heroWrapper h1{
         font-size: 1em !important;
+    }
+    .zrLigaNajava{
+        font-size: 2.5em;
+        margin-top: 5em
+    }
+    .zrLigaBtn{
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 1440px) {
+    .zrLigaNajava{
+        margin-top: 8em;
+        font-size: 2.5em
     }
 }
 
@@ -1004,6 +1041,10 @@ padding: 0.5em 0;
     }
     .trka{
         flex-basis: 30%;
+    }
+    .zrLigaNajava{
+        font-size: 2em;
+        margin-top: 5em
     }
 }
 
@@ -1193,6 +1234,13 @@ padding: 0.5em 0;
     }
     .sponzor{
         width: 30%;
+    }
+    .zrLigaNajava{
+        margin-top: 6em;
+        font-size: 1.8em;
+    }
+    .zrLigaBtn{
+        width: 80%;
     }
 }
 

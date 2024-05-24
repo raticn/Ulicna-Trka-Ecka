@@ -3,7 +3,10 @@ import Footer from '../components/Footer.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowRightArrowLeft, faBars} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import axios from 'axios'
+import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons';
+import Nav from '../components/Nav.vue'
+import { mapActions, mapState } from 'pinia'
+import { useEckaStore } from '../stores/eckaStore'
 
 export default{
     data() {
@@ -18,18 +21,16 @@ export default{
             isEmailFocused: false,
             isPredmetFocused: false,
             menu: false,
-            lang: '',
-            language: '',
-            shortText: {},
-            longText: {},
             placeholder: '',
         }
     },
     components: {
         Footer,
-        FontAwesomeIcon
+        FontAwesomeIcon,
+        Nav
     },
     methods: {
+        ...mapActions(useEckaStore, ['fetchText']),
         onFocus(field) {
             this[field] = true;
             },
@@ -41,40 +42,16 @@ export default{
         focusInput(inputRef) {
         this.$refs[inputRef].focus();
         },
-        changeLang() {
-            if (localStorage.getItem("lang") == "sr") {
-                localStorage.setItem("lang", "en")
-            }
-            else {
-                localStorage.setItem("lang", "sr")
-            }
-            this.fetchText()
-            this.placeholder = localStorage.getItem('lang')
-        },
-        async fetchText() {
-            let language = localStorage.getItem("lang")
-            try {
-                let res = await axios.get('https://093g123.mars2.mars-hosting.com/API/text', {
-                    params: {
-                        language: language
-                    }
-                })
-                this.language = res.data.trazeniTekst
-                for (let item of this.language) {
-                    this.shortText[item.tex_name] = item.tex_text
-                    this.longText[item.tex_name] = item.tex_long
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        },
+    },
+    computed: {
+        ...mapState(useEckaStore, ['textObj', 'longText', 'lang', 'shortText']),
     },
     mounted() {
         window.scrollTo(0, 0);
         this.fetchText()
     },
     created() {
-        library.add(faArrowRightArrowLeft, faBars)
+        library.add(faArrowRightArrowLeft, faBars, faInstagram, faFacebook)
     }
 }
 </script>
@@ -82,47 +59,15 @@ export default{
 <template>
 <div class="kontaktWrapper">
     <header>
-        <nav>
-            <div class="nav fixed">
-                <img class="logo" @click="this.$router.push('/')" src="../assets/logo.png" alt="Ulicna trka Ecka logo">
-                <ul class="navLista">
-                    <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
-                    <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
-                    <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
-                    <li class="language" @click="changeLang">
-                        <img class="lang" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
-                        <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                        <img class="lang" src="../assets/engleska.jpg" width="64" height="64" alt="English flag image">  
-                    </li>
-                </ul>
-            </div>
-            <div class="nav2">
-                <div class="menu">
-                    <div class="menuWrapper">
-                        <p class="nav2Header"><img class="logo2" src="../assets/logo.png" alt="Ulicna trka Ecka logo" @click="this.$router.push('/')"> {{ this.shortText.nav2Naslov }}</p>
-                        <FontAwesomeIcon @click="this.menu = !this.menu" class="bars" icon="fa-solid fa-bars"></FontAwesomeIcon>
-                    </div>
-                    <div class="dropDownMenu" v-if="this.menu">
-                        <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
-                        <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
-                        <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
-                        <div class="lang2" @click="changeLang(); this.menu = !this.menu">
-                            <img class="langImg" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
-                            <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
-                            <img class="langImg" src="../assets/engleska.jpg" width="64" height="64" alt="English flag image">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        <Nav />
     </header>
     <div class="kontakt">
         <div class="kontaktInfo">
-            <section class="contactUs" aria-label="Sekcija: Kontakt informacije">
-                    <p class="bold">Sportsko udruženje Ulična trka Ečka</p>
-                    <p class="bold">Beogradska 64, Zrenjanin</p>
-                    <p class="bold">+381 62 543-543</p>
-            </section>
+            <p class="bold">Sportsko udruženje Ulična trka Ečka</p>
+            <p class="bold">Beogradska 64, Zrenjanin</p>
+            <p class="bold">+381 62 543-543</p>
+            <p><a aria-label="Pogledajte nasu Instagram stranicu" href="https://www.instagram.com/ulicna_trka_ecka/" target="_blank"><FontAwesomeIcon class="kontaktSocials instagram" icon="fa-brands fa-instagram"></FontAwesomeIcon>@ulicna_trka_ecka</a></p>
+            <p><a aria-label="Pogledajte nasu Facebook stranicu" href="https://www.facebook.com/ulicnatrkaecka" target="_blank"><FontAwesomeIcon class="kontaktSocials" icon="fa-brands fa-facebook"></FontAwesomeIcon>Ulična Trka Ečka</a></p>
             <section aria-label="Sekcija: Kontakt forma">
                 <form id="form" action="https://formsubmit.co/ulicnatrkaecka@gmail.com" method="POST">
                     <div class="formInfo">
@@ -158,12 +103,25 @@ export default{
 </template>
 
 <style>
+.kontaktWrapper .nav{
+    position: fixed;
+    background-color: rgb(255, 255, 255);
+    color: #4A90E2;
+    border-bottom: 1px solid #4A90E2;
+    z-index: 10;
+}
 .kontakt{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 90%;
     margin: 150px auto 0;
+}
+.kontaktSocials{
+    margin: 0 .5em;
+}
+.instagram{
+    color: rgb(255, 0, 140);
 }
 .formField{
     position: relative;
