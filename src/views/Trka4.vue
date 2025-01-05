@@ -54,7 +54,7 @@ export default {
         </header>
         <h2 class="trka4Header">{{ this.shortText.trka4Info }}</h2>
         <p class="trka4Rez">
-            {{ this.shortText.trka4Rez }}: <a href="https://www.facebook.com/ulicnatrkaecka" target="_blank" aria-label="Link do naše Facebook stranice"> trka.rs/events/479/</a>
+            {{ this.shortText.trka4Rez }}: <a href="https://trka.rs/events/479/" target="_blank" aria-label="Link do naše Facebook stranice"> trka.rs/events/479/</a>
         </p>
         <div class="propozicijeWrapper">
             <h3 class="trka4SubHeader">{{ this.shortText.propNaslov }}</h3>
