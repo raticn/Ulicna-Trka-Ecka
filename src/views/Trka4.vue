@@ -53,6 +53,9 @@ export default {
             <Nav />
         </header>
         <h2 class="trka4Header">{{ this.shortText.trka4Info }}</h2>
+        <p class="trka4Rez">
+            {{ this.shortText.trka4Rez }}: <a href="https://www.facebook.com/ulicnatrkaecka" target="_blank" aria-label="Link do naše Facebook stranice"> trka.rs/events/479/</a>
+        </p>
         <div class="propozicijeWrapper">
             <h3 class="trka4SubHeader">{{ this.shortText.propNaslov }}</h3>
             <p>{{ this.longText.propP1 }}</p>
@@ -163,6 +166,15 @@ export default {
     margin: 3em 0 1em 0;
     text-align: center
 }
+.trka4Rez{
+    width: 40%;
+    text-align: center;
+    margin: 0 auto 50px;
+    border: 5px dotted #4A90E2;
+    padding: 20px 0;
+    font-weight: 700;
+
+}
 .trka4SubHeader{
     font-size: 2.5em;
     text-align: center;
@@ -213,6 +225,9 @@ export default {
 @media (max-width: 600px) {
     .podelaKategorija{
         flex-wrap: wrap;
+    }
+    .trka4Rez{
+        width: 90%;
     }
     .kategorija{
         width: 45%;
