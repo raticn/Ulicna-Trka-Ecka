@@ -225,7 +225,7 @@ export default {
         <div class="odbrojavanjeWrapper">
             <h2 class="countdownHeader">{{ this.shortText.vreme }}</h2>
             <p class="countDown" aria-live="polite" aria-atomic="true"></p>
-            <a class="countdownBtn" aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.trk }}</a>
+            <a class="countdownBtn" aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/698-5-ulicna-trka-ecka/" target="_blank">{{ this.shortText.trk }}</a>
         </div>
     </section>
     <section aria-label="Sekcija: Dosadasnje trke">
@@ -250,6 +250,11 @@ export default {
                 <p class="trkaGod">{{ this.shortText.trka4god }}</p>
                 <div class="overlay"></div>
             </div>
+            <div class="trka trka5" @click="this.$router.push('/peta-trka-info')">
+                <p class="trkaNo">{{ this.shortText.trka5Naslov  }}</p>
+                <p class="trkaGod">{{ this.shortText.trka5god }}</p>
+                <div class="overlay"></div>
+            </div>
         </div>
     </section>
     <!-- <section>
@@ -272,6 +277,14 @@ export default {
         </div>
     </section>
     <section>
+        <div class="editTrkeWrapper">
+            <h2 class="editTrkeHeader">{{ this.shortText.editTrkeHeader4 }}</h2>
+            <!-- <video class="editTrke" controls aria-label="Video montaža 4. Ulične trke Ečka" preload="metadata">
+                <source src="https://youtu.be/CrtuQEs57OI?si=uqbdrX2u_2t6LWtK&t=2">
+                Your browser does not support the video tag.
+            </video> -->
+            <iframe class="editTrke" src="https://www.youtube.com/embed/CrtuQEs57OI?si=uqbdrX2u_2t6LWtK&amp;start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
         <div class="editTrkeWrapper">
             <h2 class="editTrkeHeader">{{ this.shortText.editTrkeHeader3 }}</h2>
             <video class="editTrke" controls aria-label="Video montaža 3. Ulične trke Ečka" preload="metadata">
@@ -707,6 +720,9 @@ background-image: url("../assets/trecaTrka.jpg");
 .trka4{
 background-image: url("https://093g123.mars2.mars-hosting.com/API/pictures/112");
 }
+.trka5{
+background-image: url("https://093g123.mars2.mars-hosting.com/API/pictures/114");
+}
 .trkaNo{
 position: relative;
 z-index: 3;
@@ -848,6 +864,7 @@ align-items: center;
 .editTrke{
     margin: 2em 0;
     width: 80%;
+    height: 90vh;
 }
 /* ------------------------------------------END OF EDIT TRKE------------------------------------ */
 /* ------------------------------------------SPONZORI------------------------------------ */

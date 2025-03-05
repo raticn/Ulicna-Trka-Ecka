@@ -48,7 +48,7 @@ export default {
                 <li class="navLink" @click="this.$router.push('/rezultati')">{{ this.shortText.rezultatinaslov }}</li>
                 <li class="navLink" @click="this.$router.push('/rekordi')">{{ this.shortText.rekordiNav }}</li>
                 <li class="navLink" @click="this.$router.push('/kontakt')">{{ this.shortText.kontaktnaslov }}</li>
-                <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
+                <li class="navLink prijava"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/698-5-ulicna-trka-ecka/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></li>
                 <li class="language" @click="changeLang">
                     <img class="lang" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                     <FontAwesomeIcon class="changeLang" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>
@@ -67,7 +67,7 @@ export default {
                     <p @click="this.$router.push('/rezultati'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rezultatinaslov }}</p>
                     <p @click="this.$router.push('/rekordi'); this.menu = !this.menu" class="navLink2">{{ this.shortText.rekordiNav }}</p>
                     <p @click="this.menu = !this.menu; this.$router.push('/kontakt')" class="navLink2">{{ this.shortText.kontaktnaslov }}</p>
-                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/479/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
+                    <p @click="this.menu = !this.menu" class="navLink2 prijava2"><span><a aria-label="Prijavi se za trku (otvara se u novom prozoru)" href="https://trka.rs/events/698-5-ulicna-trka-ecka/" target="_blank">{{ this.shortText.prijavaNaslov }}</a></span></p>
                     <div class="lang2" @click="changeLang(); this.menu = !this.menu">
                         <img class="langImg" src="../assets/srbija.webp" width="64" height="64" alt="Serbian flag image">
                         <FontAwesomeIcon class="langSw" icon="fa-solid fa-arrow-right-arrow-left"></FontAwesomeIcon>

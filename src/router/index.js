@@ -7,6 +7,7 @@ import TabelaTrke from "../views/TabelaTrke.vue"
 import Onama from "../views/Onama.vue"
 import Rekordi from "../views/Rekordi.vue"
 import Trka4 from "../views/Trka4.vue"
+import Trka5 from "../views/Trka5.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,7 +17,7 @@ const router = createRouter({
       name: 'home',
       component: Home,
       meta: {
-        title: "4. Ulična Trka Ečka: Sve što Treba da Znate",
+        title: "5. Ulična Trka Ečka: Sve što Treba da Znate",
         description: "Dobrodošli na Uličnu trku Ečka! Pridružite se uzbudljivim trkama na 5 i 10 km, štafetnoj ili dečijoj trci i doživite trkački duh u prelepom okruženju Ečke!"
       }
     },
@@ -81,6 +82,15 @@ const router = createRouter({
       meta: {
         title: "Sve Potrebne Informacije o 4. Uličnoj trci Ečka",
         description: "Sve informacije o 4. Uličnoj trci Ečka, uključujući datume, rute, kotizacije, prijave..."
+      }
+    },
+    {
+      path: '/peta-trka-info',
+      name: 'peta-trka-info',
+      component: Trka5,
+      meta: {
+        title: "Sve Potrebne Informacije o 5. Uličnoj trci Ečka",
+        description: "Sve informacije o 5. Uličnoj trci Ečka, uključujući datume, rute, kotizacije, prijave..."
       }
     },
   ],
